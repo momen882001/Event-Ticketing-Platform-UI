@@ -1,0 +1,43 @@
+<aside class="sidebar">
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <div class="brand">
+    <div class="logo">
+      <i class="bi-ticket-perforated-fill"></i>
+    </div>
+
+    <div class="brand-info">
+      <h2>Event Ticketing</h2>
+
+      <div class="user-info">
+        <span class="username">
+          {{ getFullname() }}
+        </span>
+
+        <span class="role-badge" [ngClass]="getUserRole()?.toLowerCase()">
+          {{ getDashboardTitleDependsRole() }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navigation">
+    <!-- @if (isUserAdmin()) { -->
+    <a routerLink="/dashboard/users" routerLinkActive="active" class="nav-item">
+      <i class="bi bi-people"></i>
+
+      <span>Users</span>
+    </a>
+    <!-- } -->
+  </nav>
+
+  <div class="bottom-section">
+    <button class="logout-btn" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i>
+
+      <span>Logout</span>
+    </button>
+  </div>
+</aside>

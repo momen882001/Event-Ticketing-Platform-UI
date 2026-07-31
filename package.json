@@ -19,6 +19,7 @@
     "@angular/material": "^22.0.6",
     "@angular/platform-browser": "^22.0.0",
     "@angular/router": "^22.0.0",
+    "bootstrap-icons": "^1.13.1",
     "ngx-toastr": "^20.0.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
