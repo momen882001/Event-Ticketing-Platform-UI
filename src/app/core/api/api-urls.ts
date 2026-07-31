@@ -1,5 +1,5 @@
 export const URLs = {
-  apiBaseUrl: 'http://localhost:8000/api/',
+  apiBaseUrl: 'http://localhost:8082/api/',
 
   // auth
   login: 'auth/login',

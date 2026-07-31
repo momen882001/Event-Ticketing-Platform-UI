@@ -116,15 +116,15 @@ export class Login {
       })
       .subscribe({
         next: (res) => {
-          if (res) {
-            this.notification.success(SuccessMessages.login);
-            this.storageService.setItem('userData', res);
-            this.router.navigateByUrl(this.returnUrl());
-          }
+          this.storageService.setItem('userData', res);
         },
 
         error: (err) => {
           console.log('err', err);
+        },
+        complete: () => {
+          this.notification.success(SuccessMessages.login);
+          // this.router.navigateByUrl(this.returnUrl());
         },
       });
   }
