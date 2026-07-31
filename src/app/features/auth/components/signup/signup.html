@@ -1,0 +1,161 @@
+<section class="signup-page fade-in">
+  <aside class="signup-hero">
+    <div class="signup-hero__glow" aria-hidden="true"></div>
+
+    <div class="signup-hero__content">
+      <p class="signup-hero__brand">Event Ticketing Platform</p>
+
+      <h1 class="signup-hero__headline">Join the experience.</h1>
+
+      <p class="signup-hero__lede">
+        Create an account to discover events, reserve your seats, and manage your tickets in one
+        place.
+      </p>
+    </div>
+  </aside>
+
+  <div class="signup-panel">
+    <div class="signup-panel__inner">
+      <header class="signup-panel__header">
+        <!-- <p class="signup-panel__brand md:hidden">Evently</p> -->
+
+        <h2 class="signup-panel__title">Create account</h2>
+
+        <p class="signup-panel__subtitle">Fill in your details to start booking events.</p>
+      </header>
+
+      <form class="signup-form" (submit)="onSubmit($event)" novalidate>
+        <mat-form-field appearance="outline" class="signup-form__field">
+          <mat-label> Full name </mat-label>
+
+          <input
+            matInput
+            [formField]="signupForm.fullname"
+            autocomplete="name"
+            [attr.aria-invalid]="!!fullnameError()"
+          />
+
+          <mat-icon matPrefix> badge </mat-icon>
+
+          @if (fullnameError(); as message) {
+            <mat-error>
+              {{ message }}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="signup-form__field w-full">
+          <mat-label> Username </mat-label>
+
+          <input
+            matInput
+            [formField]="signupForm.username"
+            autocomplete="username"
+            [attr.aria-invalid]="!!usernameError()"
+          />
+
+          <mat-icon matPrefix> person </mat-icon>
+
+          @if (usernameError(); as message) {
+            <mat-error>
+              {{ message }}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="signup-form__field w-full">
+          <mat-label> Email </mat-label>
+
+          <input
+            matInput
+            [formField]="signupForm.email"
+            autocomplete="email"
+            [attr.aria-invalid]="!!emailError()"
+          />
+
+          <mat-icon matPrefix> email </mat-icon>
+
+          @if (emailError(); as message) {
+            <mat-error>
+              {{ message }}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="signup-form__field w-full">
+          <mat-label> Password </mat-label>
+
+          <input
+            matInput
+            [formField]="signupForm.password"
+            [type]="passwordType()"
+            autocomplete="new-password"
+            [attr.aria-invalid]="!!passwordError()"
+          />
+
+          <mat-icon matPrefix> lock </mat-icon>
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="passwordToggleLabel()"
+          >
+            <mat-icon>
+              {{ passwordToggleIcon() }}
+            </mat-icon>
+          </button>
+
+          @if (passwordError(); as message) {
+            <mat-error>
+              {{ message }}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="signup-form__field w-full">
+          <mat-label> Confirm password </mat-label>
+
+          <input
+            matInput
+            [formField]="signupForm.confirmPassword"
+            [type]="confirmPasswordType()"
+            autocomplete="new-password"
+            [attr.aria-invalid]="!!confirmPasswordError()"
+          />
+
+          <mat-icon matPrefix> lock_outline </mat-icon>
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="toggleConfirmPasswordVisibility()"
+            [attr.aria-label]="confirmPasswordToggleLabel()"
+          >
+            <mat-icon>
+              {{ confirmPasswordToggleIcon() }}
+            </mat-icon>
+          </button>
+
+          @if (confirmPasswordError(); as message) {
+            <mat-error>
+              {{ message }}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" class="signup-form__submit">
+          Create account
+        </button>
+      </form>
+
+      <p class="signup-panel__footer">
+        Already have an account?
+
+        <a routerLink="/auth/login" class="signup-panel__link"> Sign in </a>
+      </p>
+    </div>
+  </div>
+</section>
