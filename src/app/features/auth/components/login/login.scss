@@ -1,0 +1,203 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.login-page {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-columns: 1fr;
+  background: var(--app-bg);
+}
+
+@media (min-width: 900px) {
+  .login-page {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+}
+
+/* ===== Hero (brand plane) ===== */
+.login-hero {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgb(239 108 0 / 0.28), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 15%, rgb(21 101 192 / 0.35), transparent 50%),
+    linear-gradient(155deg, var(--app-hero-from) 0%, var(--app-hero-to) 55%, #1e40af 100%);
+}
+
+@media (min-width: 900px) {
+  .login-hero {
+    display: flex;
+    align-items: flex-end;
+    padding: clamp(2rem, 5vw, 4.5rem);
+  }
+}
+
+.login-hero__glow {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to top, black 20%, transparent 85%);
+  animation: fadeIn 1.2s ease-out;
+  pointer-events: none;
+}
+
+.login-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 28rem;
+  animation: fadeInUp 0.55s ease-out 0.08s both;
+}
+
+.login-hero__brand {
+  margin: 0 0 1.25rem;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #fff;
+  animation: softFloat 7s ease-in-out infinite;
+}
+
+.login-hero__headline {
+  margin: 0 0 0.85rem;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.92);
+}
+
+.login-hero__lede {
+  margin: 0;
+  max-width: 26rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: rgb(232 238 245 / 0.72);
+}
+
+/* ===== Form panel ===== */
+.login-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background:
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgb(26 77 124 / 0.06), transparent 60%),
+    var(--app-bg);
+}
+
+.login-panel__inner {
+  width: 100%;
+  max-width: 24.5rem;
+  animation: fadeInUp 0.45s ease-out 0.12s both;
+}
+
+.login-panel__header {
+  margin-bottom: 1.75rem;
+}
+
+.login-panel__brand {
+  margin: 0 0 0.75rem;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--app-text);
+  letter-spacing: -0.02em;
+}
+
+.login-panel__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.login-panel__subtitle {
+  margin: 0;
+  color: var(--app-text-muted);
+  font-size: 0.95rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.login-form__alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--app-primary) 25%, var(--app-border));
+  background: color-mix(in srgb, var(--app-primary) 8%, white);
+  color: var(--app-text);
+  font-size: 0.875rem;
+  line-height: 1.4;
+
+  mat-icon {
+    flex-shrink: 0;
+    font-size: 1.15rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--app-primary);
+  }
+}
+
+.login-form__field {
+  width: 100%;
+}
+
+.login-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  height: 48px;
+  margin-top: 0.5rem;
+  border-radius: 10px !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  background: var(--app-primary) !important;
+  color: var(--app-on-primary) !important;
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
+.login-panel__footer {
+  margin: 1.5rem 0 0;
+  text-align: center;
+  color: var(--app-text-muted);
+  font-size: 0.9rem;
+}
+
+.login-panel__link {
+  color: var(--app-primary);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 0.25rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Keep outline rectangular — do not radius individual notch segments */
+:host ::ng-deep {
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-bottom: 0.15rem;
+  }
+
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-radius: 0;
+  }
+}
