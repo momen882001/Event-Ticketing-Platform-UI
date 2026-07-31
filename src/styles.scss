@@ -1,1 +1,357 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$event-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$orange-palette,
+    ),
+
+    typography: (
+      brand-family: 'Fraunces',
+      plain-family: 'DM Sans',
+      bold-weight: 600,
+      medium-weight: 500,
+      regular-weight: 400,
+    ),
+
+    density: (
+      scale: -1,
+    ),
+  )
+);
+
+// $bookstore-theme: mat.define-theme(
+//   (
+//     color: (
+//       theme-type: light,
+//       primary: mat.$azure-palette,
+//       tertiary: mat.$orange-palette,
+//     ),
+//     typography: (
+//       brand-family: 'Fraunces',
+//       plain-family: 'DM Sans',
+//       bold-weight: 600,
+//       medium-weight: 500,
+//       regular-weight: 400,
+//     ),
+//     density: (
+//       scale: -1,
+//     ),
+//   )
+// );
+
+html {
+  height: 100%;
+  color-scheme: light;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  @include mat.all-component-themes($event-theme);
+
+  /* ===== Event Ticketing Application Tokens ===== */
+
+  --app-primary: var(--mat-sys-primary, #1565c0);
+  --app-on-primary: var(--mat-sys-on-primary, #ffffff);
+  --app-primary-container: var(--mat-sys-primary-container, #d7e9ff);
+  --app-on-primary-container: var(--mat-sys-on-primary-container, #001b3d);
+  --app-tertiary: var(--mat-sys-tertiary, #ef6c00);
+  --app-on-tertiary: var(--mat-sys-on-tertiary, #ffffff);
+  --app-surface: var(--mat-sys-surface, #f8fafc);
+  --app-on-surface: var(--mat-sys-on-surface, #172033);
+  --app-outline: var(--mat-sys-outline-variant, #dbe3ec);
+  --app-error: var(--mat-sys-error, #ba1a1a);
+
+  /* Application colors */
+
+  --app-bg: #f8fafc;
+  --app-sidebar-bg: #0b1f33;
+  --app-sidebar-text: #c5d4e5;
+  --app-sidebar-active: #163a5c;
+  --app-card-bg: #ffffff;
+  --app-border: #dbe3ec;
+  --app-text: #172033;
+  --app-text-muted: #64748b;
+
+  /* Login hero */
+
+  --app-hero-from: #0b1f33;
+  --app-hero-to: #1565c0;
+  --app-accent-warm: #ef6c00;
+  --sidebar-width: 280px;
+
+  height: 100%;
+  margin: 0;
+
+  font-family:
+    'DM Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
+
+  background: var(--app-bg);
+  color: var(--app-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--app-text);
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+  font-family:
+    'DM Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+/* ===== Shared page utilities ===== */
+.page-container {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.page-subtitle {
+  color: var(--app-text-muted);
+  margin: 0 0 24px 0;
+  font-size: 0.95rem;
+}
+
+.card {
+  background: var(--app-card-bg);
+  border-radius: 14px;
+  border: 1px solid var(--app-border);
+  box-shadow: 0 1px 3px 0 rgb(15 23 42 / 0.06);
+}
+
+/* ===== Material cohesion ===== */
+.mat-mdc-card {
+  border-radius: 14px !important;
+  border: 1px solid var(--app-border) !important;
+  box-shadow: 0 1px 3px 0 rgb(15 23 42 / 0.06) !important;
+}
+
+.mat-mdc-table {
+  background: transparent !important;
+}
+
+.mat-mdc-row:hover {
+  background: color-mix(in srgb, var(--app-primary) 6%, white) !important;
+}
+
+.mat-mdc-paginator {
+  background: transparent !important;
+  border-top: 1px solid var(--app-border);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #b0becd;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8494a8;
+}
+
+// ------------------------------------------------- side bar -------------------------------------------------
+
+.toggle-sidebar {
+  #main {
+    margin-left: 80px !important;
+  }
+
+  .sidebar {
+    --sidebar-width: 80px;
+  }
+
+  .sidebar .brand {
+    justify-content: center;
+    gap: 0;
+
+    padding-inline: 0;
+  }
+
+  .sidebar .brand-info {
+    opacity: 0;
+
+    width: 0;
+
+    overflow: hidden;
+  }
+
+  .sidebar .navigation {
+    padding-inline: 10px;
+  }
+
+  .sidebar .nav-item {
+    justify-content: center;
+
+    padding-inline: 0;
+    gap: 0;
+  }
+
+  .sidebar .nav-item span {
+    opacity: 0;
+
+    width: 0;
+
+    overflow: hidden;
+  }
+
+  .sidebar .logout-btn {
+    justify-content: center;
+
+    padding-inline: 0;
+  }
+
+  .sidebar .logout-btn span {
+    display: none;
+  }
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.dropdown {
+  .dropdown-menu {
+    .dropdown-item {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-light-color) !important;
+  box-shadow: 0 0 0 0 var(--white-color) !important;
+  color: var(--primary-light-color) !important;
+  caret-color: var(--primary-light-color) !important;
+}
+
+.form-check-input:active {
+  filter: none;
+  -webkit-filter: none;
+}
+
+button {
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--white-color);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--text-color);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 6px;
+  background-color: var(--text-color);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* ===== Motion ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes softFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.35s ease-out;
+}
+
+// view book dialog component
+// .book-dialog {
+//   .mat-mdc-dialog-surface {
+//     padding: 0 !important;
+
+//     border-radius: 24px !important;
+
+//     overflow: hidden;
+
+//     background: var(--app-card-bg);
+//   }
+// }

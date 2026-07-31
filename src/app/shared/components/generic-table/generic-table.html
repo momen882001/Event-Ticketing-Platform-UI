@@ -1,0 +1,74 @@
+<div class="generic-table">
+  @if (isSearchable()) {
+    <mat-form-field appearance="outline" class="generic-table__search" subscriptSizing="dynamic">
+      <mat-label>{{ searchPlaceholder() }}</mat-label>
+      <input matInput [formControl]="searchControl" autocomplete="off" />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+  }
+
+  <div class="generic-table__surface">
+    <table mat-table [dataSource]="dataSource()" class="generic-table__table">
+      @for (column of columns(); track column.key) {
+        <ng-container [matColumnDef]="column.key">
+          <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
+          <td mat-cell *matCellDef="let element">
+            @if (column.type === 'date') {
+              {{ element[column.key] | date: 'dd/MM/yyyy' }}
+            } @else if (column.type === 'datetime') {
+              {{ element[column.key] | date: 'dd/MM/yyyy HH:mm' }}
+            } @else {
+              {{ cellValue(element, column) }}
+            }
+          </td>
+        </ng-container>
+      }
+
+      @if (actions().length > 0) {
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="generic-table__actions-header">Actions</th>
+          <td mat-cell *matCellDef="let element" class="generic-table__actions-cell">
+            @if (visibleActions(element); as rowActions) {
+              @if (rowActions.length > 0) {
+                <button
+                  mat-icon-button
+                  type="button"
+                  [matMenuTriggerFor]="actionsMenu"
+                  aria-label="Row actions"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #actionsMenu="matMenu">
+                  @for (action of rowActions; track action.label) {
+                    <button mat-menu-item type="button" (click)="action.handler(element)">
+                      <mat-icon>{{ actionIcon(action, element) }}</mat-icon>
+                      <span>{{ actionLabel(action, element) }}</span>
+                    </button>
+                  }
+                </mat-menu>
+              }
+            }
+          </td>
+        </ng-container>
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
+    </table>
+
+    @if (!hasData()) {
+      <p class="generic-table__empty">{{ emptyTableMessage() }}</p>
+    }
+  </div>
+
+  <!-- @if (hasData()) {
+    <mat-paginator
+      class="generic-table__paginator"
+      [length]="totalItems()"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+    />
+  } -->
+</div>
