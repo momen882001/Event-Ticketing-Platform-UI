@@ -42,7 +42,7 @@ export class Login {
   readonly hidePassword = signal(true);
   readonly submitAttempted = signal(false);
 
-  readonly returnUrl = signal('/dashboard/books');
+  readonly returnUrl = signal('/dashboard');
 
   readonly loginModel = signal<LoginModel>({
     username: '',
@@ -124,7 +124,7 @@ export class Login {
         },
         complete: () => {
           this.notification.success(SuccessMessages.login);
-          // this.router.navigateByUrl(this.returnUrl());
+          this.router.navigateByUrl(this.returnUrl());
         },
       });
   }
