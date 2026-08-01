@@ -86,8 +86,87 @@
   font-size: 0.95rem;
 }
 
+// .generic-table__paginator {
+//   background: transparent !important;
+//   border-top: none;
+//   color: var(--app-text-muted);
+// }
+
 .generic-table__paginator {
-  background: transparent !important;
-  border-top: none;
-  color: var(--app-text-muted);
+  background: var(--app-card-bg) !important;
+  border-top: 1px solid var(--app-border);
+  color: var(--app-text);
+  padding: 0.35rem 0.75rem;
+}
+
+:host ::ng-deep {
+  /* Container */
+  .mat-mdc-paginator-container {
+    min-height: 60px;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* Labels */
+  .mat-mdc-paginator,
+  .mat-mdc-paginator-page-size-label,
+  .mat-mdc-paginator-range-label {
+    color: var(--app-text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* Select */
+  .mat-mdc-paginator .mat-mdc-select {
+    font-size: 0.9rem;
+  }
+
+  /* Dropdown arrow */
+  .mat-mdc-select-arrow {
+    color: var(--app-primary);
+  }
+
+  /* Navigation buttons */
+  .mat-mdc-paginator-navigation-previous,
+  .mat-mdc-paginator-navigation-next,
+  .mat-mdc-paginator-navigation-first,
+  .mat-mdc-paginator-navigation-last {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .mat-mdc-paginator-navigation-previous:hover,
+  .mat-mdc-paginator-navigation-next:hover,
+  .mat-mdc-paginator-navigation-first:hover,
+  .mat-mdc-paginator-navigation-last:hover {
+    background: color-mix(in srgb, var(--app-primary) 12%, white);
+  }
+
+  .mat-mdc-paginator-navigation-previous .mat-icon,
+  .mat-mdc-paginator-navigation-next .mat-icon,
+  .mat-mdc-paginator-navigation-first .mat-icon,
+  .mat-mdc-paginator-navigation-last .mat-icon {
+    color: var(--app-primary);
+  }
+
+  /* Disabled buttons */
+  .mat-mdc-icon-button[disabled] {
+    opacity: 0.35;
+  }
+
+  /* Page size field */
+  .mat-mdc-paginator-page-size {
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mat-mdc-paginator-page-size .mat-mdc-form-field {
+    width: 78px;
+  }
+
+  .mat-mdc-paginator-page-size .mat-mdc-text-field-wrapper {
+    border-radius: 10px;
+  }
 }

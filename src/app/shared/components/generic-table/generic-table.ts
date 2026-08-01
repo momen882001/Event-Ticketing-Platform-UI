@@ -42,13 +42,13 @@ export class GenericTable implements OnInit {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly actions = input<TableAction<any>[]>([]);
   readonly isSearchable = input(false);
-  // readonly totalItems = input(0);
-  // readonly pageSize = input(10);
+  readonly totalItems = input(0);
+  readonly pageSize = input(5);
   readonly emptyTableMessage = input('No data available');
   readonly searchPlaceholder = input('Search…');
 
   readonly search = output<TableSearchEvent>();
-  // readonly pageChange = output<PageEvent>();
+  readonly pageChange = output<PageEvent>();
 
   protected readonly searchControl = new FormControl('', { nonNullable: true });
 
@@ -71,9 +71,9 @@ export class GenericTable implements OnInit {
       });
   }
 
-  // protected onPageChange(event: PageEvent): void {
-  //   this.pageChange.emit(event);
-  // }
+  protected onPageChange(event: PageEvent): void {
+    this.pageChange.emit(event);
+  }
 
   protected cellValue(element: Record<string, unknown>, column: TableColumn): unknown {
     const value = element[column.key];
