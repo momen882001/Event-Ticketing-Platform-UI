@@ -24,19 +24,17 @@
   </div>
 
   <nav class="navigation">
-    <!-- @if (isUserAdmin()) { -->
-    <a routerLink="/dashboard/users" routerLinkActive="active" class="nav-item">
-      <i class="bi bi-people"></i>
-
-      <span>Users</span>
-    </a>
-    <!-- } -->
+    @if (isUserAdmin()) {
+      <a routerLink="/dashboard/users" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-people"></i>
+        <span>Users</span>
+      </a>
+    }
   </nav>
 
   <div class="bottom-section">
     <button class="logout-btn" (click)="logout()">
       <i class="bi bi-box-arrow-right"></i>
-
       <span>Logout</span>
     </button>
   </div>
