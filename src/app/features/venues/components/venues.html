@@ -1,0 +1,22 @@
+<section class="page-container fade-in page">
+  <header class="page__header">
+    <div>
+      <h1 class="page-title">Venues</h1>
+    </div>
+
+    <button class="create-btn" type="button">
+      <i class="bi bi-plus-circle"></i>
+      <span> Add Venue </span>
+    </button>
+  </header>
+
+  <app-generic-table
+    [dataSource]="allVenues()"
+    [columns]="columns"
+    [actions]="actions"
+    [isSearchable]="false"
+    [totalItems]="totalItems()"
+    [pageSize]="pageSize()"
+    (pageChange)="onPageChange($event)"
+  />
+</section>
