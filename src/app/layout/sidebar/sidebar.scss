@@ -1,0 +1,271 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+
+  width: var(--sidebar-width);
+  height: 100vh;
+
+  overflow: hidden;
+
+  background: var(--app-sidebar-bg);
+  border-right: 1px solid var(--app-sidebar-border);
+
+  transition: width 0.3s ease;
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  margin: 16px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: transparent;
+
+  color: var(--app-sidebar-text);
+
+  cursor: pointer;
+
+  font-size: 1.4rem;
+
+  transition: 0.25s ease;
+
+  &:hover {
+    background: var(--app-sidebar-hover);
+    color: var(--app-on-primary);
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 0 20px 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(135deg, var(--app-primary), var(--app-tertiary));
+
+  color: var(--app-on-primary);
+
+  box-shadow: 0 10px 28px rgb(21 101 192 / 0.35);
+
+  i {
+    font-size: 1.55rem;
+  }
+}
+
+.brand-info {
+  overflow: hidden;
+}
+
+.brand-info h2 {
+  margin: 0;
+
+  color: var(--app-on-primary);
+
+  font-size: 1.3rem;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.45rem;
+
+  margin-top: 0.55rem;
+}
+
+.username {
+  color: var(--app-sidebar-text-muted);
+
+  font-size: 0.92rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.role-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+
+  padding: 0.35rem 0.75rem;
+
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+}
+
+.role-badge.admin {
+  background: var(--app-role-admin-bg);
+  color: var(--app-role-admin);
+}
+
+.role-badge.organizer {
+  background: var(--app-role-organizer-bg);
+  color: var(--app-role-organizer);
+}
+
+.role-badge.user {
+  background: var(--app-role-customer-bg);
+  color: var(--app-role-customer);
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  flex: 1;
+
+  padding: 0 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  height: 52px;
+
+  padding: 0 18px;
+
+  border-radius: 14px;
+
+  color: var(--app-sidebar-text);
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition: all 0.25s ease;
+
+  i {
+    width: 24px;
+
+    font-size: 1.2rem;
+
+    color: var(--app-sidebar-icon);
+
+    text-align: center;
+
+    flex-shrink: 0;
+
+    transition: inherit;
+  }
+
+  span {
+    transition: inherit;
+  }
+
+  &:hover {
+    background: var(--app-sidebar-hover);
+
+    color: var(--app-on-primary);
+
+    i {
+      color: var(--app-on-primary);
+    }
+  }
+
+  &.active {
+    background: linear-gradient(
+      135deg,
+      var(--app-primary),
+      color-mix(in srgb, var(--app-primary) 75%, var(--app-tertiary))
+    );
+
+    color: var(--app-on-primary);
+
+    box-shadow: 0 8px 22px rgb(21 101 192 / 0.25);
+
+    i {
+      color: var(--app-on-primary);
+    }
+  }
+}
+
+.bottom-section {
+  padding: 16px;
+
+  border-top: 1px solid var(--app-sidebar-border);
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  width: 100%;
+  height: 52px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: transparent;
+
+  color: var(--app-sidebar-text);
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  i {
+    width: 24px;
+
+    font-size: 1.2rem;
+
+    color: var(--app-sidebar-icon);
+
+    text-align: center;
+
+    transition: inherit;
+  }
+
+  &:hover {
+    background: rgb(220 38 38 / 0.12);
+
+    color: #ef4444;
+
+    i {
+      color: #ef4444;
+    }
+  }
+}

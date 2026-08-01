@@ -78,6 +78,44 @@ body {
   --app-text: #172033;
   --app-text-muted: #64748b;
 
+  /* Sidebar */
+
+  --app-sidebar-bg: #0b1f33;
+  --app-sidebar-surface: #102943;
+  --app-sidebar-hover: rgb(255 255 255 / 0.08);
+  --app-sidebar-active: var(--app-primary);
+  --app-sidebar-border: rgb(255 255 255 / 0.08);
+
+  --app-sidebar-text: #c5d4e5;
+  --app-sidebar-text-muted: #8ea5bd;
+  --app-sidebar-icon: #9fb7cf;
+  --app-sidebar-icon-active: #ffffff;
+
+  /* Status & Role Colors */
+
+  --app-success: #16a34a;
+  --app-success-bg: rgb(22 163 74 / 0.16);
+
+  --app-info: #1565c0;
+  --app-info-bg: rgb(21 101 192 / 0.16);
+
+  --app-warning: #ef6c00;
+  --app-warning-bg: rgb(239 108 0 / 0.16);
+
+  --app-danger: #dc2626;
+  --app-danger-bg: rgb(220 38 38 / 0.16);
+
+  /* User Roles */
+
+  --app-role-admin: var(--app-success);
+  --app-role-admin-bg: var(--app-success-bg);
+
+  --app-role-organizer: var(--app-warning);
+  --app-role-organizer-bg: var(--app-warning-bg);
+
+  --app-role-customer: var(--app-info);
+  --app-role-customer-bg: var(--app-info-bg);
+
   /* Login hero */
 
   --app-hero-from: #0b1f33;
