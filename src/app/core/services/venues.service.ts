@@ -13,7 +13,7 @@ export class VenuesService {
   getAllVenuesPaginated(params: IGetAllApiParams) {
     const httpParams = new HttpParams().set('page', params.pageNumber).set('size', params.pageSize);
 
-    return this.http.get(`${URLs.apiBaseUrl + URLs.getAllCategoriesPaginated}`, {
+    return this.http.get(`${URLs.apiBaseUrl + URLs.getAllVenuesPaginated}`, {
       params: httpParams,
     });
   }

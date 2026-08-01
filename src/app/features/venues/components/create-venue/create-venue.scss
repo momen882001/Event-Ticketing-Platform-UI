@@ -1,0 +1,223 @@
+.venue-dialog {
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: linear-gradient(180deg, var(--app-card-bg), var(--app-surface));
+
+  color: var(--app-text);
+}
+
+/* ================= HEADER ================= */
+
+.dialog-header {
+  min-height: 96px;
+
+  padding: 0 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.header-content {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.icon-wrapper {
+  width: 46px;
+
+  height: 46px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: linear-gradient(135deg, var(--app-primary), var(--app-tertiary));
+
+  color: white;
+
+  box-shadow: var(--app-hero-shadow);
+}
+
+.icon-wrapper mat-icon {
+  font-size: 24px;
+}
+
+h2 {
+  margin: 0;
+
+  font-size: 24px;
+
+  font-weight: 700;
+}
+
+p {
+  margin: 6px 0 0;
+
+  color: var(--app-text-muted);
+
+  font-size: 14px;
+}
+
+.close-btn {
+  color: var(--app-text-muted);
+}
+
+/* ================= BODY ================= */
+
+.dialog-body {
+  flex: 1;
+
+  overflow: auto;
+
+  padding: 24px;
+}
+
+.venue-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+.field-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background: var(--app-card-bg);
+
+  border: 1px solid var(--app-border);
+}
+
+.field-title {
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: var(--app-primary);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* ================= SEAT TOGGLE ================= */
+
+.seat-toggle {
+  padding: 20px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  background: color-mix(in srgb, var(--app-primary-container) 70%, transparent);
+
+  border: 1px solid color-mix(in srgb, var(--app-primary) 20%, transparent);
+}
+
+.seat-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.seat-icon {
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: var(--app-primary);
+
+  color: white;
+}
+
+.seat-info strong {
+  display: block;
+
+  font-weight: 700;
+}
+
+.seat-info small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--app-text-muted);
+}
+
+/* ================= FOOTER ================= */
+
+.dialog-footer {
+  height: 80px;
+
+  padding: 0 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  border-top: 1px solid var(--app-border);
+
+  background: var(--app-card-bg);
+}
+
+.cancel-btn {
+  color: var(--app-text-muted);
+}
+
+.create-btn {
+  height: 44px;
+
+  padding: 0 22px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  gap: 8px;
+
+  align-items: center;
+
+  background: linear-gradient(135deg, var(--app-primary), var(--app-tertiary));
+
+  color: white;
+}

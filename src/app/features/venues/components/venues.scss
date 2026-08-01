@@ -1,58 +1,167 @@
 .page {
-  &__header {
+  /* ==========================================
+      Hero
+  ========================================== */
+
+  .venues-hero {
+    position: relative;
+
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
+    gap: 2rem;
 
-    gap: 20px;
+    overflow: hidden;
 
-    margin-bottom: 24px;
+    min-height: 190px;
+
+    margin-bottom: 1.5rem;
+
+    padding: 2rem 2.5rem;
+
+    border-radius: 20px;
+
+    background:
+      linear-gradient(
+        rgb(from var(--app-hero-from) r g b / 82%),
+        rgb(from var(--app-hero-from) r g b / 82%)
+      ),
+      url('/assets/images/venues-banner.jpg');
+
+    background-position: center;
+    background-size: cover;
+
+    border: 1px solid color-mix(in srgb, var(--app-primary) 15%, transparent);
+
+    box-shadow: 0 14px 32px color-mix(in srgb, var(--app-primary) 18%, transparent);
+
+    isolation: isolate;
   }
 
+  .venues-hero__overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+      radial-gradient(
+        circle at top right,
+        color-mix(in srgb, var(--app-tertiary) 30%, transparent),
+        transparent 35%
+      ),
+      radial-gradient(
+        circle at bottom left,
+        color-mix(in srgb, var(--app-primary) 28%, transparent),
+        transparent 45%
+      );
+
+    pointer-events: none;
+  }
+
+  .venues-hero__content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 560px;
+  }
+
+  .venues-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+
+    margin-bottom: 1rem;
+
+    padding: 0.45rem 0.9rem;
+
+    border-radius: 999px;
+
+    background: rgb(255 255 255 / 14%);
+
+    backdrop-filter: blur(12px);
+
+    color: white;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+
+    i {
+      color: var(--app-accent-warm);
+    }
+  }
+
+  .page-title {
+    margin: 0 0 0.65rem;
+
+    color: white;
+
+    font-size: clamp(2rem, 3vw, 2.4rem);
+
+    line-height: 1.15;
+  }
+
+  .venues-hero__description {
+    margin: 0;
+
+    max-width: 470px;
+
+    color: rgb(255 255 255 / 82%);
+
+    font-size: 0.95rem;
+
+    line-height: 1.65;
+  }
+
+  .venues-hero__actions {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ==========================================
+      Create Button
+  ========================================== */
+
   .create-btn {
-    display: flex;
+    display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
-    gap: 10px;
+    gap: 0.65rem;
 
-    height: 44px;
+    height: 46px;
 
-    padding: 0 22px;
+    padding: 0 1.35rem;
 
     border: none;
 
     border-radius: 12px;
 
-    background: var(--app-primary);
+    background: var(--app-card-bg);
 
-    color: var(--app-on-primary);
+    color: var(--app-primary);
 
-    font-size: 15px;
-
-    font-weight: 600;
+    font-size: 0.93rem;
+    font-weight: 700;
 
     cursor: pointer;
 
-    transition:
-      background 0.25s ease,
-      transform 0.2s ease,
-      box-shadow 0.25s ease;
+    transition: 0.25s ease;
+
+    box-shadow: 0 10px 24px rgb(0 0 0 / 14%);
 
     i {
-      font-size: 18px;
+      font-size: 1rem;
     }
 
     &:hover {
-      background: var(--app-hero-to);
+      background: var(--app-primary);
+
+      color: var(--app-on-primary);
 
       transform: translateY(-2px);
 
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 14px 30px color-mix(in srgb, var(--app-primary) 35%, transparent);
     }
 
     &:active {
@@ -61,12 +170,32 @@
   }
 }
 
-@media (max-width: 600px) {
+/* ==========================================
+    Responsive
+========================================== */
+
+@media (max-width: 900px) {
   .page {
-    &__header {
+    .venues-hero {
       flex-direction: column;
 
-      align-items: stretch;
+      align-items: flex-start;
+
+      justify-content: center;
+
+      min-height: auto;
+
+      padding: 1.5rem;
+
+      gap: 1.25rem;
+    }
+
+    .venues-hero__content {
+      max-width: 100%;
+    }
+
+    .venues-hero__actions {
+      width: 100%;
     }
 
     .create-btn {

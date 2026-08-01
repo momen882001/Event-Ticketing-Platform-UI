@@ -384,6 +384,33 @@ button {
   cursor: pointer;
 }
 
+.side-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+
+    border-radius: 0;
+
+    overflow: hidden;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 0;
+  }
+}
+
+// create venue dialog
+.venue-dialog-panel {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 0px;
+
+    border-radius: 0 !important;
+  }
+
+  .mdc-dialog__surface {
+    border-radius: 0 !important;
+  }
+}
+
 /* ===== Motion ===== */
 @keyframes fadeInUp {
   from {

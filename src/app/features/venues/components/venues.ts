@@ -3,6 +3,8 @@ import { TableAction, TableColumn } from '../../../shared/interfaces/table-confi
 import { VenuesService } from '../../../core/services/venues.service';
 import { IGetAllApiParams } from '../../../shared/interfaces/apis-interface';
 import { GenericTable } from '../../../shared/components/generic-table/generic-table';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateVenue } from './create-venue/create-venue';
 
 @Component({
   selector: 'app-venues',
@@ -16,7 +18,10 @@ export class Venues {
   pageSize = signal<number>(5);
   pageNumber = signal<number>(0);
 
-  constructor(private venuesService: VenuesService) {}
+  constructor(
+    private venuesService: VenuesService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.loadAllVenues();
@@ -24,7 +29,10 @@ export class Venues {
 
   readonly columns: TableColumn[] = [
     { key: 'name', header: 'Name' },
-    { key: 'createdAt', header: 'Created At', type: 'date' },
+    { key: 'address', header: 'Address' },
+    { key: 'capacity', header: 'Capacity' },
+    { key: 'categoryName', header: 'Category Name' },
+    { key: 'isSeatable', header: 'Visualized seats', pipe: (value) => (value ? 'Yes' : 'No') },
   ];
 
   readonly actions: TableAction[] = [
@@ -54,8 +62,8 @@ export class Venues {
       next: (res: any) => {
         console.log(res);
         this.allVenues.set(res.content);
-        this.pageSize.set(res.page.size);
-        this.totalItems.set(res.page.totalElements);
+        this.pageSize.set(res.size);
+        this.totalItems.set(res.totalElements);
       },
       error: (err) => {
         console.log(err);
@@ -67,5 +75,19 @@ export class Venues {
     this.pageNumber.set(event.pageIndex);
     this.pageSize.set(event.pageSize);
     this.loadAllVenues();
+  }
+
+  onCreateVenue(): void {
+    this.dialog.open(CreateVenue, {
+      width: '520px',
+      height: '100vh',
+      autoFocus: false,
+      position: {
+        right: '0',
+      },
+      panelClass: 'venue-dialog-panel',
+      enterAnimationDuration: '350ms',
+      exitAnimationDuration: '250ms',
+    });
   }
 }

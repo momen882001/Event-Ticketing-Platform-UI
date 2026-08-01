@@ -1,14 +1,28 @@
 <section class="page-container fade-in page">
-  <header class="page__header">
-    <div>
+  <section class="venues-hero">
+    <div class="venues-hero__overlay"></div>
+
+    <div class="venues-hero__content">
+      <span class="venues-hero__badge">
+        <i class="bi bi-geo-alt-fill"></i>
+        Event Venues
+      </span>
+
       <h1 class="page-title">Venues</h1>
+
+      <p class="venues-hero__description">
+        Create and manage venues for concerts, conferences, theaters, stadiums, and every place
+        where unforgettable experiences happen.
+      </p>
     </div>
 
-    <button class="create-btn" type="button">
-      <i class="bi bi-plus-circle"></i>
-      <span> Add Venue </span>
-    </button>
-  </header>
+    <div class="venues-hero__actions">
+      <button class="create-btn" type="button" (click)="onCreateVenue()">
+        <i class="bi bi-plus-circle-fill"></i>
+        <span>Add Venue</span>
+      </button>
+    </div>
+  </section>
 
   <app-generic-table
     [dataSource]="allVenues()"
