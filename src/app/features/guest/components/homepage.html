@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+
+<div class="home">
+  <section class="hero" aria-label="Introduction">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1800&q=80"
+        alt=""
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="hero__content">
+      <p class="hero__brand"> Event Booking Platform</p>
+      <h1 class="hero__headline">Live events, booked with ease.</h1>
+      <p class="hero__lede">
+        Discover concerts, sports, and gatherings near you — then reserve your seat in minutes.
+      </p>
+
+      <div class="hero__actions">
+        <a routerLink="/events" class="btn btn--primary">Browse events</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="home-main">
+    <section class="section" id="featured">
+      <div class="section__intro section__intro--row">
+        <div>
+          <h2>Featured events</h2>
+          <p>Handpicked experiences worth your weekend.</p>
+        </div>
+
+        <a routerLink="/events" class="section__link">View all</a>
+      </div>
+
+      @if (isFeaturedLoading) {
+        <div class="featured-loading" aria-live="polite">
+          <p>Loading featured events...</p>
+        </div>
+      } @else {
+        <div class="event-grid event-grid--featured">
+          @for (event of featuredEvents; track featuredBatch + '-' + event.title + '-' + $index; let i = $index) {
+            <app-event-card
+              class="featured-card featured-card--enter"
+              [style.animation-delay]="(i * 120) + 'ms'"
+              [event]="event"
+            ></app-event-card>
+          }
+        </div>
+      }
+    </section>
+
+    <app-info></app-info>
+  </main>
+
+  <footer class="home-footer">
+    <div class="home-footer__inner">
+      <div>
+        <strong>Event Booking Platform</strong>
+        <p>Curated experiences. Seamless booking.</p>
+      </div>
+      <p class="home-footer__copy">© 2026 Event Booking Platform</p>
+    </div>
+  </footer>
+</div>

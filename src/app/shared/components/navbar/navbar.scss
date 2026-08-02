@@ -1,0 +1,202 @@
+/* ---------- Nav (floating glass pill) ---------- */
+
+.home-nav {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  z-index: 20;
+  width: min(calc(100% - 28px), 1180px);
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.12);
+  border: 1px solid rgb(255 255 255 / 0.28);
+  box-shadow: 0 10px 30px rgb(15 23 42 / 0.14);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+}
+
+.home-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 10px 10px clamp(16px, 2.5vw, 24px);
+}
+
+.home-nav__start {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.8vw, 32px);
+  min-width: 0;
+}
+
+.home-nav__brand {
+  flex-shrink: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.home-nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 26px);
+}
+
+.home-nav__links a {
+  text-decoration: none;
+  color: rgb(255 255 255 / 0.88);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.home-nav__links a:hover,
+.home-nav__links a:focus-visible {
+  color: #fff;
+}
+
+.home-nav__end {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.home-nav__explore {
+  position: relative;
+}
+
+.home-nav__explore summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: rgb(255 255 255 / 0.88);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  user-select: none;
+  padding: 8px 6px;
+}
+
+.home-nav__explore summary::-webkit-details-marker {
+  display: none;
+}
+
+.home-nav__explore summary:hover,
+.home-nav__explore summary:focus-visible {
+  color: #fff;
+}
+
+.home-nav__chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
+.home-nav__explore[open] .home-nav__chevron {
+  transform: rotate(225deg) translateY(-1px);
+}
+
+.home-nav__menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  min-width: 190px;
+  padding: 8px;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.12);
+  border: 1px solid rgb(255 255 255 / 0.25);
+  box-shadow: 0 12px 28px rgb(15 23 42 / 0.18);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  display: grid;
+  gap: 2px;
+}
+
+.home-nav__menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgb(255 255 255 / 0.9);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.home-nav__menu a:hover,
+.home-nav__menu a:focus-visible {
+  background: rgb(255 255 255 / 0.12);
+  color: #fff;
+}
+
+.home-nav__login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--app-primary, #0f172a);
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.home-nav__login:hover,
+.home-nav__login:focus-visible {
+  background: color-mix(in srgb, var(--app-primary, #0f172a) 85%, black);
+  transform: translateY(-1px);
+}
+
+.btn--ghost-nav {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 0.5);
+  box-shadow: none;
+}
+
+.btn--ghost-nav:hover,
+.btn--ghost-nav:focus-visible {
+  background: rgb(255 255 255 / 0.1);
+  border-color: #fff;
+}
+
+@media (max-width: 720px) {
+  .home-nav {
+    top: 12px;
+    width: calc(100% - 20px);
+    border-radius: 22px;
+  }
+
+  .home-nav__links {
+    display: none;
+  }
+
+  .home-nav__inner {
+    padding: 8px 8px 8px 14px;
+  }
+
+  .home-nav__brand {
+    font-size: 0.9rem;
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

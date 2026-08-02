@@ -1,0 +1,15 @@
+<article class="event">
+  <div class="event__media">
+    <img [src]="event.image" [alt]="event.title" loading="lazy" />
+  </div>
+  <div class="event__body">
+    <p class="event__category">{{ event.category }}</p>
+    <h3>{{ event.title }}</h3>
+    <p class="event__meta">{{ event.date }}</p>
+    <p class="event__meta">{{ event.venue }}</p>
+    <div class="event__footer">
+      <strong>{{ event.price }}</strong>
+      <button type="button" class="btn btn--compact">Book</button>
+    </div>
+  </div>
+</article>
