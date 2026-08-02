@@ -22,6 +22,26 @@ export const DASHBOARD_ROUTES: Routes = [
         //   roles: [UserRoleEnum.ADMIN],
         // },
       },
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('../../features/categories/components/categories').then((c) => c.Categories),
+        canActivate: [AuthGuard],
+
+        // data: {
+        //   roles: [UserRoleEnum.ADMIN],
+        // },
+      },
+      {
+        path: 'venues',
+        loadComponent: () =>
+          import('../../features/venues/components/venues').then((c) => c.Venues),
+        canActivate: [AuthGuard],
+
+        // data: {
+        //   roles: [UserRoleEnum.ADMIN],
+        // },
+      },
     ],
   },
   {

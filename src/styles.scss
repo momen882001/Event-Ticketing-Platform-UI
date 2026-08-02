@@ -56,72 +56,107 @@ body {
 
   /* ===== Event Ticketing Application Tokens ===== */
 
-  --app-primary: var(--mat-sys-primary, #1565c0);
+  --app-primary: var(--mat-sys-primary, #6c4cf6);
   --app-on-primary: var(--mat-sys-on-primary, #ffffff);
-  --app-primary-container: var(--mat-sys-primary-container, #d7e9ff);
-  --app-on-primary-container: var(--mat-sys-on-primary-container, #001b3d);
-  --app-tertiary: var(--mat-sys-tertiary, #ef6c00);
+
+  --app-primary-container: var(--mat-sys-primary-container, #e9e2ff);
+  --app-on-primary-container: var(--mat-sys-on-primary-container, #24105c);
+
+  --app-tertiary: var(--mat-sys-tertiary, #ff6b5e);
   --app-on-tertiary: var(--mat-sys-on-tertiary, #ffffff);
-  --app-surface: var(--mat-sys-surface, #f8fafc);
-  --app-on-surface: var(--mat-sys-on-surface, #172033);
-  --app-outline: var(--mat-sys-outline-variant, #dbe3ec);
-  --app-error: var(--mat-sys-error, #ba1a1a);
 
-  /* Application colors */
+  --app-surface: var(--mat-sys-surface, #faf9ff);
+  --app-on-surface: var(--mat-sys-on-surface, #211f2d);
 
-  --app-bg: #f8fafc;
-  --app-sidebar-bg: #0b1f33;
-  --app-sidebar-text: #c5d4e5;
-  --app-sidebar-active: #163a5c;
+  --app-outline: var(--mat-sys-outline-variant, #ddd8ea);
+
+  --app-error: var(--mat-sys-error, #dc2626);
+
+  /* ================= Application ================= */
+
+  --app-bg: #faf9ff;
+
   --app-card-bg: #ffffff;
-  --app-border: #dbe3ec;
-  --app-text: #172033;
-  --app-text-muted: #64748b;
 
-  /* Sidebar */
+  --app-border: #e4dfef;
 
-  --app-sidebar-bg: #0b1f33;
-  --app-sidebar-surface: #102943;
+  --app-text: #211f2d;
+
+  --app-text-muted: #716b82;
+
+  /* ================= Sidebar ================= */
+
+  --app-sidebar-bg: #171329;
+
+  --app-sidebar-surface: #241f42;
+
   --app-sidebar-hover: rgb(255 255 255 / 0.08);
-  --app-sidebar-active: var(--app-primary);
-  --app-sidebar-border: rgb(255 255 255 / 0.08);
 
-  --app-sidebar-text: #c5d4e5;
-  --app-sidebar-text-muted: #8ea5bd;
-  --app-sidebar-icon: #9fb7cf;
+  --app-sidebar-active: var(--app-primary);
+
+  --app-sidebar-border: rgb(255 255 255 / 0.1);
+
+  --app-sidebar-text: #e8e4f7;
+
+  --app-sidebar-text-muted: #afa8c8;
+
+  --app-sidebar-icon: #c8c1e6;
+
   --app-sidebar-icon-active: #ffffff;
 
-  /* Status & Role Colors */
+  /* ================= Status ================= */
 
   --app-success: #16a34a;
-  --app-success-bg: rgb(22 163 74 / 0.16);
 
-  --app-info: #1565c0;
-  --app-info-bg: rgb(21 101 192 / 0.16);
+  --app-success-bg: rgb(22 163 74 / 0.15);
 
-  --app-warning: #ef6c00;
-  --app-warning-bg: rgb(239 108 0 / 0.16);
+  --app-info: #6c4cf6;
 
-  --app-danger: #dc2626;
-  --app-danger-bg: rgb(220 38 38 / 0.16);
+  --app-info-bg: rgb(108 76 246 / 0.15);
 
-  /* User Roles */
+  --app-warning: #f59e0b;
+
+  --app-warning-bg: rgb(245 158 11 / 0.15);
+
+  --app-danger: #ef4444;
+
+  --app-danger-bg: rgb(239 68 68 / 0.15);
+
+  /* ================= Roles ================= */
 
   --app-role-admin: var(--app-success);
+
   --app-role-admin-bg: var(--app-success-bg);
 
-  --app-role-organizer: var(--app-warning);
-  --app-role-organizer-bg: var(--app-warning-bg);
+  --app-role-organizer: var(--app-tertiary);
 
-  --app-role-customer: var(--app-info);
+  --app-role-organizer-bg: rgb(255 107 94 / 0.15);
+
+  --app-role-customer: var(--app-primary);
+
   --app-role-customer-bg: var(--app-info-bg);
 
-  /* Login hero */
+  /* ================= Login / Dashboard Hero ================= */
 
-  --app-hero-from: #0b1f33;
-  --app-hero-to: #1565c0;
-  --app-accent-warm: #ef6c00;
+  --app-hero-from: #171329;
+
+  --app-hero-to: #6c4cf6;
+
+  --app-accent-warm: #ffb703;
+
   --sidebar-width: 280px;
+
+  /* Dashboard Hero */
+
+  --app-hero-overlay: rgb(23 19 41 / 80%);
+
+  --app-hero-glow-primary: color-mix(in srgb, var(--app-primary) 40%, transparent);
+
+  --app-hero-glow-secondary: color-mix(in srgb, var(--app-tertiary) 35%, transparent);
+
+  --app-hero-shadow: 0 14px 36px color-mix(in srgb, var(--app-primary) 25%, transparent);
+
+  --app-hero-radius: 20px;
 
   height: 100%;
   margin: 0;
@@ -133,8 +168,11 @@ body {
     sans-serif;
 
   background: var(--app-bg);
+
   color: var(--app-text);
+
   -webkit-font-smoothing: antialiased;
+
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -344,6 +382,33 @@ button {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.side-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+
+    border-radius: 0;
+
+    overflow: hidden;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 0;
+  }
+}
+
+// create venue dialog
+.venue-dialog-panel {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 0px;
+
+    border-radius: 0 !important;
+  }
+
+  .mdc-dialog__surface {
+    border-radius: 0 !important;
+  }
 }
 
 /* ===== Motion ===== */

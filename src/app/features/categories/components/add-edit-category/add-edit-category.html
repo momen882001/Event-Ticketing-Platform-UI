@@ -1,0 +1,59 @@
+<div class="category-dialog">
+  <header class="dialog-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon>
+          {{ isEditMode() ? 'edit' : 'category' }}
+        </mat-icon>
+      </div>
+
+      <div>
+        <h2>
+          {{ isEditMode() ? 'Edit Category' : 'Create Category' }}
+        </h2>
+
+        <p>
+          {{ isEditMode() ? 'Update category information' : 'Create a new venue category' }}
+        </p>
+      </div>
+    </div>
+
+    <button mat-icon-button class="close-btn" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <mat-divider></mat-divider>
+
+  <section class="dialog-body">
+    <form class="category-form">
+      <div class="field-group">
+        <span class="field-title"> Category Information </span>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Category Name</mat-label>
+
+          <input matInput placeholder="Conference Hall" [formField]="categoryForm.name" />
+
+          @if (categoryForm.name().touched() && categoryForm.name().invalid()) {
+            <mat-error>
+              {{ categoryForm.name().errors()[0]?.message }}
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </form>
+  </section>
+
+  <footer class="dialog-footer">
+    <button mat-button class="cancel-btn" (click)="close()">Cancel</button>
+
+    <button mat-flat-button class="save-btn" (click)="save()">
+      <mat-icon>
+        {{ isEditMode() ? 'save' : 'add' }}
+      </mat-icon>
+
+      {{ isEditMode() ? 'Save Changes' : 'Create Category' }}
+    </button>
+  </footer>
+</div>

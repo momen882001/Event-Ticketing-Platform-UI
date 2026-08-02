@@ -1,0 +1,22 @@
+<section class="page-container fade-in page">
+  <app-page-hero
+    badge="Venue Categories"
+    badgeIcon="bi bi-tags-fill"
+    title="Categories"
+    description="Organize your venues into categories such as conference halls, theaters, stadiums, outdoor venues, exhibition spaces, and more."
+    buttonText="Add Category"
+    buttonIcon="bi bi-plus-circle-fill"
+    (action)="onCreateCategory()"
+  >
+  </app-page-hero>
+
+  <app-generic-table
+    [dataSource]="allCategories()"
+    [columns]="columns"
+    [actions]="actions"
+    [isSearchable]="false"
+    [totalItems]="totalItems()"
+    [pageSize]="pageSize()"
+    (pageChange)="onPageChange($event)"
+  />
+</section>

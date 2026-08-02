@@ -1,0 +1,21 @@
+<section class="page-container fade-in page">
+  <app-page-hero
+    badge="Event Venues"
+    badgeIcon="bi bi-geo-alt-fill"
+    title="Venues"
+    description="Create and manage venues for concerts, conferences, theaters, stadiums, and every place where unforgettable experiences happen."
+    buttonText="Add Venue"
+    buttonIcon="bi bi-plus-circle-fill"
+    (action)="onCreateVenue()"
+  />
+
+  <app-generic-table
+    [dataSource]="allVenues()"
+    [columns]="columns"
+    [actions]="actions"
+    [isSearchable]="false"
+    [totalItems]="totalItems()"
+    [pageSize]="pageSize()"
+    (pageChange)="onPageChange($event)"
+  />
+</section>

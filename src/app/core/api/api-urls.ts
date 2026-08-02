@@ -4,4 +4,16 @@ export const URLs = {
   // auth
   login: 'auth/login',
   register: 'auth/register',
+
+  // categories
+  getAllCategories: 'categories',
+  getAllCategoriesPaginated: 'categories/paged',
+  createCategory: 'categories',
+  updateCategory: 'categories/:id',
+
+  // venues
+  getAllVenues: 'venues',
+  getAllVenuesPaginated: 'venues/paged',
+  createVenue: 'venues',
+  updateVenue: 'venues/:id',
 };
