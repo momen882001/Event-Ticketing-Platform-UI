@@ -1,0 +1,28 @@
+<section class="page-hero">
+  <div class="page-hero__overlay"></div>
+
+  <div class="page-hero__content">
+    <span class="page-hero__badge">
+      <i [class]="badgeIcon()"></i>
+      {{ badge() }}
+    </span>
+
+    <h1 class="page-title">
+      {{ title() }}
+    </h1>
+
+    <p class="page-hero__description">
+      {{ description() }}
+    </p>
+  </div>
+
+  <div class="page-hero__actions">
+    <button class="create-btn" type="button" (click)="onAction()">
+      <i [class]="buttonIcon()"></i>
+
+      <span>
+        {{ buttonText() }}
+      </span>
+    </button>
+  </div>
+</section>

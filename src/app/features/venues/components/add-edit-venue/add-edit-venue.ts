@@ -1,3 +1,4 @@
+import { IVenueRequest } from './../../interfaces/venue-interface';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -10,18 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { form, FormField, maxLength, min, minLength, required } from '@angular/forms/signals';
-import { IVenueRequest, IVenueResponse } from '../../interfaces/venue-interface';
+import { IVenueResponse } from '../../interfaces/venue-interface';
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { ICategoryResponse } from '../../../categories/interfaces/category-interface';
-
-export interface VenueModel {
-  id?: number;
-  name: string;
-  address: string;
-  capacity: number;
-  categoryId: number | null;
-  isSeatable: boolean;
-}
 
 @Component({
   selector: 'app-add-edit-venue',
@@ -48,8 +40,7 @@ export class AddEditVenue implements OnInit {
   readonly isEditMode = computed(() => !!this.venue);
   allCategories = signal<ICategoryResponse[]>([]);
 
-  venueModel = signal<VenueModel>({
-    id: this.venue?.id,
+  venueModel = signal<IVenueRequest>({
     name: this.venue?.name ?? '',
     address: this.venue?.address ?? '',
     capacity: this.venue?.capacity ?? 0,
@@ -92,13 +83,6 @@ export class AddEditVenue implements OnInit {
     if (this.venueForm().invalid()) {
       return;
     }
-    const req: IVenueRequest = {
-      name: this.venueForm().value().name,
-      address: this.venueForm().value().address,
-      capacity: this.venueForm().value().capacity,
-      categoryId: this.venueForm().value().categoryId,
-      isSeatable: this.venueForm().value().isSeatable,
-    };
-    this.dialogRef.close(req);
+    this.dialogRef.close(this.venueForm().value());
   }
 }

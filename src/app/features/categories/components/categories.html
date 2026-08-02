@@ -1,14 +1,14 @@
 <section class="page-container fade-in page">
-  <header class="page__header">
-    <div>
-      <h1 class="page-title">Categories</h1>
-    </div>
-
-    <button class="create-btn" type="button">
-      <i class="bi bi-plus-circle"></i>
-      <span> Add Category </span>
-    </button>
-  </header>
+  <app-page-hero
+    badge="Venue Categories"
+    badgeIcon="bi bi-tags-fill"
+    title="Categories"
+    description="Organize your venues into categories such as conference halls, theaters, stadiums, outdoor venues, exhibition spaces, and more."
+    buttonText="Add Category"
+    buttonIcon="bi bi-plus-circle-fill"
+    (action)="onCreateCategory()"
+  >
+  </app-page-hero>
 
   <app-generic-table
     [dataSource]="allCategories()"

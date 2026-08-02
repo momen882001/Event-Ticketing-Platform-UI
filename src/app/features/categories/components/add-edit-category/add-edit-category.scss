@@ -1,0 +1,108 @@
+.category-dialog {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--app-card-bg), var(--app-surface));
+}
+
+.dialog-header {
+  min-height: 96px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--app-primary), var(--app-tertiary));
+  color: white;
+  box-shadow: var(--app-hero-shadow);
+}
+
+.icon-wrapper mat-icon {
+  font-size: 24px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.dialog-header p {
+  margin-top: 6px;
+  color: var(--app-text-muted);
+}
+
+.close-btn {
+  color: var(--app-text-muted);
+}
+
+.dialog-body {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.category-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--app-card-bg);
+  border: 1px solid var(--app-border);
+}
+
+.field-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--app-primary);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.dialog-footer {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 0 24px;
+  border-top: 1px solid var(--app-border);
+  background: var(--app-card-bg);
+}
+
+.cancel-btn {
+  color: var(--app-text-muted);
+}
+
+.save-btn {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--app-primary), var(--app-tertiary));
+  color: white;
+}

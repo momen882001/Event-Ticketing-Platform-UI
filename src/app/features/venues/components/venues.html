@@ -1,28 +1,13 @@
 <section class="page-container fade-in page">
-  <section class="venues-hero">
-    <div class="venues-hero__overlay"></div>
-
-    <div class="venues-hero__content">
-      <span class="venues-hero__badge">
-        <i class="bi bi-geo-alt-fill"></i>
-        Event Venues
-      </span>
-
-      <h1 class="page-title">Venues</h1>
-
-      <p class="venues-hero__description">
-        Create and manage venues for concerts, conferences, theaters, stadiums, and every place
-        where unforgettable experiences happen.
-      </p>
-    </div>
-
-    <div class="venues-hero__actions">
-      <button class="create-btn" type="button" (click)="onCreateVenue()">
-        <i class="bi bi-plus-circle-fill"></i>
-        <span>Add Venue</span>
-      </button>
-    </div>
-  </section>
+  <app-page-hero
+    badge="Event Venues"
+    badgeIcon="bi bi-geo-alt-fill"
+    title="Venues"
+    description="Create and manage venues for concerts, conferences, theaters, stadiums, and every place where unforgettable experiences happen."
+    buttonText="Add Venue"
+    buttonIcon="bi bi-plus-circle-fill"
+    (action)="onCreateVenue()"
+  />
 
   <app-generic-table
     [dataSource]="allVenues()"

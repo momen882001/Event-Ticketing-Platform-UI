@@ -8,6 +8,8 @@ export const URLs = {
   // categories
   getAllCategories: 'categories',
   getAllCategoriesPaginated: 'categories/paged',
+  createCategory: 'categories',
+  updateCategory: 'categories/:id',
 
   // venues
   getAllVenues: 'venues',

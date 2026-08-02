@@ -8,10 +8,11 @@ import { IVenueRequest, IVenueResponse } from '../interfaces/venue-interface';
 import { SuccessMessages } from '../../../core/constants/successMessages';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AddEditVenue } from './add-edit-venue/add-edit-venue';
+import { PageHero } from '../../../shared/components/page-hero/page-hero';
 
 @Component({
   selector: 'app-venues',
-  imports: [GenericTable],
+  imports: [GenericTable, PageHero],
   templateUrl: './venues.html',
   styleUrl: './venues.scss',
 })
@@ -43,7 +44,7 @@ export class Venues {
     {
       icon: 'edit',
       label: 'Edit',
-      handler: (venue) => this.editVenue(venue),
+      handler: (venue) => this.onEditVenue(venue),
     },
     // {
     //   icon: 'delete',
@@ -108,7 +109,7 @@ export class Venues {
     });
   }
 
-  editVenue(venue: IVenueResponse): void {
+  onEditVenue(venue: IVenueResponse): void {
     const dialog = this.dialog.open(AddEditVenue, {
       width: '520px',
       height: '100vh',
