@@ -2,18 +2,21 @@
   <header class="dialog-header">
     <div class="header-content">
       <div class="icon-wrapper">
-        <mat-icon>location_city</mat-icon>
+        <mat-icon>{{ isEditMode() ? 'edit_location_alt' : 'location_city' }}</mat-icon>
       </div>
-
       <div>
-        <h2>Create Venue</h2>
-
-        <p>Add venue details and configure seating options</p>
+        <h2>{{ isEditMode() ? 'Edit Venue' : 'Create Venue' }}</h2>
+        <p>
+          {{
+            isEditMode()
+              ? 'Update venue details and seating configuration'
+              : 'Add venue details and configure seating options'
+          }}
+        </p>
       </div>
     </div>
-
     <button mat-icon-button class="close-btn" (click)="close()">
-      <mat-icon> close </mat-icon>
+      <mat-icon>close</mat-icon>
     </button>
   </header>
 
@@ -21,87 +24,68 @@
 
   <section class="dialog-body">
     <form class="venue-form">
-      <!-- Name -->
-
       <div class="field-group">
-        <span class="field-title"> Basic Information </span>
+        <span class="field-title">Basic Information</span>
 
         <mat-form-field appearance="outline">
-          <mat-label> Venue Name </mat-label>
-
+          <mat-label>Venue Name</mat-label>
           <input matInput placeholder="Main Hall" [formField]="venueForm.name" />
-
           @if (venueForm.name().touched() && venueForm.name().invalid()) {
-            <mat-error>
-              {{ venueForm.name().errors()[0]?.message }}
-            </mat-error>
+            <mat-error>{{ venueForm.name().errors()[0]?.message }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label> Address </mat-label>
-
-          <textarea matInput rows="3" placeholder="Venue address" [formField]="venueForm.address">
-          </textarea>
-
+          <mat-label>Address</mat-label>
+          <textarea
+            matInput
+            rows="3"
+            placeholder="Venue address"
+            [formField]="venueForm.address"
+          ></textarea>
           @if (venueForm.address().touched() && venueForm.address().invalid()) {
-            <mat-error>
-              {{ venueForm.address().errors()[0]?.message }}
-            </mat-error>
+            <mat-error>{{ venueForm.address().errors()[0]?.message }}</mat-error>
           }
         </mat-form-field>
       </div>
 
-      <!-- Capacity + Category -->
-
       <div class="field-group">
-        <span class="field-title"> Venue Configuration </span>
+        <span class="field-title">Venue Configuration</span>
 
         <mat-form-field appearance="outline">
-          <mat-label> Capacity </mat-label>
-
+          <mat-label>Capacity</mat-label>
           <input matInput type="number" placeholder="500" [formField]="venueForm.capacity" />
-
           @if (venueForm.capacity().touched() && venueForm.capacity().invalid()) {
-            <mat-error>
-              {{ venueForm.capacity().errors()[0]?.message }}
-            </mat-error>
+            <mat-error>{{ venueForm.capacity().errors()[0]?.message }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label> Category </mat-label>
-
+          <mat-label>Category</mat-label>
           <mat-select [formField]="venueForm.categoryId">
-            @for (category of categories; track category.id) {
+            @for (category of allCategories(); track category.id) {
               <mat-option [value]="category.id">
                 {{ category.name }}
               </mat-option>
             }
           </mat-select>
-
           @if (venueForm.categoryId().touched() && venueForm.categoryId().invalid()) {
-            <mat-error> Category is required </mat-error>
+            <mat-error>Category is required</mat-error>
           }
         </mat-form-field>
       </div>
 
-      <!-- Seat Option -->
-
       <div class="seat-toggle">
         <div class="seat-info">
           <div class="seat-icon">
-            <mat-icon> event_seat </mat-icon>
+            <mat-icon>event_seat</mat-icon>
           </div>
-
           <div>
-            <strong> Seatable Venue </strong>
-
-            <small> Enable visual seat selection for customers </small>
+            <strong>Seatable Venue</strong>
+            <small>Enable visual seat selection for customers</small>
           </div>
         </div>
-
-        <mat-slide-toggle color="primary" [formField]="venueForm.isSeatable"> </mat-slide-toggle>
+        <mat-slide-toggle color="primary" [formField]="venueForm.isSeatable"></mat-slide-toggle>
       </div>
     </form>
   </section>
@@ -110,9 +94,8 @@
     <button mat-button class="cancel-btn" (click)="close()">Cancel</button>
 
     <button mat-flat-button class="create-btn" (click)="save()">
-      <mat-icon> add_location </mat-icon>
-
-      Create Venue
+      <mat-icon>{{ isEditMode() ? 'save' : 'add_location' }}</mat-icon>
+      {{ isEditMode() ? 'Save Changes' : 'Create Venue' }}
     </button>
   </footer>
 </div>

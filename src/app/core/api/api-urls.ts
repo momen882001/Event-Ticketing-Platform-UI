@@ -9,7 +9,9 @@ export const URLs = {
   getAllCategories: 'categories',
   getAllCategoriesPaginated: 'categories/paged',
 
-  // categories
+  // venues
   getAllVenues: 'venues',
   getAllVenuesPaginated: 'venues/paged',
+  createVenue: 'venues',
+  updateVenue: 'venues/:id',
 };

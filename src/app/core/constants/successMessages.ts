@@ -15,6 +15,24 @@ export const SuccessMessages = {
   userDeleted: 'User has been deleted successfully.',
 
   // ==========================
+  // Categories
+  // ==========================
+  categoriesLoaded: 'Categories loaded successfully.',
+  categoryLoaded: 'Category details loaded successfully.',
+  categoryCreated: 'Category has been created successfully.',
+  categoryUpdated: 'Category has been updated successfully.',
+  categoryDeleted: 'Category has been deleted successfully.',
+
+  // ==========================
+  // Venues
+  // ==========================
+  venuesLoaded: 'Venues loaded successfully.',
+  venueLoaded: 'Venue details loaded successfully.',
+  venueCreated: 'Venue has been created successfully.',
+  venueUpdated: 'Venue has been updated successfully.',
+  venueDeleted: 'Venue has been deleted successfully.',
+
+  // ==========================
   // Generic
   // ==========================
   saved: 'Changes have been saved successfully.',

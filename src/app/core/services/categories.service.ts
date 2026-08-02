@@ -11,7 +11,7 @@ export class CategoriesService {
   constructor(private http: HttpClient) {}
 
   //* APIs
-  getAllCategories(params: IGetAllApiParams) {
+  getAllCategories(params?: IGetAllApiParams) {
     // const httpParams = new HttpParams().set('page', params.pageNumber).set('size', params.pageSize);
 
     // return this.http.get<ICategoryResponse[]>(`${URLs.apiBaseUrl + URLs.getAllCategoriesPaginated}`, {

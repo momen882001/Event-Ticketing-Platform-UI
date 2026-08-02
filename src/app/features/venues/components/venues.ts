@@ -4,7 +4,10 @@ import { VenuesService } from '../../../core/services/venues.service';
 import { IGetAllApiParams } from '../../../shared/interfaces/apis-interface';
 import { GenericTable } from '../../../shared/components/generic-table/generic-table';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateVenue } from './create-venue/create-venue';
+import { IVenueRequest, IVenueResponse } from '../interfaces/venue-interface';
+import { SuccessMessages } from '../../../core/constants/successMessages';
+import { NotificationService } from '../../../core/services/notification.service';
+import { AddEditVenue } from './add-edit-venue/add-edit-venue';
 
 @Component({
   selector: 'app-venues',
@@ -21,6 +24,7 @@ export class Venues {
   constructor(
     private venuesService: VenuesService,
     public dialog: MatDialog,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -35,22 +39,17 @@ export class Venues {
     { key: 'isSeatable', header: 'Visualized seats', pipe: (value) => (value ? 'Yes' : 'No') },
   ];
 
-  readonly actions: TableAction[] = [
-    {
-      icon: 'visibility',
-      label: 'View',
-      handler: (venues) => console.log(venues),
-    },
+  readonly actions: TableAction<IVenueResponse>[] = [
     {
       icon: 'edit',
       label: 'Edit',
-      handler: (venues) => console.log(venues),
+      handler: (venue) => this.editVenue(venue),
     },
-    {
-      icon: 'delete',
-      label: 'Delete',
-      handler: (venues) => console.log('Delete venues', venues),
-    },
+    // {
+    //   icon: 'delete',
+    //   label: 'Delete',
+    //   handler: (venues) => console.log('Delete venues', venues),
+    // },
   ];
 
   private loadAllVenues() {
@@ -78,7 +77,7 @@ export class Venues {
   }
 
   onCreateVenue(): void {
-    this.dialog.open(CreateVenue, {
+    const dialog = this.dialog.open(AddEditVenue, {
       width: '520px',
       height: '100vh',
       autoFocus: false,
@@ -88,6 +87,57 @@ export class Venues {
       panelClass: 'venue-dialog-panel',
       enterAnimationDuration: '350ms',
       exitAnimationDuration: '250ms',
+    });
+
+    dialog.afterClosed().subscribe((result: IVenueRequest) => {
+      if (result) {
+        console.log(result);
+        this.venuesService.createVenue(result).subscribe({
+          next: (res) => {
+            console.log(res, 'create venue res');
+            this.notificationService.success(SuccessMessages.venueCreated);
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
+            this.loadAllVenues();
+          },
+        });
+      }
+    });
+  }
+
+  editVenue(venue: IVenueResponse): void {
+    const dialog = this.dialog.open(AddEditVenue, {
+      width: '520px',
+      height: '100vh',
+      autoFocus: false,
+      position: {
+        right: '0',
+      },
+      panelClass: 'venue-dialog-panel',
+      enterAnimationDuration: '350ms',
+      exitAnimationDuration: '250ms',
+      data: venue,
+    });
+
+    dialog.afterClosed().subscribe((result: IVenueRequest) => {
+      if (result) {
+        console.log(result);
+        this.venuesService.updateVenue(result, venue.id).subscribe({
+          next: (res) => {
+            console.log(res, 'update venue res');
+            this.notificationService.success(SuccessMessages.venueUpdated);
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
+            this.loadAllVenues();
+          },
+        });
+      }
     });
   }
 }

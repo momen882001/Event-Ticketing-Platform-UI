@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { URLs } from '../api/api-urls';
 import { IGetAllApiParams } from '../../shared/interfaces/apis-interface';
+import { IVenueRequest } from '../../features/venues/interfaces/venue-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,18 @@ export class VenuesService {
   constructor(private http: HttpClient) {}
 
   //* APIs
+
+  createVenue(venueData: IVenueRequest) {
+    return this.http.post(`${URLs.apiBaseUrl + URLs.createVenue}`, venueData);
+  }
+
+  updateVenue(venueData: IVenueRequest, id: number) {
+    return this.http.put(
+      `${URLs.apiBaseUrl + URLs.updateVenue}`.replace(':id', id.toString()),
+      venueData,
+    );
+  }
+
   getAllVenuesPaginated(params: IGetAllApiParams) {
     const httpParams = new HttpParams().set('page', params.pageNumber).set('size', params.pageSize);
 
