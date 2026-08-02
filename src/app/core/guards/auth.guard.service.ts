@@ -31,6 +31,7 @@ export class AuthGuard implements CanActivate {
     if (guestOnly) {
       if (hasToken) {
         return this.router.createUrlTree(['/dashboard']);
+        return this.router.createUrlTree(['/events']);
       }
 
       return true;

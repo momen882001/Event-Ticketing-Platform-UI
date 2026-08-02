@@ -1,0 +1,15 @@
+<section class="section section--trust">
+  <div class="section__intro">
+    <h2>Why book with us</h2>
+    <p>A clearer path from discovery to your seat.</p>
+  </div>
+
+  <div class="trust-grid">
+    @for (item of highlights; track item.title) {
+      <article class="trust-item">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.text }}</p>
+      </article>
+    }
+  </div>
+</section>
