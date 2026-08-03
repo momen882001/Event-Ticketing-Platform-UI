@@ -1,0 +1,207 @@
+.calendar-page {
+  padding: 1.5rem;
+}
+
+.calendar-card {
+  overflow: hidden;
+  border: 1px solid var(--app-border);
+  border-radius: 24px;
+  background: var(--app-card-bg);
+  box-shadow:
+    0 10px 30px rgb(20 20 50 / 6%),
+    0 2px 8px rgb(20 20 50 / 4%);
+}
+
+:host ::ng-deep {
+  /* ================= Toolbar ================= */
+
+  .fc {
+    --fc-border-color: var(--app-border);
+    --fc-page-bg-color: var(--app-card-bg);
+    --fc-neutral-bg-color: var(--app-bg);
+    --fc-now-indicator-color: var(--app-tertiary);
+
+    font-family: inherit;
+  }
+
+  .fc-toolbar {
+    margin: 0;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--app-border);
+    background: linear-gradient(135deg, var(--app-hero-from), var(--app-hero-to));
+  }
+
+  .fc-toolbar-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+  }
+
+  /* ================= Buttons ================= */
+
+  .fc .fc-button {
+    border: none;
+    border-radius: 12px;
+    background: rgb(255 255 255 / 12%);
+    color: white;
+    font-weight: 600;
+    text-transform: capitalize;
+    box-shadow: none;
+    transition: 0.25s;
+  }
+
+  .fc .fc-button:hover {
+    background: rgb(255 255 255 / 22%);
+    transform: translateY(-1px);
+  }
+
+  .fc .fc-button:focus {
+    box-shadow: none;
+  }
+
+  .fc .fc-button-active {
+    background: white !important;
+    color: var(--app-primary) !important;
+  }
+
+  .fc .fc-today-button {
+    background: var(--app-tertiary);
+  }
+
+  .fc .fc-today-button:hover {
+    background: color-mix(in srgb, var(--app-tertiary) 85%, black);
+  }
+
+  /* ================= Header ================= */
+
+  .fc-col-header-cell {
+    background: var(--app-surface);
+    border-color: var(--app-border);
+    padding: 0.8rem 0;
+  }
+
+  .fc-col-header-cell-cushion {
+    color: var(--app-text);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* ================= Grid ================= */
+
+  .fc-theme-standard td,
+  .fc-theme-standard th {
+    border-color: var(--app-border);
+  }
+
+  .fc-scrollgrid {
+    border: none;
+  }
+
+  .fc-daygrid-day,
+  .fc-timegrid-slot {
+    background: white;
+  }
+
+  .fc-day-today {
+    background: rgb(108 76 246 / 6%) !important;
+  }
+
+  .fc-daygrid-day-number,
+  .fc-timegrid-axis-cushion,
+  .fc-timegrid-slot-label-cushion {
+    color: var(--app-text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* ================= Events ================= */
+
+  .fc-event {
+    border: none;
+    border-radius: 12px;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, var(--app-primary), #8f6fff);
+    box-shadow: 0 8px 18px rgb(108 76 246 / 20%);
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .fc-event:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 24px rgb(108 76 246 / 28%);
+  }
+
+  .fc-event-title {
+    font-weight: 600;
+  }
+
+  .fc-event-time {
+    font-weight: 700;
+  }
+
+  /* ================= Current Time ================= */
+
+  .fc-timegrid-now-indicator-line {
+    border-color: var(--app-tertiary);
+    border-width: 2px;
+  }
+
+  .fc-timegrid-now-indicator-arrow {
+    border-top-color: var(--app-tertiary);
+    border-bottom-color: var(--app-tertiary);
+  }
+
+  /* ================= List View ================= */
+
+  .fc-list {
+    border: none;
+  }
+
+  .fc-list-day-cushion {
+    background: var(--app-surface);
+  }
+
+  .fc-list-event:hover td {
+    background: rgb(108 76 246 / 5%);
+  }
+
+  /* ================= Scrollbar ================= */
+
+  .fc-scroller::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .fc-scroller::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: var(--app-border);
+  }
+
+  .fc-scroller::-webkit-scrollbar-thumb:hover {
+    background: var(--app-primary);
+  }
+
+  /* ================= Responsive ================= */
+
+  @media (max-width: 768px) {
+    .fc-toolbar {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .fc-toolbar-title {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .fc-toolbar-chunk {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  }
+}

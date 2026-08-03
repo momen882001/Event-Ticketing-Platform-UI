@@ -42,6 +42,18 @@ export const DASHBOARD_ROUTES: Routes = [
         //   roles: [UserRoleEnum.ADMIN],
         // },
       },
+      {
+        path: 'calendar',
+        loadComponent: () =>
+          import('../../features/calendar/calendar-landing-page').then(
+            (c) => c.CalendarLandingPage,
+          ),
+        canActivate: [AuthGuard],
+
+        // data: {
+        //   roles: [UserRoleEnum.ADMIN],
+        // },
+      },
     ],
   },
   {
