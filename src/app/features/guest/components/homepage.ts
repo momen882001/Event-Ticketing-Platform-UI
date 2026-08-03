@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { NavbarComponent } from '../../../shared/components/navbar/navbar';
+import { NavbarComponent } from '../../../layout/navbar/navbar';
 import { InfoComponent } from './info/info';
 import { EventCardComponent, EventCard } from '../../../shared/components/event-card/event-card';
 import { AuthService } from '../../../core/services/auth.service';
@@ -40,8 +40,7 @@ export class Homepage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.authService.hasUserToken()) {
-      this.router.navigate(['/momen']);
-      return;
+      this.router.navigate(['/dashboard']);
     }
 
     this.loadFeaturedEvents();

@@ -6,6 +6,7 @@ import {
   ICategoryResponse,
 } from '../../features/categories/interfaces/category-interface';
 import { IGetAllApiParams } from '../../shared/interfaces/apis-interface';
+import { IPagedResponse } from '../../shared/interfaces/pagination-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,13 +27,18 @@ export class CategoriesService {
     );
   }
 
-  getAllCategories(params?: IGetAllApiParams) {
-    // const httpParams = new HttpParams().set('page', params.pageNumber).set('size', params.pageSize);
+  getAllCategoriesPaginated(params: IGetAllApiParams) {
+    const httpParams = new HttpParams().set('page', params.pageNumber).set('size', params.pageSize);
 
-    // return this.http.get<ICategoryResponse[]>(`${URLs.apiBaseUrl + URLs.getAllCategoriesPaginated}`, {
-    //   params: httpParams,
-    // });
+    return this.http.get<IPagedResponse<ICategoryResponse>>(
+      `${URLs.apiBaseUrl + URLs.getAllCategoriesPaginated}`,
+      {
+        params: httpParams,
+      },
+    );
+  }
 
+  getAllCategories() {
     return this.http.get<ICategoryResponse[]>(`${URLs.apiBaseUrl + URLs.getAllCategories}`);
   }
 }

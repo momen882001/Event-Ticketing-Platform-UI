@@ -52,12 +52,12 @@ export class Categories implements OnInit {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
     };
-    this.categoriesService.getAllCategories(getCategoriesParams).subscribe({
+    this.categoriesService.getAllCategoriesPaginated(getCategoriesParams).subscribe({
       next: (res) => {
         console.log(res);
-        this.allCategories.set(res);
-        // this.pageSize.set(res.page.size);
-        // this.totalItems.set(res.page.totalElements);
+        this.allCategories.set(res.content);
+        this.pageSize.set(res.page.size);
+        this.totalItems.set(res.page.totalElements);
       },
       error: (err) => {
         console.log(err);

@@ -17,7 +17,7 @@ import { PageHero } from '../../../shared/components/page-hero/page-hero';
   styleUrl: './venues.scss',
 })
 export class Venues {
-  allVenues = signal([]);
+  allVenues = signal<IVenueResponse[]>([]);
   totalItems = signal<number>(0);
   pageSize = signal<number>(5);
   pageNumber = signal<number>(0);
@@ -59,11 +59,11 @@ export class Venues {
       pageSize: this.pageSize(),
     };
     this.venuesService.getAllVenuesPaginated(getCategoriesParams).subscribe({
-      next: (res: any) => {
+      next: (res) => {
         console.log(res);
         this.allVenues.set(res.content);
-        this.pageSize.set(res.size);
-        this.totalItems.set(res.totalElements);
+        this.pageSize.set(res.page.size);
+        this.totalItems.set(res.page.totalElements);
       },
       error: (err) => {
         console.log(err);
