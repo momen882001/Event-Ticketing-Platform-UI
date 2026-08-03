@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { URLs } from '../api/api-urls';
 import { IGetAllApiParams } from '../../shared/interfaces/apis-interface';
-import { IVenueRequest } from '../../features/venues/interfaces/venue-interface';
+import { IVenueRequest, IVenueResponse } from '../../features/venues/interfaces/venue-interface';
+import { IPagedResponse } from '../../shared/interfaces/pagination-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +27,11 @@ export class VenuesService {
   getAllVenuesPaginated(params: IGetAllApiParams) {
     const httpParams = new HttpParams().set('page', params.pageNumber).set('size', params.pageSize);
 
-    return this.http.get(`${URLs.apiBaseUrl + URLs.getAllVenuesPaginated}`, {
-      params: httpParams,
-    });
+    return this.http.get<IPagedResponse<IVenueResponse>>(
+      `${URLs.apiBaseUrl + URLs.getAllVenuesPaginated}`,
+      {
+        params: httpParams,
+      },
+    );
   }
 }

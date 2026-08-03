@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { EventCardComponent, EventCard } from '../../../../shared/components/event-card/event-card';
-import { NavbarComponent } from '../../../../shared/components/navbar/navbar';
+import { NavbarComponent } from '../../../../layout/navbar/navbar';
 import {
   CategoryResponse,
   EventResponse,
@@ -49,7 +49,8 @@ export class EventViewAllComponent implements OnInit {
 
   protected get filteredEvents(): EventCard[] {
     return this.allEvents.filter((event) => {
-      const matchCategory = this.selectedCategory === 'All' || event.category === this.selectedCategory;
+      const matchCategory =
+        this.selectedCategory === 'All' || event.category === this.selectedCategory;
       const matchVenue = this.selectedVenue === 'All' || event.venue === this.selectedVenue;
       return matchCategory && matchVenue;
     });
@@ -85,7 +86,9 @@ export class EventViewAllComponent implements OnInit {
         const categoryList = categories ?? [];
         const venueList = venues.content ?? [];
 
-        this.categoryNameMap = new Map(categoryList.map((category) => [category.id, category.name]));
+        this.categoryNameMap = new Map(
+          categoryList.map((category) => [category.id, category.name]),
+        );
         this.allCategories = categoryList.map((category) => category.name);
         this.renderCategorySlice();
         this.isLoadingCategories = false;
