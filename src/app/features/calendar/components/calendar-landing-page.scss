@@ -2,6 +2,11 @@
   padding: 1.5rem;
 }
 
+app-event-status-indicators {
+  display: block;
+  margin-bottom: 1rem;
+}
+
 .calendar-card {
   overflow: hidden;
   border: 1px solid var(--app-border);
@@ -122,8 +127,8 @@
     border: none;
     border-radius: 12px;
     padding: 4px 8px;
-    background: linear-gradient(135deg, var(--app-primary), #8f6fff);
-    box-shadow: 0 8px 18px rgb(108 76 246 / 20%);
+    // background: linear-gradient(135deg, var(--app-primary), #8f6fff);
+    // box-shadow: 0 8px 18px rgb(108 76 246 / 20%);
     cursor: pointer;
     transition: 0.25s;
   }

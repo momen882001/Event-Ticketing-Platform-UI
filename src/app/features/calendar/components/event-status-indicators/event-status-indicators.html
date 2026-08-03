@@ -1,0 +1,13 @@
+<div class="status-indicators">
+  @for (status of statuses; track status) {
+    <div class="status-item">
+      <span class="status-color" [style.background]="config[status].backgroundColor"> </span>
+
+      <!-- <i [class]="config[status].icon"></i> -->
+
+      <span>
+        {{ config[status].label }}
+      </span>
+    </div>
+  }
+</div>

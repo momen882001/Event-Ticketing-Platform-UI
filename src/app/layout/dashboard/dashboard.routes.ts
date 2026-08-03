@@ -45,7 +45,7 @@ export const DASHBOARD_ROUTES: Routes = [
       {
         path: 'calendar',
         loadComponent: () =>
-          import('../../features/calendar/calendar-landing-page').then(
+          import('../../features/calendar/components/calendar-landing-page').then(
             (c) => c.CalendarLandingPage,
           ),
         canActivate: [AuthGuard],
