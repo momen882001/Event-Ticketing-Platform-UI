@@ -1,6 +1,6 @@
 import { Component, computed, effect, signal } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, EventInput } from '@fullcalendar/core';
+import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -9,6 +9,8 @@ import { EventStatusEnum } from '../../../shared/enums/EventStatusEnum';
 import { IEventResponse } from '../../events/interfaces/event-interface';
 import { EventStatusIndicators } from './event-status-indicators/event-status-indicators';
 import { mapEventToCalendar } from '../mappers/event-calendar.mapper';
+import { ViewEvent } from './view-event/view-event';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calendar-landing-page',
@@ -160,7 +162,7 @@ export class CalendarLandingPage {
 
   calendarEvents = computed(() => this.events().map(mapEventToCalendar));
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
     effect(() => {
       this.calendarOptions.update((options) => ({
         ...options,
@@ -177,7 +179,7 @@ export class CalendarLandingPage {
     nowIndicator: true,
     dayMaxEvents: true,
     weekends: true,
-    selectable: false,
+    selectable: true,
     editable: false,
     slotMinTime: '08:00:00',
     slotMaxTime: '24:00:00',
@@ -197,8 +199,27 @@ export class CalendarLandingPage {
     },
 
     events: [],
-    eventClick: (info) => console.log('Event clicked:', info.event),
+    eventClick: (info) => this.onViewEvent(info),
+    selectAllow: (selectInfo) => {
+      return selectInfo.start >= new Date();
+    },
+    slotLaneClassNames: ({ date }) => (date && date < new Date() ? ['fc-slot-past'] : []),
+    dayCellClassNames: (arg) =>
+      arg.date < new Date(new Date().setHours(0, 0, 0, 0)) ? ['fc-day-past-custom'] : [],
     // select: (info) => console.log('Slot selected:', info.jsEvent, info.startStr, info.endStr),
     // eventDrop: (info) => console.log('Event moved:', info.event.title, info.event.startStr),
   });
+
+  onViewEvent(info: EventClickArg) {
+    console.log(info, 'infoooo');
+
+    this.dialog.open(ViewEvent, {
+      width: '800px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      panelClass: 'event-dialog',
+      autoFocus: false,
+      data: info.event,
+    });
+  }
 }

@@ -1,0 +1,331 @@
+.dialog {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  max-height: 80vh;
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--app-primary) 5%, var(--app-card-bg)),
+    var(--app-card-bg)
+  );
+
+  color: var(--app-text);
+}
+
+/* ================= Header ================= */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 1.2rem;
+  flex-shrink: 0;
+
+  border-bottom: 1px solid var(--app-border);
+
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--app-primary) 10%, transparent),
+    transparent
+  );
+
+  h2 {
+    margin: 0.75rem 0 0;
+
+    font-size: 1.8rem;
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+
+    color: var(--app-text);
+  }
+
+  button {
+    background: color-mix(in srgb, var(--app-primary) 10%, transparent);
+
+    transition: 0.25s;
+
+    &:hover {
+      background: var(--app-primary);
+      color: white;
+      transform: rotate(90deg);
+    }
+  }
+}
+
+/* ================= Scroll Body ================= */
+
+.dialog-body {
+  flex: 1;
+  overflow-y: auto;
+
+  padding: 1.75rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--app-primary) transparent;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--app-primary);
+  }
+}
+
+/* ================= Status ================= */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  padding: 0.45rem 1rem;
+
+  border-radius: 999px;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  backdrop-filter: blur(10px);
+}
+
+.published {
+  background: var(--app-info-bg);
+  color: var(--app-info);
+}
+
+.sold-out {
+  background: var(--app-warning-bg);
+  color: var(--app-warning);
+}
+
+.completed {
+  background: var(--app-success-bg);
+  color: var(--app-success);
+}
+
+.cancelled {
+  background: var(--app-danger-bg);
+  color: var(--app-danger);
+}
+
+/* ================= Description ================= */
+
+.description {
+  margin-bottom: 2rem;
+
+  padding: 1.25rem;
+
+  border-radius: 20px;
+
+  background: color-mix(in srgb, var(--app-primary) 5%, var(--app-card-bg));
+
+  border: 1px solid var(--app-border);
+
+  color: var(--app-text-muted);
+
+  line-height: 1.8;
+
+  font-size: 0.95rem;
+}
+
+/* ================= Info Cards ================= */
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 1rem;
+
+  margin-bottom: 2.5rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1.25rem;
+
+  border-radius: 20px;
+
+  background: var(--app-card-bg);
+
+  border: 1px solid var(--app-border);
+
+  box-shadow: 0 10px 25px rgb(33 31 45 / 5%);
+
+  transition:
+    transform 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+
+  &:hover {
+    transform: translateY(-4px);
+
+    border-color: var(--app-primary);
+
+    box-shadow: 0 16px 35px rgb(108 76 246 / 15%);
+  }
+
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 14px;
+
+    background: var(--app-primary-container);
+
+    color: var(--app-primary);
+
+    font-size: 24px;
+  }
+
+  label {
+    display: block;
+
+    margin-bottom: 0.3rem;
+
+    color: var(--app-text-muted);
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+  }
+
+  span {
+    font-weight: 700;
+
+    font-size: 0.95rem;
+  }
+}
+
+/* ================= Seats ================= */
+
+.section-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.6rem;
+
+  margin-bottom: 1.2rem;
+
+  font-size: 1.15rem;
+
+  font-weight: 800;
+
+  mat-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: color-mix(in srgb, var(--app-tertiary) 15%, transparent);
+
+    color: var(--app-tertiary);
+  }
+}
+
+.seat-section {
+  margin-bottom: 1rem;
+}
+
+.seat {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 1.25rem;
+
+  margin-bottom: 0.85rem;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    135deg,
+    var(--app-card-bg),
+    color-mix(in srgb, var(--app-primary) 4%, white)
+  );
+
+  border: 1px solid var(--app-border);
+
+  transition: 0.25s;
+
+  &:hover {
+    transform: translateX(6px);
+
+    border-color: var(--app-primary);
+  }
+
+  h4 {
+    margin: 0 0 0.35rem;
+
+    font-size: 1rem;
+
+    font-weight: 800;
+  }
+
+  small {
+    color: var(--app-text-muted);
+
+    font-weight: 600;
+  }
+
+  strong {
+    padding: 0.55rem 1rem;
+
+    border-radius: 999px;
+
+    background: var(--app-primary-container);
+
+    color: var(--app-primary);
+
+    font-size: 1rem;
+  }
+}
+
+/* ================= Footer ================= */
+
+mat-dialog-actions {
+  flex-shrink: 0;
+
+  margin: 0;
+
+  padding: 1rem 1.75rem;
+
+  border-top: 1px solid var(--app-border);
+
+  background: var(--app-card-bg);
+
+  button {
+    border-radius: 14px;
+
+    padding-inline: 1.5rem;
+
+    font-weight: 700;
+  }
+}

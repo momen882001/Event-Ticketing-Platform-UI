@@ -411,6 +411,17 @@ button {
   }
 }
 
+// view event dialog
+.event-dialog .mat-mdc-dialog-surface {
+  border-radius: 24px !important;
+  overflow: hidden;
+  background: var(--app-card-bg);
+}
+
+.event-dialog .mat-mdc-dialog-container {
+  padding: 0;
+}
+
 /* ===== Motion ===== */
 @keyframes fadeInUp {
   from {
