@@ -1,4 +1,5 @@
 import { EventStatusEnum } from '../../../shared/enums/EventStatusEnum';
+import { IVenueResponse } from '../../venues/interfaces/venue-interface';
 
 export interface IEventRequest {
   venueId: number;
@@ -12,7 +13,7 @@ export interface IEventRequest {
 export interface IEventResponse {
   id: number;
   organizerId: number;
-  venueId: number;
+  venue: IVenueResponse;
   categoryId: number;
   title: string;
   description: string;
