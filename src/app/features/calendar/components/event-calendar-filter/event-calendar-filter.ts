@@ -70,6 +70,7 @@ export class EventCalendarFilter {
     venueId: null,
     status: null,
   });
+  search = signal<string>('');
 
   hasFilters = computed(() => {
     const value = this.filterObject();
@@ -83,6 +84,21 @@ export class EventCalendarFilter {
   });
 
   constructor() {
+    let timer: ReturnType<typeof setTimeout>;
+
+    effect(() => {
+      const value = this.search();
+
+      clearTimeout(timer);
+
+      timer = setTimeout(() => {
+        this.filterObject.update((current) => ({
+          ...current,
+          search: value,
+        }));
+      }, 500);
+    });
+
     effect(() => {
       this.filterChanged.emit(this.filterObject());
     });
@@ -112,12 +128,12 @@ export class EventCalendarFilter {
     }));
   }
 
-  onSearch(value: string): void {
-    this.filterObject.update((current) => ({
-      ...current,
-      search: value,
-    }));
-  }
+  // onSearch(value: string): void {
+  //   this.filterObject.update((current) => ({
+  //     ...current,
+  //     search: value,
+  //   }));
+  // }
 
   reset(): void {
     this.filterObject.set({

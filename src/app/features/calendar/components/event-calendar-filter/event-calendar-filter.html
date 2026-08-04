@@ -27,12 +27,7 @@
 
       <mat-icon matPrefix> search </mat-icon>
 
-      <input
-        matInput
-        placeholder="Search by title..."
-        [value]="filterObject().search"
-        (input)="onSearch($event.target.value)"
-      />
+      <input matInput [value]="search()" (input)="search.set($any($event.target).value)" />
     </mat-form-field>
 
     <!-- Category -->
