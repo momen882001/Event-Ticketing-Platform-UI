@@ -1,1 +1,19 @@
-<p>users works!</p>
+<section class="page-container fade-in page">
+  <app-page-hero
+    badge="Platform Users"
+    badgeIcon="bi bi-people-fill"
+    title="Users"
+    description="View and manage all registered users on the platform, including their roles, emails, and account details."
+  >
+  </app-page-hero>
+
+  <app-generic-table
+    [dataSource]="allUsers()"
+    [columns]="columns"
+    [actions]="[]"
+    [isSearchable]="false"
+    [totalItems]="totalItems()"
+    [pageSize]="pageSize()"
+    (pageChange)="onPageChange($event)"
+  />
+</section>

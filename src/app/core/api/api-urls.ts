@@ -16,4 +16,7 @@ export const URLs = {
   getAllVenuesPaginated: 'venues/paged',
   createVenue: 'venues',
   updateVenue: 'venues/:id',
+
+  // users
+  getAllUsers: 'users',
 };

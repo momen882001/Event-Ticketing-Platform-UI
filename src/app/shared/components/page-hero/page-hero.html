@@ -16,13 +16,15 @@
     </p>
   </div>
 
-  <div class="page-hero__actions">
-    <button class="create-btn" type="button" (click)="onAction()">
-      <i [class]="buttonIcon()"></i>
+  @if (buttonText()) {
+    <div class="page-hero__actions">
+      <button class="create-btn" type="button" (click)="onAction()">
+        <i [class]="buttonIcon()"></i>
 
-      <span>
-        {{ buttonText() }}
-      </span>
-    </button>
-  </div>
+        <span>
+          {{ buttonText() }}
+        </span>
+      </button>
+    </div>
+  }
 </section>
