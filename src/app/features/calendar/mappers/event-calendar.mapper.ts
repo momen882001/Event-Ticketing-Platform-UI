@@ -1,5 +1,5 @@
 import { EventInput } from '@fullcalendar/core/index.js';
-import { IEventResponse } from '../../events/interfaces/event-interface';
+import { IEventResponse } from '../interfaces/event-interface';
 import { getEventColors } from './event-colors';
 
 export const mapEventToCalendar = (event: IEventResponse): EventInput => {

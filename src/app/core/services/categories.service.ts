@@ -7,6 +7,7 @@ import {
 } from '../../features/categories/interfaces/category-interface';
 import { IGetAllApiParams } from '../../shared/interfaces/apis-interface';
 import { IPagedResponse } from '../../shared/interfaces/pagination-interface';
+import { ICalendarFilter } from '../../features/calendar/interfaces/calendar-interface';
 
 @Injectable({
   providedIn: 'root',

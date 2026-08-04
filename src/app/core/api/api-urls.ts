@@ -13,7 +13,12 @@ export const URLs = {
 
   // venues
   getAllVenues: 'venues',
+  getAllVenuesByCategoryId: 'venues/category/:categoryId',
   getAllVenuesPaginated: 'venues/paged',
   createVenue: 'venues',
   updateVenue: 'venues/:id',
+
+  // events
+  getAllEvents: 'events',
+  getAllEventsPaginated: 'events/paged',
 };

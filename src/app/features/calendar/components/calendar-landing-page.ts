@@ -1,4 +1,4 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -6,19 +6,25 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import { EventStatusEnum } from '../../../shared/enums/EventStatusEnum';
-import { IEventResponse } from '../../events/interfaces/event-interface';
+import { IEventResponse } from '../interfaces/event-interface';
 import { EventStatusIndicators } from './event-status-indicators/event-status-indicators';
 import { mapEventToCalendar } from '../mappers/event-calendar.mapper';
 import { ViewEvent } from './view-event/view-event';
 import { MatDialog } from '@angular/material/dialog';
+import { CategoriesService } from '../../../core/services/categories.service';
+import { VenuesService } from '../../../core/services/venues.service';
+import { EventCalendarFilter } from './event-calendar-filter/event-calendar-filter';
+import { ICalendarFilter } from '../interfaces/calendar-interface';
+import { ICategoryResponse } from '../../categories/interfaces/category-interface';
+import { IVenueResponse } from '../../venues/interfaces/venue-interface';
 
 @Component({
   selector: 'app-calendar-landing-page',
-  imports: [FullCalendarModule, EventStatusIndicators],
+  imports: [FullCalendarModule, EventStatusIndicators, EventCalendarFilter],
   templateUrl: './calendar-landing-page.html',
   styleUrl: './calendar-landing-page.scss',
 })
-export class CalendarLandingPage {
+export class CalendarLandingPage implements OnInit {
   events = signal<IEventResponse[]>([
     {
       id: 1,
@@ -159,16 +165,34 @@ export class CalendarLandingPage {
       ],
     },
   ]);
+  allCategories = signal<ICategoryResponse[]>([]);
+  allVenues = signal<IVenueResponse[]>([]);
+  filterObject = signal<ICalendarFilter>({
+    search: '',
+    categoryId: null,
+    venueId: null,
+    status: null,
+  });
+  loadingVenues = signal<boolean>(false);
 
   calendarEvents = computed(() => this.events().map(mapEventToCalendar));
 
-  constructor(private dialog: MatDialog) {
+  constructor(
+    private dialog: MatDialog,
+    private categoriesService: CategoriesService,
+    private venuesService: VenuesService,
+  ) {
     effect(() => {
       this.calendarOptions.update((options) => ({
         ...options,
         events: this.calendarEvents(),
       }));
     });
+  }
+
+  ngOnInit(): void {
+    this.loadAllCategories();
+    this.loadAllVenues();
   }
 
   calendarOptions = signal<CalendarOptions>({
@@ -220,6 +244,52 @@ export class CalendarLandingPage {
       panelClass: 'event-dialog',
       autoFocus: false,
       data: info.event,
+    });
+  }
+
+  onFilterChanged(filterObject: ICalendarFilter): void {
+    this.filterObject.set(filterObject);
+    console.log('Filter changed:', filterObject);
+  }
+
+  onCategoryChanged(categoryId: number | null): void {
+    if (categoryId === null) {
+      this.loadAllVenues();
+      return;
+    }
+    this.venuesService.getAllVenuesByCategoryId(categoryId).subscribe({
+      next: (response) => {
+        this.allVenues.set(response);
+      },
+      error: (error) => {
+        console.error('Error loading venues by category:', error);
+      },
+    });
+  }
+
+  // ------------------------------- Private Methods -------------------------------
+
+  private loadAllCategories() {
+    this.categoriesService.getAllCategories().subscribe({
+      next: (response) => {
+        this.allCategories.set(response);
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      },
+    });
+  }
+
+  private loadAllVenues() {
+    this.loadingVenues.set(true);
+    this.venuesService.getAllVenues().subscribe({
+      next: (response) => {
+        this.allVenues.set(response);
+        this.loadingVenues.set(false);
+      },
+      error: (error) => {
+        console.error('Error loading venues:', error);
+      },
     });
   }
 }

@@ -34,4 +34,17 @@ export class VenuesService {
       },
     );
   }
+
+  getAllVenues() {
+    return this.http.get<IVenueResponse[]>(`${URLs.apiBaseUrl + URLs.getAllVenues}`);
+  }
+
+  getAllVenuesByCategoryId(categoryId: number) {
+    return this.http.get<IVenueResponse[]>(
+      `${URLs.apiBaseUrl + URLs.getAllVenuesByCategoryId}`.replace(
+        ':categoryId',
+        categoryId.toString(),
+      ),
+    );
+  }
 }

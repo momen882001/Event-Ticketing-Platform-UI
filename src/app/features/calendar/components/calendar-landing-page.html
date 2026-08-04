@@ -1,4 +1,12 @@
 <div class="calendar-page">
+  <app-event-calendar-filter
+    [categories]="allCategories()"
+    [venues]="allVenues()"
+    [loadingVenues]="loadingVenues()"
+    (filterChanged)="onFilterChanged($event)"
+    (categoryChanged)="onCategoryChanged($event)"
+  >
+  </app-event-calendar-filter>
   <app-event-status-indicators></app-event-status-indicators>
   <div class="calendar-card">
     <full-calendar [options]="calendarOptions()"></full-calendar>
