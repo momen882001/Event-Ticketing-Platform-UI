@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { required } from '@angular/forms/signals';
+import { Component, input } from '@angular/core';
 import { EventStatusEnum } from '../../../../shared/enums/EventStatusEnum';
 
 @Component({
@@ -8,6 +9,7 @@ import { EventStatusEnum } from '../../../../shared/enums/EventStatusEnum';
   styleUrl: './event-status-indicators.scss',
 })
 export class EventStatusIndicators {
+  totalEventsLength = input.required<number>();
   statuses = Object.values(EventStatusEnum);
 
   config = {

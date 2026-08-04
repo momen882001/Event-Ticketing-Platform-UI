@@ -7,7 +7,11 @@
     (categoryChanged)="onCategoryChanged($event)"
   >
   </app-event-calendar-filter>
-  <app-event-status-indicators></app-event-status-indicators>
+
+  <app-event-status-indicators
+    [totalEventsLength]="totalEventsLength()"
+  ></app-event-status-indicators>
+
   <div class="calendar-card">
     <full-calendar [options]="calendarOptions()"></full-calendar>
   </div>

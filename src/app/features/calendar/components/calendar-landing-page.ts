@@ -182,6 +182,7 @@ export class CalendarLandingPage implements OnInit {
   loadingVenues = signal<boolean>(false);
 
   calendarEvents = computed(() => this.events().map(mapEventToCalendar));
+  totalEventsLength = computed(() => this.events().length);
 
   constructor(
     private dialog: MatDialog,
