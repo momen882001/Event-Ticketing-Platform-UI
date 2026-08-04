@@ -24,20 +24,22 @@
   </div>
 
   <nav class="navigation">
-    @if (isUserAdmin()) {
+    @if (isAdmin()) {
       <a routerLink="/dashboard/users" routerLinkActive="active" class="nav-item">
         <i class="bi bi-people"></i>
         <span>Users</span>
       </a>
+      <a routerLink="/dashboard/categories" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-grid"></i>
+        <span>Categories</span>
+      </a>
     }
-    <a routerLink="/dashboard/categories" routerLinkActive="active" class="nav-item">
-      <i class="bi bi-grid"></i>
-      <span>Categories</span>
-    </a>
-    <a routerLink="/dashboard/venues" routerLinkActive="active" class="nav-item">
-      <i class="bi bi-buildings"></i>
-      <span>Venues</span>
-    </a>
+    @if (isAdmin() || isOrganizer()) {
+      <a routerLink="/dashboard/venues" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-buildings"></i>
+        <span>Venues</span>
+      </a>
+    }
     <a routerLink="/dashboard/calendar" routerLinkActive="active" class="nav-item">
       <i class="bi bi-calendar"></i>
       <span>Events</span>

@@ -10,7 +10,7 @@ export const DASHBOARD_ROUTES: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'users',
+        redirectTo: 'calendar',
         pathMatch: 'full',
       },
       {
@@ -18,9 +18,9 @@ export const DASHBOARD_ROUTES: Routes = [
         loadComponent: () => import('../../features/users/components/users').then((c) => c.Users),
         canActivate: [AuthGuard],
 
-        // data: {
-        //   roles: [UserRoleEnum.ADMIN],
-        // },
+        data: {
+          roles: [UserRoleEnum.ADMIN],
+        },
       },
       {
         path: 'categories',
@@ -28,9 +28,9 @@ export const DASHBOARD_ROUTES: Routes = [
           import('../../features/categories/components/categories').then((c) => c.Categories),
         canActivate: [AuthGuard],
 
-        // data: {
-        //   roles: [UserRoleEnum.ADMIN],
-        // },
+        data: {
+          roles: [UserRoleEnum.ADMIN],
+        },
       },
       {
         path: 'venues',
@@ -38,9 +38,9 @@ export const DASHBOARD_ROUTES: Routes = [
           import('../../features/venues/components/venues').then((c) => c.Venues),
         canActivate: [AuthGuard],
 
-        // data: {
-        //   roles: [UserRoleEnum.ADMIN],
-        // },
+        data: {
+          roles: [UserRoleEnum.ADMIN, UserRoleEnum.ORGANIZER],
+        },
       },
       {
         path: 'calendar',
@@ -49,16 +49,12 @@ export const DASHBOARD_ROUTES: Routes = [
             (c) => c.CalendarLandingPage,
           ),
         canActivate: [AuthGuard],
-
-        // data: {
-        //   roles: [UserRoleEnum.ADMIN],
-        // },
       },
     ],
   },
   {
     path: '',
-    redirectTo: 'dashboard/users',
+    redirectTo: 'dashboard/calendar',
     pathMatch: 'full',
   },
 ];
