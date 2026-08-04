@@ -17,8 +17,10 @@ export const URLs = {
   getAllVenuesPaginated: 'venues/paged',
   createVenue: 'venues',
   updateVenue: 'venues/:id',
+  getVenueById: 'venues/:id',
 
   // events
   getAllEvents: 'events',
   getAllEventsPaginated: 'events/paged',
+  createEvent: 'events',
 };

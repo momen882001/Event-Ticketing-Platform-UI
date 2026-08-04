@@ -1,0 +1,222 @@
+<div class="drawer">
+  <!-- Header -->
+  <header class="drawer-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <mat-icon> event </mat-icon>
+      </div>
+
+      <div>
+        <h2>
+          {{ dialogTitle() }}
+        </h2>
+
+        <p>Configure event details and seating categories</p>
+      </div>
+    </div>
+
+    <button mat-icon-button type="button" (click)="close()">
+      <mat-icon> close </mat-icon>
+    </button>
+  </header>
+
+  <!-- Content -->
+  <section class="drawer-content">
+    <!-- Schedule -->
+    <section class="info-card">
+      <div class="section-title">
+        <mat-icon> schedule </mat-icon>
+
+        <span> Selected Schedule </span>
+      </div>
+
+      <div class="schedule">
+        <div>
+          <span> Start </span>
+
+          <strong>
+            {{ data.startDateTime | date: 'medium' }}
+          </strong>
+        </div>
+
+        <div>
+          <span> End </span>
+
+          <strong>
+            {{ data.endDateTime | date: 'medium' }}
+          </strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Venue Capacity -->
+    @if (venue()) {
+      <section class="capacity-card" [class.error]="capacityExceeded">
+        <div class="capacity-header">
+          <div>
+            <mat-icon> account_balance </mat-icon>
+
+            <div>
+              <h3>
+                {{ venue()?.name }}
+              </h3>
+
+              <p>
+                Capacity:
+                {{ venue()?.capacity }}
+                seats
+              </p>
+            </div>
+          </div>
+
+          <div class="seat-summary">
+            <strong>
+              {{ totalSeats }}
+            </strong>
+
+            <span> selected </span>
+          </div>
+        </div>
+
+        @if (capacityExceeded) {
+          <div class="capacity-error">
+            <mat-icon> warning </mat-icon>
+
+            <span>
+              Total seats exceed venue capacity. Remaining:
+              {{ remainingSeats }}
+            </span>
+          </div>
+        }
+      </section>
+    }
+
+    <!-- Event Form -->
+    <form class="event-form" [formGroup]="form">
+      <!-- Title -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label> Event Title </mat-label>
+
+        <input matInput formControlName="title" placeholder="Enter event title" />
+
+        @if (form.controls.title.hasError('required') && form.controls.title.touched) {
+          <mat-error> Title is required </mat-error>
+        }
+
+        @if (form.controls.title.hasError('minlength')) {
+          <mat-error> Title must be at least 2 characters </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Description -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label> Description </mat-label>
+
+        <textarea matInput rows="4" formControlName="description" placeholder="Describe your event">
+        </textarea>
+
+        @if (form.controls.description.hasError('required') && form.controls.description.touched) {
+          <mat-error> Description is required </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Seat Categories -->
+
+      <div class="categories-header">
+        <div>
+          <h3>Seat Categories</h3>
+
+          <p>Define ticket sections and prices</p>
+        </div>
+
+        <button mat-stroked-button type="button" (click)="addSeatCategory()">
+          <mat-icon> add </mat-icon>
+
+          Add Category
+        </button>
+      </div>
+
+      <div class="categories" formArrayName="seatCategories">
+        @for (category of seatCategories.controls; track category; let i = $index) {
+          <div class="category-card" [formGroupName]="i">
+            <div class="category-header">
+              <h4>Category {{ i + 1 }}</h4>
+
+              @if (seatCategories.length > 1) {
+                <button mat-icon-button type="button" color="warn" (click)="removeSeatCategory(i)">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              }
+            </div>
+
+            <!-- Name -->
+            <mat-form-field appearance="outline">
+              <mat-label> Category Name </mat-label>
+
+              <input matInput formControlName="name" placeholder="VIP" />
+
+              @if (categoryName(i)?.hasError('required') && categoryName(i)?.touched) {
+                <mat-error> Category name is required </mat-error>
+              }
+
+              @if (categoryName(i)?.hasError('minlength') && categoryName(i)?.touched) {
+                <mat-error> Category name must be at least 2 characters </mat-error>
+              }
+
+              @if (categoryName(i)?.hasError('maxlength') && categoryName(i)?.touched) {
+                <mat-error> Category name cannot exceed 100 characters </mat-error>
+              }
+            </mat-form-field>
+
+            <div class="row">
+              <!-- Price -->
+              <mat-form-field appearance="outline">
+                <mat-label> Price </mat-label>
+
+                <input matInput type="number" formControlName="price" />
+
+                @if (categoryPrice(i)?.hasError('required') && categoryPrice(i)?.touched) {
+                  <mat-error> Price is required </mat-error>
+                }
+
+                @if (categoryPrice(i)?.hasError('min') && categoryPrice(i)?.touched) {
+                  <mat-error> Price cannot be negative </mat-error>
+                }
+              </mat-form-field>
+
+              <!-- Total Seats -->
+              <mat-form-field appearance="outline">
+                <mat-label> Total Seats </mat-label>
+
+                <input matInput type="number" formControlName="totalSeats" />
+
+                @if (categorySeats(i)?.hasError('required') && categorySeats(i)?.touched) {
+                  <mat-error> Total seats is required </mat-error>
+                }
+
+                @if (categorySeats(i)?.hasError('min') && categorySeats(i)?.touched) {
+                  <mat-error> Total seats must be greater than 0 </mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        }
+      </div>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="drawer-footer">
+    <button mat-button type="button" (click)="close()">Cancel</button>
+
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="form.invalid || capacityExceeded"
+      (click)="submit()"
+    >
+      {{ submitLabel() }}
+    </button>
+  </footer>
+</div>

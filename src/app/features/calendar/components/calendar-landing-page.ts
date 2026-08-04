@@ -1,6 +1,6 @@
 import { Component, computed, effect, OnInit, signal } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -18,6 +18,9 @@ import { ICalendarFilter } from '../interfaces/calendar-interface';
 import { ICategoryResponse } from '../../categories/interfaces/category-interface';
 import { IVenueResponse } from '../../venues/interfaces/venue-interface';
 import { EventsService } from '../../../core/services/events.service';
+import { AddEditEvent } from './add-edit-event/add-edit-event';
+import { NotificationService } from '../../../core/services/notification.service';
+import { SuccessMessages } from '../../../core/constants/successMessages';
 
 @Component({
   selector: 'app-calendar-landing-page',
@@ -185,6 +188,7 @@ export class CalendarLandingPage implements OnInit {
     private categoriesService: CategoriesService,
     private venuesService: VenuesService,
     private eventsService: EventsService,
+    private notificationService: NotificationService,
   ) {
     effect(() => {
       this.calendarOptions.update((options) => ({
@@ -235,7 +239,7 @@ export class CalendarLandingPage implements OnInit {
     slotLaneClassNames: ({ date }) => (date && date < new Date() ? ['fc-slot-past'] : []),
     dayCellClassNames: (arg) =>
       arg.date < new Date(new Date().setHours(0, 0, 0, 0)) ? ['fc-day-past-custom'] : [],
-    // select: (info) => console.log('Slot selected:', info.jsEvent, info.startStr, info.endStr),
+    select: (info) => this.onSelectedDateTimeRange(info),
     // eventDrop: (info) => console.log('Event moved:', info.event.title, info.event.startStr),
   });
 
@@ -270,6 +274,47 @@ export class CalendarLandingPage implements OnInit {
       error: (error) => {
         console.error('Error loading venues by category:', error);
       },
+    });
+  }
+
+  onSelectedDateTimeRange(info: DateSelectArg): void {
+    if (!this.filterObject().venueId) {
+      this.notificationService.info(SuccessMessages.shouldSelectVenue);
+      return;
+    }
+
+    const dialogRef = this.dialog.open(AddEditEvent, {
+      width: '550px',
+      height: '100vh',
+      maxWidth: '100vw',
+      panelClass: 'event-drawer-dialog',
+      position: {
+        right: '0',
+        top: '0',
+      },
+
+      data: {
+        venueId: this.filterObject().venueId,
+        startDateTime: this.formatLocalDateTime(info.start),
+
+        endDateTime: this.formatLocalDateTime(info.end),
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
+      }
+
+      this.eventsService.createEvent(result).subscribe({
+        next: (response) => {
+          console.log('Event created:', response);
+          this.loadAllEvents();
+        },
+        error: (error) => {
+          console.error('Error creating event:', error);
+        },
+      });
     });
   }
 
@@ -308,5 +353,13 @@ export class CalendarLandingPage implements OnInit {
         console.error('Error loading venues:', error);
       },
     });
+  }
+
+  private formatLocalDateTime(date: Date): string {
+    const pad = (value: number) => value.toString().padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(
+      date.getHours(),
+    )}:${pad(date.getMinutes())}:00`;
   }
 }

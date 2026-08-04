@@ -1,5 +1,14 @@
 import { EventStatusEnum } from '../../../shared/enums/EventStatusEnum';
 
+export interface IEventRequest {
+  venueId: number;
+  title: string;
+  description: string;
+  startDateTime: string;
+  endDateTime: string;
+  seatCategories: ISeatCategoryRequest[];
+}
+
 export interface IEventResponse {
   id: number;
   organizerId: number;
@@ -13,6 +22,12 @@ export interface IEventResponse {
   createdAt: string;
   updatedAt: string;
   seatCategories: ISeatCategoryResponse[];
+}
+
+export interface ISeatCategoryRequest {
+  name: string;
+  price: number;
+  totalSeats: number;
 }
 
 export interface ISeatCategoryResponse {

@@ -47,4 +47,10 @@ export class VenuesService {
       ),
     );
   }
+
+  getVenueById(id: number) {
+    return this.http.get<IVenueResponse>(
+      `${URLs.apiBaseUrl + URLs.getVenueById}`.replace(':id', id.toString()),
+    );
+  }
 }

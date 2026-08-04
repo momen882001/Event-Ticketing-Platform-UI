@@ -33,6 +33,11 @@ export const SuccessMessages = {
   venueDeleted: 'Venue has been deleted successfully.',
 
   // ==========================
+  // Calendar Events
+  // ==========================
+  shouldSelectVenue: 'Please select a venue before creating an event.',
+
+  // ==========================
   // Generic
   // ==========================
   saved: 'Changes have been saved successfully.',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { URLs } from '../api/api-urls';
 import { ICalendarFilter } from '../../features/calendar/interfaces/calendar-interface';
-import { IEventResponse } from '../../features/calendar/interfaces/event-interface';
+import { IEventRequest, IEventResponse } from '../../features/calendar/interfaces/event-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,10 @@ export class EventsService {
     return this.http.get<IEventResponse[]>(`${URLs.apiBaseUrl + URLs.getAllEvents}`, {
       params: this.buildParams(params),
     });
+  }
+
+  createEvent(eventDate: IEventRequest) {
+    return this.http.post(`${URLs.apiBaseUrl + URLs.createEvent}`, eventDate);
   }
 
   // ------------------------------ Private Methods ------------------------------------
