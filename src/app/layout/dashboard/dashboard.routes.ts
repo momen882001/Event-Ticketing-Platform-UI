@@ -10,17 +10,16 @@ export const DASHBOARD_ROUTES: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'users',
+        redirectTo: 'categories',
         pathMatch: 'full',
       },
       {
         path: 'users',
         loadComponent: () => import('../../features/users/components/users').then((c) => c.Users),
         canActivate: [AuthGuard],
-
-        // data: {
-        //   roles: [UserRoleEnum.ADMIN],
-        // },
+        data: {
+          roles: [UserRoleEnum.ADMIN],
+        },
       },
       {
         path: 'categories',
@@ -46,7 +45,7 @@ export const DASHBOARD_ROUTES: Routes = [
   },
   {
     path: '',
-    redirectTo: 'dashboard/users',
+    redirectTo: 'dashboard/categories',
     pathMatch: 'full',
   },
 ];

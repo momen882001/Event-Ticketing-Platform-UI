@@ -11,8 +11,8 @@ export class PageHero {
   badgeIcon = input.required<string>();
   title = input.required<string>();
   description = input.required<string>();
-  buttonText = input.required<string>();
-  buttonIcon = input.required<string>();
+  buttonText = input<string>('');
+  buttonIcon = input<string>('');
   action = output<void>();
 
   onAction() {
