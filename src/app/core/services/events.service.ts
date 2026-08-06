@@ -18,6 +18,12 @@ export class EventsService {
     });
   }
 
+  getEventById(id: number) {
+    return this.http.get<IEventResponse>(
+      `${URLs.apiBaseUrl + URLs.getEventById}`.replace(':id', id.toString()),
+    );
+  }
+
   createEvent(eventDate: IEventRequest) {
     return this.http.post(`${URLs.apiBaseUrl + URLs.createEvent}`, eventDate);
   }

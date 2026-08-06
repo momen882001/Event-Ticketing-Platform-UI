@@ -22,6 +22,7 @@ import { AddEditEvent } from './add-edit-event/add-edit-event';
 import { NotificationService } from '../../../core/services/notification.service';
 import { SuccessMessages } from '../../../core/constants/successMessages';
 import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar-landing-page',
@@ -51,6 +52,7 @@ export class CalendarLandingPage implements OnInit {
     private eventsService: EventsService,
     private notificationService: NotificationService,
     private authService: AuthService,
+    private router: Router,
   ) {
     effect(() => {
       this.calendarOptions.update((options) => ({
@@ -108,15 +110,16 @@ export class CalendarLandingPage implements OnInit {
 
   onViewEvent(info: EventClickArg) {
     console.log(info, 'infoooo');
+    this.router.navigate(['/dashboard', 'calendar', 'events', info.event.id, 'booking']);
 
-    this.dialog.open(ViewEvent, {
-      width: '800px',
-      maxWidth: '95vw',
-      maxHeight: '90vh',
-      panelClass: 'event-dialog',
-      autoFocus: false,
-      data: info.event,
-    });
+    // this.dialog.open(ViewEvent, {
+    //   width: '800px',
+    //   maxWidth: '95vw',
+    //   maxHeight: '90vh',
+    //   panelClass: 'event-dialog',
+    //   autoFocus: false,
+    //   data: info.event,
+    // });
   }
 
   onFilterChanged(filterObject: ICalendarFilter): void {

@@ -50,6 +50,14 @@ export const DASHBOARD_ROUTES: Routes = [
           ),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'calendar/events/:eventId/booking',
+        loadComponent: () =>
+          import('../../features/bookings/components/event-booking/event-booking').then(
+            (c) => c.EventBooking,
+          ),
+        canActivate: [AuthGuard],
+      },
     ],
   },
   {
