@@ -436,6 +436,15 @@ button {
   }
 }
 
+// payment card dialog
+.payment-dialog {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: transparent;
+
+    padding: 0;
+  }
+}
+
 /* ===== Motion ===== */
 @keyframes fadeInUp {
   from {

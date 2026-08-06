@@ -20,6 +20,8 @@ import { EventsService } from '../../../../core/services/events.service';
 import { BookingTicketCard } from '../booking-ticket-card/booking-ticket-card';
 import { BookingHeader } from '../booking-header/booking-header';
 import { BookingSummary } from '../booking-summary/booking-summary';
+import { PaymentCard } from '../payment-card/payment-card';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-event-booking',
@@ -31,6 +33,7 @@ import { BookingSummary } from '../booking-summary/booking-summary';
 })
 export class EventBooking implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  public readonly dialog = inject(MatDialog);
 
   private readonly fb = inject(FormBuilder);
 
@@ -209,7 +212,22 @@ export class EventBooking implements OnInit {
           })) ?? [],
     };
 
-    this.submitting.set(true);
+    const dialogRef = this.dialog.open(PaymentCard, {
+      maxWidth: '80vw',
+      height: '90vh',
+      panelClass: 'payment-dialog-panel',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((payment) => {
+      if (payment) {
+        console.log(payment);
+
+        // call booking payment API
+      }
+    });
+
+    // this.submitting.set(true);
 
     console.log(payload, 'booking payload');
 
