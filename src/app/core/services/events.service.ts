@@ -28,6 +28,13 @@ export class EventsService {
     return this.http.post(`${URLs.apiBaseUrl + URLs.createEvent}`, eventDate);
   }
 
+  cancelEvent(eventId: number) {
+    return this.http.put(
+      `${URLs.apiBaseUrl + URLs.cancelEventById}`.replace(':id', eventId.toString()),
+      {},
+    );
+  }
+
   // ------------------------------ Private Methods ------------------------------------
   private buildParams(params?: ICalendarFilter): HttpParams {
     let httpParams = new HttpParams();

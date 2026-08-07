@@ -42,6 +42,8 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { DatePipe } from '@angular/common';
 import { UserRoleEnum } from '../../../shared/enums/UserRoleEnum';
+import { ConfirmationDialog } from '../../../shared/components/confirmation-dialog/confirmation-dialog';
+import { IConfirmationDialogData } from '../../../shared/interfaces/confirmation-dialog';
 
 @Component({
   selector: 'app-calendar-landing-page',
@@ -139,7 +141,7 @@ export class CalendarLandingPage implements OnInit {
 
         return isAllowedUser && isActiveEvent;
       },
-      action: () => console.log(),
+      action: () => this.onCancelEvent(),
     },
   ]);
 
@@ -315,6 +317,7 @@ export class CalendarLandingPage implements OnInit {
       this.eventsService.createEvent(result).subscribe({
         next: (response) => {
           console.log('Event created:', response);
+          this.notificationService.success(SuccessMessages.eventCreated);
           this.loadAllEvents();
         },
         error: (error) => {
@@ -380,6 +383,47 @@ export class CalendarLandingPage implements OnInit {
       ...options,
       selectable: this.isSelectableDependsRole(),
     }));
+  }
+
+  private onCancelEvent(): void {
+    const event = this.clickedEvent();
+
+    if (!event) {
+      return;
+    }
+
+    const dialogRef = this.dialog.open<ConfirmationDialog, IConfirmationDialogData, boolean>(
+      ConfirmationDialog,
+      {
+        panelClass: 'confirmation-dialog-panel',
+
+        data: {
+          title: 'Cancel event?',
+          message:
+            'The event will be marked as cancelled and users will no longer be able to book it.',
+          confirmText: 'Cancel Event',
+          cancelText: 'Keep Event',
+          icon: 'bi-calendar-x',
+          type: 'warning',
+        },
+      },
+    );
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (!confirmed) {
+        return;
+      }
+
+      this.eventsService.cancelEvent(+event.id).subscribe({
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.notificationService.success(SuccessMessages.eventCanceled);
+          this.loadAllEvents();
+        },
+      });
+    });
   }
 
   @HostListener('window:scroll')

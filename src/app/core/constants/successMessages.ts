@@ -36,6 +36,8 @@ export const SuccessMessages = {
   // Calendar Events
   // ==========================
   shouldSelectVenue: 'Please select a venue before creating an event.',
+  eventCreated: 'Event has been created successfully.',
+  eventCanceled: 'Event has been canceled successfully.',
 
   // ==========================
   // Generic
