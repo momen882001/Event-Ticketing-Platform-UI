@@ -41,6 +41,7 @@ import { Router } from '@angular/router';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { DatePipe } from '@angular/common';
+import { UserRoleEnum } from '../../../shared/enums/UserRoleEnum';
 
 @Component({
   selector: 'app-calendar-landing-page',
@@ -78,6 +79,11 @@ export class CalendarLandingPage implements OnInit {
 
   calendarEvents = computed(() => this.events().map(mapEventToCalendar));
   totalEventsLength = computed(() => this.events().length);
+
+  isAdmin = computed(() => this.authService.getUserRole() === UserRoleEnum.ADMIN);
+  isOrganizer = computed(() => this.authService.getUserRole() === UserRoleEnum.ORGANIZER);
+  isUser = computed(() => this.authService.getUserRole() === UserRoleEnum.USER);
+
   menuActions = computed<ICalendarMenuAction[]>(() => [
     {
       label: 'View Event',
@@ -90,21 +96,49 @@ export class CalendarLandingPage implements OnInit {
       label: 'Edit Event',
       icon: 'bi-pencil-square',
       color: 'var(--app-warning)',
+      isVisible: () =>
+        this.isAdmin() ||
+        (this.isOrganizer() &&
+          this.authService.getUserData?.userId ==
+            this.clickedEvent()?.extendedProps['organizerId']),
       action: () => console.log('edit'),
     },
 
     {
-      label: 'Manage Bookings',
-      icon: 'bi-people',
+      label: 'Book Event',
+      icon: 'bi-ticket-perforated',
       color: 'var(--app-success)',
+      isVisible: () =>
+        this.isUser() && this.clickedEvent()?.extendedProps['status'] == EventStatusEnum.PUBLISHED,
       action: () => console.log(),
     },
-
     {
       label: 'Delete Event',
       icon: 'bi-trash3',
       type: 'danger',
       color: 'var(--app-danger)',
+      isVisible: () => this.isAdmin(),
+      action: () => console.log(),
+    },
+    {
+      label: 'Cancel Event',
+      icon: 'bi-x-circle',
+      type: 'danger',
+      color: 'var(--app-danger)',
+      isVisible: () => {
+        const event = this.clickedEvent();
+        const status = event?.extendedProps['status'];
+
+        const isAllowedUser =
+          this.isAdmin() ||
+          (this.isOrganizer() &&
+            this.authService.getUserData?.userId === event?.extendedProps['organizerId']);
+
+        const isActiveEvent =
+          status !== EventStatusEnum.CANCELLED && status !== EventStatusEnum.COMPLETED;
+
+        return isAllowedUser && isActiveEvent;
+      },
       action: () => console.log(),
     },
   ]);
@@ -173,6 +207,8 @@ export class CalendarLandingPage implements OnInit {
   });
 
   onOpenMenu(clickInfo: EventClickArg) {
+    console.log(clickInfo.event, 'clickInfo event');
+
     this.clickedEvent.set(clickInfo.event);
 
     const rect = clickInfo.el.getBoundingClientRect();

@@ -12,5 +12,6 @@ export interface ICalendarMenuAction {
   icon: string;
   type?: 'normal' | 'danger';
   color?: string;
+  isVisible?: () => boolean;
   action: () => void;
 }

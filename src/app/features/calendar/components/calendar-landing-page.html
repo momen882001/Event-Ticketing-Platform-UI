@@ -69,15 +69,17 @@
 
     <div class="menu-actions">
       @for (item of menuActions(); track item.label) {
-        <button [class.danger]="item.type === 'danger'" (click)="item.action()">
-          <span class="icon" [style.color]="item.color">
-            <i class="bi" [class]="item.icon"> </i>
-          </span>
+        @if (!item.isVisible || item.isVisible()) {
+          <button [class.danger]="item.type === 'danger'" (click)="item.action()">
+            <span class="icon" [style.color]="item.color">
+              <i class="bi" [class]="item.icon"> </i>
+            </span>
 
-          <span>
-            {{ item.label }}
-          </span>
-        </button>
+            <span>
+              {{ item.label }}
+            </span>
+          </button>
+        }
       }
     </div>
   </div>
