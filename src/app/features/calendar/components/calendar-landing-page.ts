@@ -120,7 +120,7 @@ export class CalendarLandingPage implements OnInit {
       type: 'danger',
       color: 'var(--app-danger)',
       isVisible: () => this.isAdmin(),
-      action: () => console.log(),
+      action: () => this.onDeleteEvent(),
     },
     {
       label: 'Cancel Event',
@@ -420,6 +420,46 @@ export class CalendarLandingPage implements OnInit {
         },
         complete: () => {
           this.notificationService.success(SuccessMessages.eventCanceled);
+          this.loadAllEvents();
+        },
+      });
+    });
+  }
+
+  private onDeleteEvent(): void {
+    const event = this.clickedEvent();
+
+    if (!event) {
+      return;
+    }
+
+    const dialogRef = this.dialog.open<ConfirmationDialog, IConfirmationDialogData, boolean>(
+      ConfirmationDialog,
+      {
+        panelClass: 'confirmation-dialog-panel',
+
+        data: {
+          title: 'Delete event?',
+          message: 'This action will permanently delete the event. This cannot be undone.',
+          confirmText: 'Delete Event',
+          cancelText: 'Keep Event',
+          icon: 'bi-trash3',
+          type: 'danger',
+        },
+      },
+    );
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (!confirmed) {
+        return;
+      }
+
+      this.eventsService.deleteEvent(+event.id).subscribe({
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.notificationService.success(SuccessMessages.eventDeleted);
           this.loadAllEvents();
         },
       });

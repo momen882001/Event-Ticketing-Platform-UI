@@ -24,5 +24,6 @@ export const URLs = {
   getAllEventsPaginated: 'events/paged',
   createEvent: 'events',
   getEventById: 'events/:id',
+  deleteEventById: 'events/:id',
   cancelEventById: 'events/:id/cancel',
 };

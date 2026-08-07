@@ -35,6 +35,12 @@ export class EventsService {
     );
   }
 
+  deleteEvent(eventId: number) {
+    return this.http.delete(
+      `${URLs.apiBaseUrl + URLs.deleteEventById}`.replace(':id', eventId.toString()),
+    );
+  }
+
   // ------------------------------ Private Methods ------------------------------------
   private buildParams(params?: ICalendarFilter): HttpParams {
     let httpParams = new HttpParams();

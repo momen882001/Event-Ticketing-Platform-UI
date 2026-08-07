@@ -39,7 +39,7 @@ export const DASHBOARD_ROUTES: Routes = [
         canActivate: [AuthGuard],
 
         data: {
-          roles: [UserRoleEnum.ADMIN, UserRoleEnum.ORGANIZER],
+          roles: [UserRoleEnum.ADMIN],
         },
       },
       {
