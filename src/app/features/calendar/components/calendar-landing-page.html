@@ -16,3 +16,69 @@
     <full-calendar [options]="calendarOptions()"></full-calendar>
   </div>
 </div>
+
+<!-- <div #menuTriggerElement [matMenuTriggerFor]="menuTemplate"></div>
+
+<mat-menu #menuTemplate="matMenu" class="event-menu" xPosition="before" yPosition="below">
+  <button mat-menu-item (click)="onViewEvent()">
+    <i class="bi bi-eye"></i>
+    <span>View Event</span>
+  </button>
+
+  <button mat-menu-item>
+    <i class="bi bi-pencil-square"></i>
+    <span>Edit</span>
+  </button>
+
+  <button mat-menu-item>
+    <i class="bi bi-people"></i>
+    <span>Bookings</span>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button mat-menu-item class="danger">
+    <i class="bi bi-trash3"></i>
+    <span>Delete</span>
+  </button>
+</mat-menu> -->
+
+@if (menuOpen()) {
+  <div class="menu-backdrop" (click)="menuOpen.set(false)"></div>
+
+  <div
+    #calendarMenu
+    class="calendar-menu"
+    [style.left.px]="menuPosition().x"
+    [style.top.px]="menuPosition().y"
+  >
+    <div class="menu-header">
+      <div class="event-icon">
+        <i class="bi bi-calendar-event"></i>
+      </div>
+
+      <div class="event-info">
+        <h4>{{ clickedEvent()?.title }}</h4>
+
+        <small>
+          <i class="bi bi-clock"></i>
+          {{ clickedEvent()?.start | date: 'MMM d • h:mm a' }}
+        </small>
+      </div>
+    </div>
+
+    <div class="menu-actions">
+      @for (item of menuActions(); track item.label) {
+        <button [class.danger]="item.type === 'danger'" (click)="item.action()">
+          <span class="icon" [style.color]="item.color">
+            <i class="bi" [class]="item.icon"> </i>
+          </span>
+
+          <span>
+            {{ item.label }}
+          </span>
+        </button>
+      }
+    </div>
+  </div>
+}

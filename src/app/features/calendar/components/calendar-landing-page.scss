@@ -172,6 +172,225 @@ app-event-status-indicators {
     background: rgb(108 76 246 / 5%);
   }
 
+  .calendar-menu {
+    position: fixed;
+
+    width: 270px;
+
+    background: color-mix(in srgb, var(--app-card-bg) 92%, transparent);
+
+    backdrop-filter: blur(18px);
+
+    border-radius: 22px;
+
+    border: 1px solid var(--app-border);
+
+    box-shadow: 0 25px 70px rgba(23, 19, 41, 0.22);
+
+    overflow: hidden;
+
+    z-index: 5000;
+
+    animation: menuIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* ===== Header ===== */
+
+  .menu-header {
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    background: linear-gradient(135deg, var(--app-primary), var(--app-tertiary));
+
+    color: white;
+
+    .event-icon {
+      width: 44px;
+      height: 44px;
+
+      border-radius: 14px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: rgba(255, 255, 255, 0.18);
+
+      backdrop-filter: blur(10px);
+
+      i {
+        font-size: 22px;
+      }
+    }
+
+    h4 {
+      margin: 0;
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+      max-width: 160px;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+      color: var(--app-on-primary);
+    }
+
+    small {
+      margin-top: 5px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 5px;
+
+      opacity: 0.85;
+
+      font-size: 12px;
+    }
+  }
+
+  /* ===== Actions ===== */
+
+  .menu-actions {
+    padding: 10px;
+  }
+
+  .menu-actions button {
+    width: 100%;
+
+    height: 48px;
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 12px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    color: var(--app-text);
+
+    font-weight: 600;
+
+    transition: 0.2s;
+
+    &:hover {
+      background: var(--app-primary-container);
+
+      transform: translateX(4px);
+    }
+  }
+
+  /* Icon containers */
+
+  .icon {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    i {
+      font-size: 16px;
+    }
+  }
+
+  .view {
+    background: var(--app-info-bg);
+
+    color: var(--app-primary);
+  }
+
+  .edit {
+    background: var(--app-warning-bg);
+
+    color: var(--app-warning);
+  }
+
+  .booking {
+    background: var(--app-success-bg);
+
+    color: var(--app-success);
+  }
+
+  .delete {
+    background: var(--app-danger-bg);
+
+    color: var(--app-danger);
+  }
+
+  .divider {
+    height: 1px;
+
+    background: var(--app-border);
+
+    margin: 8px 0;
+  }
+
+  .danger {
+    color: var(--app-danger) !important;
+
+    &:hover {
+      background: var(--app-danger-bg) !important;
+    }
+  }
+
+  .menu-backdrop {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 4999;
+  }
+
+  @keyframes menuIn {
+    from {
+      opacity: 0;
+
+      transform: translateY(-10px) scale(0.96);
+    }
+
+    to {
+      opacity: 1;
+
+      transform: none;
+    }
+  }
+
+  @keyframes menuIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.96);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   /* ================= Scrollbar ================= */
 
   .fc-scroller::-webkit-scrollbar {

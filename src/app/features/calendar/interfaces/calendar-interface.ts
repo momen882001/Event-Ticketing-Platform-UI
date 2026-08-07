@@ -6,3 +6,11 @@ export interface ICalendarFilter {
   venueId: number | null;
   status: EventStatusEnum | null;
 }
+
+export interface ICalendarMenuAction {
+  label: string;
+  icon: string;
+  type?: 'normal' | 'danger';
+  color?: string;
+  action: () => void;
+}

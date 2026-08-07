@@ -1,6 +1,21 @@
-import { Component, computed, effect, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  HostListener,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core';
+import {
+  CalendarOptions,
+  DateSelectArg,
+  EventApi,
+  EventClickArg,
+  EventInput,
+} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -14,7 +29,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CategoriesService } from '../../../core/services/categories.service';
 import { VenuesService } from '../../../core/services/venues.service';
 import { EventCalendarFilter } from './event-calendar-filter/event-calendar-filter';
-import { ICalendarFilter } from '../interfaces/calendar-interface';
+import { ICalendarFilter, ICalendarMenuAction } from '../interfaces/calendar-interface';
 import { ICategoryResponse } from '../../categories/interfaces/category-interface';
 import { IVenueResponse } from '../../venues/interfaces/venue-interface';
 import { EventsService } from '../../../core/services/events.service';
@@ -23,10 +38,20 @@ import { NotificationService } from '../../../core/services/notification.service
 import { SuccessMessages } from '../../../core/constants/successMessages';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-calendar-landing-page',
-  imports: [FullCalendarModule, EventStatusIndicators, EventCalendarFilter],
+  imports: [
+    FullCalendarModule,
+    EventStatusIndicators,
+    EventCalendarFilter,
+    MatMenuModule,
+    MatDividerModule,
+    DatePipe,
+  ],
   templateUrl: './calendar-landing-page.html',
   styleUrl: './calendar-landing-page.scss',
 })
@@ -41,9 +66,48 @@ export class CalendarLandingPage implements OnInit {
     status: null,
   });
   loadingVenues = signal<boolean>(false);
+  clickedEvent = signal<EventApi | null>(null);
+  menuOpen = signal(false);
+  menuPosition = signal({
+    x: 0,
+    y: 0,
+  });
+
+  @ViewChild('calendarMenu')
+  calendarMenu!: ElementRef<HTMLElement>;
 
   calendarEvents = computed(() => this.events().map(mapEventToCalendar));
   totalEventsLength = computed(() => this.events().length);
+  menuActions = computed<ICalendarMenuAction[]>(() => [
+    {
+      label: 'View Event',
+      icon: 'bi-eye',
+      color: 'var(--app-primary)',
+      action: () => this.onViewEvent(),
+    },
+
+    {
+      label: 'Edit Event',
+      icon: 'bi-pencil-square',
+      color: 'var(--app-warning)',
+      action: () => console.log('edit'),
+    },
+
+    {
+      label: 'Manage Bookings',
+      icon: 'bi-people',
+      color: 'var(--app-success)',
+      action: () => console.log(),
+    },
+
+    {
+      label: 'Delete Event',
+      icon: 'bi-trash3',
+      type: 'danger',
+      color: 'var(--app-danger)',
+      action: () => console.log(),
+    },
+  ]);
 
   constructor(
     private dialog: MatDialog,
@@ -97,7 +161,7 @@ export class CalendarLandingPage implements OnInit {
     },
 
     events: [],
-    eventClick: (info) => this.onViewEvent(info),
+    eventClick: (info) => this.onOpenMenu(info),
     selectAllow: (selectInfo) => {
       return selectInfo.start >= new Date();
     },
@@ -108,18 +172,58 @@ export class CalendarLandingPage implements OnInit {
     // eventDrop: (info) => console.log('Event moved:', info.event.title, info.event.startStr),
   });
 
-  onViewEvent(info: EventClickArg) {
-    console.log(info, 'infoooo');
-    this.router.navigate(['/dashboard', 'calendar', 'events', info.event.id, 'booking']);
+  onOpenMenu(clickInfo: EventClickArg) {
+    this.clickedEvent.set(clickInfo.event);
 
-    // this.dialog.open(ViewEvent, {
-    //   width: '800px',
-    //   maxWidth: '95vw',
-    //   maxHeight: '90vh',
-    //   panelClass: 'event-dialog',
-    //   autoFocus: false,
-    //   data: info.event,
-    // });
+    const rect = clickInfo.el.getBoundingClientRect();
+
+    // open temporarily
+    this.menuOpen.set(true);
+
+    setTimeout(() => {
+      const menu = this.calendarMenu.nativeElement;
+
+      const menuWidth = menu.offsetWidth;
+      const menuHeight = menu.offsetHeight;
+
+      const OFFSET = 8;
+
+      let x = rect.right + OFFSET;
+      let y = rect.top;
+
+      // right overflow
+      if (x + menuWidth > window.innerWidth) {
+        x = rect.left - menuWidth - OFFSET;
+      }
+
+      // bottom overflow
+      if (y + menuHeight > window.innerHeight) {
+        y = rect.bottom - menuHeight;
+      }
+
+      // keep inside viewport
+      x = Math.max(OFFSET, x);
+      y = Math.max(OFFSET, y);
+
+      this.menuPosition.set({
+        x,
+        y,
+      });
+    });
+  }
+
+  onViewEvent() {
+    console.log(this.clickedEvent(), 'infoooo');
+    // this.router.navigate(['/dashboard', 'calendar', 'events', this.clickedEvent()?.id, 'booking']);
+
+    this.dialog.open(ViewEvent, {
+      width: '800px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      panelClass: 'event-dialog',
+      autoFocus: false,
+      data: this.clickedEvent(),
+    });
   }
 
   onFilterChanged(filterObject: ICalendarFilter): void {
@@ -240,5 +344,10 @@ export class CalendarLandingPage implements OnInit {
       ...options,
       selectable: this.isSelectableDependsRole(),
     }));
+  }
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.menuOpen.set(false);
   }
 }
