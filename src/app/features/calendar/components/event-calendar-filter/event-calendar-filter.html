@@ -1,0 +1,98 @@
+<mat-card class="filter-card">
+  <div class="filter-header">
+    <div class="title">
+      <mat-icon>filter_alt</mat-icon>
+
+      <div>
+        <h2>Filter Events</h2>
+
+        <p>Search and filter events displayed on the calendar.</p>
+      </div>
+    </div>
+
+    @if (hasFilters()) {
+      <button mat-stroked-button type="button" (click)="reset()">
+        <mat-icon>restart_alt</mat-icon>
+
+        Reset
+      </button>
+    }
+  </div>
+
+  <div class="filters">
+    <!-- Search -->
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search event</mat-label>
+
+      <mat-icon matPrefix> search </mat-icon>
+
+      <input matInput [value]="search()" (input)="search.set($any($event.target).value)" />
+    </mat-form-field>
+
+    <!-- Category -->
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+
+      <mat-icon matPrefix> category </mat-icon>
+
+      <mat-select
+        [value]="filterObject().categoryId"
+        (selectionChange)="onCategoryChange($event.value)"
+      >
+        <mat-option [value]="null"> All Categories </mat-option>
+
+        @for (category of categories(); track category.id) {
+          <mat-option [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Venue -->
+
+    <mat-form-field appearance="outline">
+      <mat-label>Venue</mat-label>
+
+      <mat-icon matPrefix> location_on </mat-icon>
+
+      <mat-select
+        [value]="filterObject().venueId"
+        [disabled]="loadingVenues()"
+        (selectionChange)="onVenueChange($event.value)"
+      >
+        <mat-option [value]="null"> All Venues </mat-option>
+
+        @for (venue of venues(); track venue.id) {
+          <mat-option [value]="venue.id">
+            {{ venue.name }}
+          </mat-option>
+        }
+      </mat-select>
+
+      @if (loadingVenues()) {
+        <mat-hint> Loading venues... </mat-hint>
+      }
+    </mat-form-field>
+
+    <!-- Status -->
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+
+      <mat-icon matPrefix> flag </mat-icon>
+
+      <mat-select [value]="filterObject().status" (selectionChange)="onStatusChange($event.value)">
+        <mat-option [value]="null"> All Status </mat-option>
+
+        @for (status of statuses(); track status.value) {
+          <mat-option [value]="status.value">
+            {{ status.label }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-card>

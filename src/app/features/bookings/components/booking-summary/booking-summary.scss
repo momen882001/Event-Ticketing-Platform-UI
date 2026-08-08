@@ -1,0 +1,164 @@
+:host {
+  display: block;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  padding: 28px;
+
+  border-radius: 24px;
+
+  background: var(--app-card-bg);
+
+  border: 1px solid var(--app-border);
+
+  box-shadow: 0 14px 40px rgb(15 23 42 / 5%);
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-header h2 {
+  margin: 0;
+
+  color: var(--app-text);
+
+  font-size: 1.45rem;
+}
+
+.summary-header p {
+  margin-top: 6px;
+
+  color: var(--app-text-muted);
+}
+
+.summary-header mat-icon {
+  font-size: 34px;
+  width: 34px;
+  height: 34px;
+
+  color: var(--app-primary);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  gap: 12px;
+
+  padding: 28px 0;
+}
+
+.empty mat-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+
+  color: var(--app-primary);
+}
+
+.empty h3 {
+  margin: 0;
+}
+
+.empty p {
+  margin: 0;
+
+  color: var(--app-text-muted);
+
+  line-height: 1.6;
+}
+
+.receipt {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.receipt-item span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--app-text-muted);
+
+  font-size: 0.9rem;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.totals div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amount {
+  color: var(--app-primary);
+
+  font-size: 1.5rem;
+
+  font-weight: 800;
+}
+
+.secure-box {
+  display: flex;
+  gap: 14px;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background: var(--app-success-bg);
+
+  color: var(--app-success);
+}
+
+.secure-box mat-icon {
+  flex-shrink: 0;
+}
+
+.secure-box small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--app-text-muted);
+}
+
+.checkout-button {
+  height: 56px;
+
+  font-size: 1rem;
+
+  font-weight: 700;
+
+  border-radius: 14px;
+}
+
+.checkout-button mat-spinner {
+  margin: auto;
+}
+
+.checkout-button mat-icon {
+  margin-right: 8px;
+}

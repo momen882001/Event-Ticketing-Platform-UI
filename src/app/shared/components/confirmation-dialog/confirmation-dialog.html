@@ -1,0 +1,42 @@
+<div class="confirmation-dialog">
+  <div
+    class="confirmation-icon"
+    [class.danger]="data.type === 'danger'"
+    [class.warning]="data.type === 'warning'"
+    [class.primary]="data.type === 'primary'"
+  >
+    <i class="bi {{ data.icon || 'bi-exclamation-triangle' }}"></i>
+  </div>
+
+  <div class="confirmation-content">
+    <h2>
+      {{ data.title }}
+    </h2>
+
+    <p>
+      {{ data.message }}
+    </p>
+  </div>
+
+  <div class="confirmation-actions">
+    <button type="button" class="cancel-button" [disabled]="loading()" (click)="onCancel()">
+      {{ data.cancelText || 'Cancel' }}
+    </button>
+
+    <button
+      type="button"
+      class="confirm-button"
+      [class.danger]="data.type === 'danger'"
+      [class.warning]="data.type === 'warning'"
+      [class.primary]="data.type === 'primary'"
+      [disabled]="loading()"
+      (click)="onConfirm()"
+    >
+      @if (loading()) {
+        <span class="spinner"></span>
+      } @else {
+        {{ data.confirmText || 'Confirm' }}
+      }
+    </button>
+  </div>
+</div>

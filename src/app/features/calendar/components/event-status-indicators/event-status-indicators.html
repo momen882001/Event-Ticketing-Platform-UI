@@ -1,0 +1,26 @@
+<div class="status-indicators">
+  <div class="statuses">
+    @for (status of statuses; track status) {
+      <div class="status-item">
+        <span class="status-color" [style.background]="config[status].backgroundColor"></span>
+
+        <!-- <i [class]="config[status].icon"></i>  -->
+
+        <span>
+          {{ config[status].label }}
+        </span>
+      </div>
+    }
+  </div>
+
+  <div class="event-summary">
+    <div class="summary-icon">
+      <i class="bi bi-calendar-event"></i>
+    </div>
+
+    <div class="summary-content">
+      <span>Total Events</span>
+      <strong>{{ totalEventsLength() }}</strong>
+    </div>
+  </div>
+</div>

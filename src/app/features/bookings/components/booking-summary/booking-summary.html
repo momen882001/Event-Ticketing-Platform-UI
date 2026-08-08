@@ -1,0 +1,93 @@
+<div class="summary-card">
+  <div class="summary-header">
+    <div>
+      <h2>Booking Summary</h2>
+
+      <p>Review your selected tickets.</p>
+    </div>
+
+    <mat-icon> receipt_long </mat-icon>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  @if (items().length === 0) {
+    <div class="empty">
+      <mat-icon> confirmation_number </mat-icon>
+
+      <h3>No Tickets Selected</h3>
+
+      <p>Select one or more ticket categories to continue.</p>
+    </div>
+  } @else {
+    <div class="receipt">
+      @for (item of items(); track item.seatCategoryId) {
+        <div class="receipt-item">
+          <div>
+            <strong>
+              {{ item.name }}
+            </strong>
+
+            <span>
+              {{ item.quantity }}
+
+              ×
+
+              {{ item.price | currency }}
+            </span>
+          </div>
+
+          <strong>
+            {{ item.subtotal | currency }}
+          </strong>
+        </div>
+      }
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="totals">
+      <div>
+        <span>Total Tickets</span>
+
+        <strong>
+          {{ tickets() }}
+        </strong>
+      </div>
+
+      <div>
+        <span>Total Amount</span>
+
+        <strong class="amount">
+          {{ total() | currency }}
+        </strong>
+      </div>
+    </div>
+  }
+
+  <div class="secure-box">
+    <mat-icon> verified_user </mat-icon>
+
+    <div>
+      <strong>Secure Booking</strong>
+
+      <small> Your booking will be confirmed after payment. </small>
+    </div>
+  </div>
+
+  <button
+    mat-flat-button
+    color="primary"
+    class="checkout-button"
+    [disabled]="disabled() || loading()"
+    (click)="checkout.emit()"
+  >
+    @if (loading()) {
+      <mat-spinner diameter="22"> </mat-spinner>
+    } @else {
+      <!-- <mat-icon> payments </mat-icon> -->
+
+      Book Now
+    }
+  </button>
+</div>

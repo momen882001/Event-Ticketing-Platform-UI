@@ -23,8 +23,15 @@ export class Sidebar {
 
   ngOnInit(): void {}
 
-  isUserAdmin(): boolean {
+  isAdmin(): boolean {
     return this.authservice.getUserData?.role === UserRoleEnum.ADMIN;
+  }
+
+  isOrganizer(): boolean {
+    return this.authservice.getUserData?.role === UserRoleEnum.ORGANIZER;
+  }
+  isUser(): boolean {
+    return this.authservice.getUserData?.role === UserRoleEnum.USER;
   }
 
   getFullname(): string {

@@ -411,6 +411,40 @@ button {
   }
 }
 
+// view event dialog
+.event-dialog .mat-mdc-dialog-surface {
+  border-radius: 24px !important;
+  overflow: hidden;
+  background: var(--app-card-bg);
+}
+
+.event-dialog .mat-mdc-dialog-container {
+  padding: 0;
+}
+
+// add - edit event dialog
+.event-drawer-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    border-radius: 0;
+    height: 100vh;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 0;
+    height: 100vh;
+  }
+}
+
+// payment card dialog
+.payment-dialog {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: transparent;
+
+    padding: 0;
+  }
+}
+
 /* ===== Motion ===== */
 @keyframes fadeInUp {
   from {

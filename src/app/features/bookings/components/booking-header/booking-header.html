@@ -1,0 +1,86 @@
+<div class="booking-header">
+  <div class="page-title">
+    <h1>Event Booking</h1>
+
+    <p>Select your tickets and complete your reservation</p>
+  </div>
+
+  <div class="event-card">
+    <div class="event-content">
+      <div class="top-row">
+        <div class="category">
+          {{ event()?.venue?.category?.name }}
+        </div>
+
+        <div class="status">
+          {{ event()?.status }}
+        </div>
+      </div>
+
+      <h2>
+        {{ event()?.title }}
+      </h2>
+
+      <p class="description">
+        {{ event()?.description }}
+      </p>
+    </div>
+
+    <div class="details">
+      <div class="detail">
+        <mat-icon> calendar_month </mat-icon>
+
+        <div>
+          <span> Date </span>
+
+          <strong>
+            {{ event()?.startDateTime | date: 'MMM d, y' }}
+          </strong>
+        </div>
+      </div>
+
+      <div class="detail">
+        <mat-icon> schedule </mat-icon>
+
+        <div>
+          <span> Time </span>
+
+          <strong>
+            {{ event()?.startDateTime | date: 'shortTime' }}
+            -
+            {{ event()?.endDateTime | date: 'shortTime' }}
+          </strong>
+        </div>
+      </div>
+
+      <div class="detail">
+        <mat-icon> location_on </mat-icon>
+
+        <div>
+          <span> Venue </span>
+
+          <strong>
+            {{ event()?.venue.name }}
+          </strong>
+
+          <small>
+            {{ event()?.venue.address }}
+          </small>
+        </div>
+      </div>
+
+      <div class="detail">
+        <mat-icon> groups </mat-icon>
+
+        <div>
+          <span> Capacity </span>
+
+          <strong>
+            {{ event()?.venue.capacity }}
+            Guests
+          </strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,215 @@
+<div class="payment-dialog">
+  <!-- HEADER -->
+  <div class="dialog-header">
+    <div>
+      <h2>Payment Details</h2>
+
+      <p>Enter your card information securely</p>
+    </div>
+
+    <button type="button" class="close-btn" (click)="close()">✕</button>
+  </div>
+
+  <!-- CARD PREVIEW -->
+
+  <div class="payment-content">
+    <div class="payment-card-wrapper" [class.flipped]="isBack()">
+      <div class="payment-card">
+        <div class="payment-card-inner">
+          <!-- FRONT -->
+
+          <div class="card-face card-front" [ngClass]="cardClass()">
+            <div class="card-top">
+              <div class="chip-contactless">
+                <div class="chip"></div>
+
+                <div class="contactless">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+
+              <div class="brand">
+                @switch (cardType()) {
+                  @case ('visa') {
+                    VISA
+                  }
+
+                  @case ('mastercard') {
+                    MASTERCARD
+                  }
+
+                  @case ('amex') {
+                    AMEX
+                  }
+
+                  @case ('discover') {
+                    DISCOVER
+                  }
+
+                  @default {
+                    CARD
+                  }
+                }
+              </div>
+            </div>
+
+            <div class="card-number" [class.active]="isFocused('number')">
+              {{ formattedNumber() }}
+            </div>
+
+            <div class="card-bottom">
+              <div class="holder" [class.active]="isFocused('name')">
+                <small> CARD HOLDER </small>
+
+                <span>
+                  {{ formattedName() }}
+                </span>
+              </div>
+
+              <div class="expiry" [class.active]="isFocused('expiry')">
+                <small> EXPIRES </small>
+
+                <span>
+                  {{ formattedExpiry() }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- BACK -->
+
+          <div class="card-face card-back" [ngClass]="cardClass()">
+            <div class="magnetic-strip"></div>
+
+            <div class="signature-area">
+              <div class="signature"></div>
+
+              <div class="cvv" [class.active]="isFocused('cvv')">
+                {{ formattedCVV() }}
+              </div>
+            </div>
+
+            <div class="back-brand">
+              @switch (cardType()) {
+                @case ('visa') {
+                  VISA
+                }
+
+                @case ('mastercard') {
+                  MASTERCARD
+                }
+
+                @case ('amex') {
+                  AMEX
+                }
+
+                @case ('discover') {
+                  DISCOVER
+                }
+
+                @default {
+                  CARD
+                }
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT FORM -->
+
+    <!-- SCROLLABLE AREA -->
+    <div class="form-scroll-container">
+      <!-- PAYMENT SUMMARY -->
+      <div class="payment-summary">
+        <div class="summary-content">
+          <div class="summary-icon"><i class="bi bi-receipt"></i></div>
+          <div class="summary-info">
+            <span class="summary-label">Total Amount</span>
+            <span class="summary-secure"> <i class="bi bi-shield-check"></i> Secure payment </span>
+          </div>
+          <div class="summary-amount">
+            <span class="amount-value"> {{ data?.totalAmount | number: '1.2-2' }} </span>
+            <span class="amount-currency">EGP</span>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="paymentForm" (ngSubmit)="submit()" class="payment-form">
+        <!-- CARD NUMBER -->
+
+        <div class="form-field">
+          <label> Card Number </label>
+
+          <input
+            type="text"
+            maxlength="19"
+            inputmode="numeric"
+            formControlName="number"
+            placeholder="4242 4242 4242 4242"
+            (input)="formatCardNumber($event)"
+            (focus)="focus('number')"
+            (blur)="blur()"
+          />
+
+          @if (paymentForm.controls.number.touched && paymentForm.controls.number.invalid) {
+            <span class="error"> Enter a valid card number </span>
+          }
+        </div>
+
+        <!-- NAME -->
+
+        <div class="form-field">
+          <label> Card Holder </label>
+
+          <input type="text" formControlName="name" (input)="onlyLetters($event)" />
+
+          @if (paymentForm.controls.name.touched && paymentForm.controls.name.invalid) {
+            <span class="error"> Card holder name required </span>
+          }
+        </div>
+
+        <div class="row">
+          <!-- EXPIRY -->
+
+          <div class="form-field">
+            <label> Expiry </label>
+
+            <input
+              type="text"
+              maxlength="5"
+              inputmode="numeric"
+              placeholder="MM/YY"
+              formControlName="expiry"
+              (input)="formatExpiry($event)"
+              (focus)="focus('expiry')"
+              (blur)="blur()"
+            />
+          </div>
+
+          <!-- CVV -->
+
+          <div class="form-field">
+            <label> CVV </label>
+
+            <input
+              type="password"
+              maxlength="4"
+              inputmode="numeric"
+              placeholder="123"
+              formControlName="cvv"
+              (input)="onlyNumbers($event)"
+              (focus)="focus('cvv')"
+              (blur)="blur()"
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="pay-btn">Pay Now</button>
+      </form>
+    </div>
+  </div>
+</div>

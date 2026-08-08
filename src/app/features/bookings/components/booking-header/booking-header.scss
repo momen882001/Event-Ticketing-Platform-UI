@@ -1,0 +1,184 @@
+:host {
+  display: block;
+}
+
+.booking-header {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  h1 {
+    margin: 0;
+
+    font-size: 1.8rem;
+
+    font-weight: 800;
+
+    color: var(--app-text);
+  }
+
+  p {
+    margin: 4px 0 0;
+
+    color: var(--app-text-muted);
+
+    font-size: 0.95rem;
+  }
+}
+
+.event-card {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 22px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(120deg, var(--app-primary-container), var(--app-card-bg));
+
+  border: 1px solid var(--app-border);
+}
+
+.event-content {
+  flex: 1;
+}
+
+.top-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.category {
+  padding: 5px 12px;
+
+  border-radius: 999px;
+
+  background: var(--app-info-bg);
+
+  color: var(--app-primary);
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+}
+
+.status {
+  padding: 5px 14px;
+
+  border-radius: 999px;
+
+  background: var(--app-success-bg);
+
+  color: var(--app-success);
+
+  font-size: 0.75rem;
+
+  font-weight: 800;
+}
+
+.event-content h2 {
+  margin: 14px 0 6px;
+
+  font-size: 1.8rem;
+
+  font-weight: 900;
+
+  color: var(--app-on-primary-container);
+}
+
+.description {
+  margin: 0;
+
+  color: var(--app-text-muted);
+}
+
+.details {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+
+  gap: 12px;
+
+  min-width: 430px;
+}
+
+.detail {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px;
+
+  border-radius: 14px;
+
+  background: rgb(255 255 255 / 0.55);
+
+  border: 1px solid var(--app-border);
+}
+
+.detail mat-icon {
+  width: 38px;
+
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--app-primary);
+
+  color: white;
+
+  font-size: 22px;
+}
+
+.detail span {
+  display: block;
+
+  font-size: 0.7rem;
+
+  color: var(--app-text-muted);
+}
+
+.detail strong {
+  display: block;
+
+  font-size: 0.9rem;
+
+  color: var(--app-text);
+}
+
+.detail small {
+  color: var(--app-text-muted);
+
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1000px) {
+  .event-card {
+    flex-direction: column;
+  }
+
+  .details {
+    min-width: auto;
+
+    grid-template-columns: 1fr;
+  }
+}

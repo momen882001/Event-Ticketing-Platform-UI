@@ -1,0 +1,105 @@
+<div class="dialog">
+  <header class="header">
+    <div>
+      <span
+        class="status"
+        [class.published]="props().status === EventStatusEnum.PUBLISHED"
+        [class.sold-out]="props().status === EventStatusEnum.SOLD_OUT"
+        [class.completed]="props().status === EventStatusEnum.COMPLETED"
+        [class.cancelled]="props().status === EventStatusEnum.CANCELLED"
+      >
+        {{ props().status.replace('_', ' ') }}
+      </span>
+
+      <h2>{{ event.title }}</h2>
+    </div>
+
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="dialog-body">
+    <section class="description">
+      {{ props().description }}
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <mat-icon>schedule</mat-icon>
+
+        <div>
+          <label>Starts</label>
+
+          <span>{{ event.start | date: 'EEEE, d MMM y • h:mm a' }}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <mat-icon>event</mat-icon>
+
+        <div>
+          <label>Ends</label>
+
+          <span>{{ event.end | date: 'EEEE, d MMM y • h:mm a' }}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <mat-icon>person</mat-icon>
+
+        <div>
+          <label>Organizer ID</label>
+
+          <span>#{{ props().organizerId }}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <mat-icon>location_on</mat-icon>
+
+        <div>
+          <label>Venue</label>
+
+          <span>{{ props().venue.name }}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <mat-icon>category</mat-icon>
+
+        <div>
+          <label>Category</label>
+
+          <span>{{ props().venue.category.name }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="seat-section">
+      <div class="section-title">
+        <mat-icon>airline_seat_recline_normal</mat-icon>
+
+        <span>Seat Categories</span>
+      </div>
+
+      @for (seat of props().seatCategories; track seat.id) {
+        <div class="seat">
+          <div>
+            <h4>{{ seat.name }}</h4>
+
+            <small> {{ seat.availableSeats }} / {{ seat.totalSeats }} available </small>
+          </div>
+
+          <strong>
+            {{ seat.price | currency: 'EGP' : 'symbol' : '1.0-0' }}
+          </strong>
+        </div>
+      }
+    </section>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="close()">Close</button>
+  </mat-dialog-actions>
+</div>

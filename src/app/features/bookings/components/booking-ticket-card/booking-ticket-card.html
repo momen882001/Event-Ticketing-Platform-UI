@@ -1,0 +1,50 @@
+<div class="ticket-card" [class.sold-out]="category().availableSeats === 0">
+  <div class="ticket-info">
+    <div class="ticket-header">
+      <div>
+        <h3>
+          {{ category().name }}
+        </h3>
+
+        <p>
+          {{ category().availableSeats }}
+          /
+          {{ category().totalSeats }}
+          seats available
+        </p>
+      </div>
+
+      <span class="price">
+        {{ category().price | currency }}
+      </span>
+    </div>
+
+    <div class="availability">
+      @if (category().availableSeats > 0) {
+        <span class="available"> Available </span>
+      } @else {
+        <span class="sold"> Sold Out </span>
+      }
+    </div>
+  </div>
+
+  <div class="quantity-selector">
+    <button mat-mini-fab type="button" (click)="decrease.emit()" [disabled]="!canDecrease()">
+      <mat-icon>remove</mat-icon>
+    </button>
+
+    <div class="quantity">
+      {{ quantity() }}
+    </div>
+
+    <button
+      mat-mini-fab
+      color="primary"
+      type="button"
+      (click)="increase.emit()"
+      [disabled]="!canIncrease()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

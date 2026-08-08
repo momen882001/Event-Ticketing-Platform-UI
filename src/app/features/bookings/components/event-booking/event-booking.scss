@@ -1,0 +1,185 @@
+:host {
+  display: block;
+}
+
+.booking-page {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 32px;
+  align-items: start;
+}
+
+.tickets-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  padding: 24px 28px;
+
+  background: var(--app-card-bg);
+
+  border: 1px solid var(--app-border);
+
+  border-radius: 20px;
+
+  box-shadow: 0 8px 24px rgb(15 23 42 / 4%);
+}
+
+.section-header h2 {
+  margin: 0;
+
+  color: var(--app-text);
+
+  font-size: 1.6rem;
+
+  font-weight: 700;
+}
+
+.section-header p {
+  margin: 8px 0 0;
+
+  color: var(--app-text-muted);
+
+  line-height: 1.6;
+}
+
+.ticket-count {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 90px;
+
+  padding: 12px 18px;
+
+  border-radius: 999px;
+
+  background: var(--app-primary-container);
+
+  color: var(--app-on-primary-container);
+
+  font-weight: 700;
+
+  font-size: 0.9rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+[formArrayName='items'] {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.summary-section {
+  position: sticky;
+  top: 24px;
+}
+
+.booking-loading {
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.booking-loading p {
+  margin: 0;
+
+  color: var(--app-text-muted);
+
+  font-weight: 500;
+}
+
+/* Nice entrance animation */
+
+.booking-page {
+  animation: fadeUp 0.45s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Large Desktop */
+
+@media (min-width: 1700px) {
+  .booking-layout {
+    grid-template-columns: 1fr 420px;
+  }
+}
+
+/* Tablet */
+
+@media (max-width: 1200px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-section {
+    position: static;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .booking-page {
+    padding: 20px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ticket-count {
+    align-self: flex-start;
+  }
+}
+
+/* Small Mobile */
+
+@media (max-width: 480px) {
+  .booking-page {
+    padding: 16px;
+  }
+
+  .section-header {
+    padding: 20px;
+  }
+
+  .section-header h2 {
+    font-size: 1.3rem;
+  }
+}

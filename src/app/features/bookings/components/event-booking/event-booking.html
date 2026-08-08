@@ -1,0 +1,64 @@
+<div class="booking-page">
+  <!-- ========================================= -->
+  <!-- Hero -->
+  <!-- ========================================= -->
+
+  <app-booking-header [event]="event()"></app-booking-header>
+
+  <!-- ========================================= -->
+  <!-- Body -->
+  <!-- ========================================= -->
+
+  <div class="booking-layout">
+    <!-- ========================================= -->
+    <!-- Ticket Selection -->
+    <!-- ========================================= -->
+
+    <section class="tickets-section">
+      <div class="section-header">
+        <div>
+          <h2>Select Tickets</h2>
+
+          <p>Choose the ticket categories and quantities you would like to purchase.</p>
+        </div>
+
+        <div class="ticket-count">
+          {{ event()?.seatCategories.length }}
+          Categories
+        </div>
+      </div>
+
+      <form [formGroup]="bookingForm">
+        <div formArrayName="items">
+          @for (category of event()?.seatCategories; track category.id; let i = $index) {
+            <app-booking-ticket-card
+              [category]="category"
+              [quantity]="items.at(i).value.quantity"
+              [canIncrease]="items.at(i).value.quantity < category.availableSeats"
+              [canDecrease]="items.at(i).value.quantity > 0"
+              (increase)="increase(i)"
+              (decrease)="decrease(i)"
+            >
+            </app-booking-ticket-card>
+          }
+        </div>
+      </form>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- Receipt -->
+    <!-- ========================================= -->
+
+    <aside class="summary-section">
+      <app-booking-summary
+        [items]="receipt()"
+        [tickets]="totalTickets()"
+        [total]="totalAmount()"
+        [loading]="submitting()"
+        [disabled]="!canSubmit()"
+        (checkout)="submit()"
+      >
+      </app-booking-summary>
+    </aside>
+  </div>
+</div>

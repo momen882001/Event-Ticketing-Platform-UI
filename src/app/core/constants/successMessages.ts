@@ -33,6 +33,20 @@ export const SuccessMessages = {
   venueDeleted: 'Venue has been deleted successfully.',
 
   // ==========================
+  // Calendar Events
+  // ==========================
+  shouldSelectVenue: 'Please select a venue before creating an event.',
+  eventCreated: 'Event has been created successfully.',
+  eventCanceled: 'Event has been canceled successfully.',
+  eventDeleted: 'Event has been deleted successfully.',
+
+  // ==========================
+  // Bookings
+  // ==========================
+  bookingCreated: 'Booking has been created successfully.',
+  bookingCanceled: 'Booking has been canceled successfully.',
+
+  // ==========================
   // Generic
   // ==========================
   saved: 'Changes have been saved successfully.',
