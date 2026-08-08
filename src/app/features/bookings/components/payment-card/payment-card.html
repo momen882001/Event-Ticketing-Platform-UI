@@ -123,6 +123,21 @@
 
     <!-- SCROLLABLE AREA -->
     <div class="form-scroll-container">
+      <!-- PAYMENT SUMMARY -->
+      <div class="payment-summary">
+        <div class="summary-content">
+          <div class="summary-icon"><i class="bi bi-receipt"></i></div>
+          <div class="summary-info">
+            <span class="summary-label">Total Amount</span>
+            <span class="summary-secure"> <i class="bi bi-shield-check"></i> Secure payment </span>
+          </div>
+          <div class="summary-amount">
+            <span class="amount-value"> {{ data?.totalAmount | number: '1.2-2' }} </span>
+            <span class="amount-currency">EGP</span>
+          </div>
+        </div>
+      </div>
+
       <form [formGroup]="paymentForm" (ngSubmit)="submit()" class="payment-form">
         <!-- CARD NUMBER -->
 

@@ -11,7 +11,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { startWith } from 'rxjs';
 
@@ -22,6 +22,10 @@ import { BookingHeader } from '../booking-header/booking-header';
 import { BookingSummary } from '../booking-summary/booking-summary';
 import { PaymentCard } from '../payment-card/payment-card';
 import { MatDialog } from '@angular/material/dialog';
+import { BookingsService } from '../../../../core/services/bookings.service';
+import { IBookingRequest } from '../../interfaces/booking-interface';
+import { NotificationService } from '../../../../core/services/notification.service';
+import { SuccessMessages } from '../../../../core/constants/successMessages';
 
 @Component({
   selector: 'app-event-booking',
@@ -33,11 +37,14 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class EventBooking implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   public readonly dialog = inject(MatDialog);
 
   private readonly fb = inject(FormBuilder);
 
-  private readonly eventService = inject(EventsService);
+  private readonly eventsService = inject(EventsService);
+  private readonly bookingsService = inject(BookingsService);
+  private readonly notificationsService = inject(NotificationService);
 
   readonly submitting = signal(false);
 
@@ -71,7 +78,7 @@ export class EventBooking implements OnInit {
   }
 
   private loadEvent(eventId: number): void {
-    this.eventService
+    this.eventsService
       .getEventById(eventId)
 
       .subscribe({
@@ -197,8 +204,8 @@ export class EventBooking implements OnInit {
       return;
     }
 
-    const payload = {
-      eventId: this.bookingForm.value.eventId,
+    const payload: IBookingRequest = {
+      eventId: this.bookingForm.value.eventId as number,
 
       items:
         this.bookingForm.value.items
@@ -212,37 +219,33 @@ export class EventBooking implements OnInit {
           })) ?? [],
     };
 
+    this.onOpenPayment(payload);
+  }
+
+  private onOpenPayment(payload: IBookingRequest): void {
     const dialogRef = this.dialog.open(PaymentCard, {
       maxWidth: '80vw',
       height: '90vh',
       panelClass: 'payment-dialog-panel',
       disableClose: true,
+      data: {
+        totalAmount: this.totalAmount(),
+      },
     });
 
     dialogRef.afterClosed().subscribe((payment) => {
       if (payment) {
         console.log(payment);
-
-        // call booking payment API
+        this.bookingsService.createBooking(payload).subscribe({
+          error: (err) => {
+            console.log(err);
+          },
+          complete: () => {
+            this.notificationsService.success(SuccessMessages.bookingCreated);
+            this.router.navigate(['dashboard', 'bookings']);
+          },
+        });
       }
     });
-
-    // this.submitting.set(true);
-
-    console.log(payload, 'booking payload');
-
-    /*
-    this.bookingService.book(payload)
-      .pipe(
-        finalize(() =>
-          this.submitting.set(false)
-        )
-      )
-      .subscribe({
-        next: () => {
-
-        }
-      });
-    */
   }
 }

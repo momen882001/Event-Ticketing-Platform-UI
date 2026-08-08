@@ -26,4 +26,7 @@ export const URLs = {
   getEventById: 'events/:id',
   deleteEventById: 'events/:id',
   cancelEventById: 'events/:id/cancel',
+
+  // bookings
+  createBooking: 'bookings',
 };

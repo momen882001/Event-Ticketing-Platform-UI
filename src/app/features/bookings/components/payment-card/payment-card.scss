@@ -891,11 +891,88 @@ input {
 /* RIGHT SIDE */
 
 .form-scroll-container {
-  max-height: 380px;
+  // max-height: 380px;
 
-  overflow-y: auto;
+  // overflow-y: auto;
 
-  padding-right: 8px;
+  // padding-right: 8px;
+
+  /* ============================================ PAYMENT SUMMARY ============================================ */
+  .payment-summary {
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.1rem;
+    background: var(--app-primary-container);
+    border: 1px solid color-mix(in srgb, var(--app-primary) 15%, var(--app-outline));
+    border-radius: 16px;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+    &:hover {
+      border-color: color-mix(in srgb, var(--app-primary) 30%, var(--app-outline));
+      box-shadow: 0 6px 20px rgba(36, 16, 92, 0.06);
+    }
+  }
+  .summary-content {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .summary-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--app-primary);
+    color: var(--app-on-primary);
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(108, 76, 246, 0.2);
+  }
+  .summary-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+  }
+  .summary-label {
+    color: var(--app-on-surface);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .summary-secure {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: color-mix(in srgb, var(--app-on-surface) 60%, transparent);
+    font-size: 0.68rem;
+    font-weight: 500;
+    i {
+      color: var(--app-primary);
+      font-size: 0.72rem;
+    }
+  }
+  .summary-amount {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    white-space: nowrap;
+  }
+  .amount-value {
+    color: var(--app-primary);
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .amount-currency {
+    color: color-mix(in srgb, var(--app-on-surface) 65%, transparent);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
 }
 
 .form-scroll-container::-webkit-scrollbar {

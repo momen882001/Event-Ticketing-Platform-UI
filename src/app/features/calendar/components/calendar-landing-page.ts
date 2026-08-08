@@ -112,7 +112,7 @@ export class CalendarLandingPage implements OnInit {
       color: 'var(--app-success)',
       isVisible: () =>
         this.isUser() && this.clickedEvent()?.extendedProps['status'] == EventStatusEnum.PUBLISHED,
-      action: () => console.log(),
+      action: () => this.onBookEvent(),
     },
     {
       label: 'Delete Event',
@@ -252,7 +252,6 @@ export class CalendarLandingPage implements OnInit {
 
   onViewEvent() {
     console.log(this.clickedEvent(), 'infoooo');
-    // this.router.navigate(['/dashboard', 'calendar', 'events', this.clickedEvent()?.id, 'booking']);
 
     this.dialog.open(ViewEvent, {
       width: '800px',
@@ -464,6 +463,10 @@ export class CalendarLandingPage implements OnInit {
         },
       });
     });
+  }
+
+  private onBookEvent(): void {
+    this.router.navigate(['/dashboard', 'calendar', 'events', this.clickedEvent()?.id, 'booking']);
   }
 
   @HostListener('window:scroll')

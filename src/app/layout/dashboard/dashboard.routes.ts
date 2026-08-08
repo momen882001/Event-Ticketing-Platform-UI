@@ -58,6 +58,12 @@ export const DASHBOARD_ROUTES: Routes = [
           ),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'bookings',
+        loadComponent: () =>
+          import('../../features/bookings/components/bookings').then((c) => c.Bookings),
+        canActivate: [AuthGuard],
+      },
     ],
   },
   {

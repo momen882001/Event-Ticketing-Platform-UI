@@ -41,6 +41,12 @@ export const SuccessMessages = {
   eventDeleted: 'Event has been deleted successfully.',
 
   // ==========================
+  // Bookings
+  // ==========================
+  bookingCreated: 'Booking has been created successfully.',
+  bookingCanceled: 'Booking has been canceled successfully.',
+
+  // ==========================
   // Generic
   // ==========================
   saved: 'Changes have been saved successfully.',
