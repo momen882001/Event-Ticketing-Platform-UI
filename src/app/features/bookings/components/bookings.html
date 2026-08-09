@@ -1,1 +1,17 @@
-<p>bookings works!</p>
+<section class="page-container fade-in page">
+  <app-page-hero
+    badge="Event Booking"
+    badgeIcon="bi bi-ticket-perforated-fill"
+    title="Bookings"
+    description="Manage all event bookings "
+  />
+
+  <app-generic-table
+    [dataSource]="allBookings()"
+    [columns]="columns"
+    [isSearchable]="false"
+    [totalItems]="totalItems()"
+    [pageSize]="pageSize()"
+    (pageChange)="onPageChange($event)"
+  />
+</section>
