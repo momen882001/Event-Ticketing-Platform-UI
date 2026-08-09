@@ -102,11 +102,19 @@ export class CalendarLandingPage implements OnInit {
       label: 'Edit Event',
       icon: 'bi-pencil-square',
       color: 'var(--app-warning)',
-      isVisible: () =>
-        this.isAdmin() ||
-        (this.isOrganizer() &&
-          this.authService.getUserData?.userId ==
-            this.clickedEvent()?.extendedProps['organizerId']),
+      isVisible: () => {
+        const event = this.clickedEvent();
+        const status = event?.extendedProps['status'];
+
+        const isAllowedUser =
+          this.isAdmin() ||
+          (this.isOrganizer() &&
+            this.authService.getUserData?.userId === event?.extendedProps['organizerId']);
+
+        const isActiveEvent = status == EventStatusEnum.PUBLISHED;
+
+        return isAllowedUser && isActiveEvent && !event?.extendedProps['hasBookings'];
+      },
       action: () => this.onEditEvent(),
     },
 
@@ -526,6 +534,7 @@ export class CalendarLandingPage implements OnInit {
       updatedAt: props.updatedAt!,
       seatCategories: props.seatCategories!,
       imageUrl: props.imageUrl!,
+      hasBookings: props.hasBookings as boolean,
     };
   }
 

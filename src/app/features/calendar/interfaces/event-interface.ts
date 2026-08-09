@@ -40,6 +40,7 @@ export interface IEventResponse {
   updatedAt: string;
   seatCategories: ISeatCategoryResponse[];
   imageUrl: string;
+  hasBookings: boolean;
 }
 
 export interface IEventFormResult {
