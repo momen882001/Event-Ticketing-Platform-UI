@@ -221,3 +221,77 @@ mat-form-field {
 
   color: white;
 }
+
+// Venue image
+.image-upload {
+  width: 100%;
+}
+
+.upload-area {
+  min-height: 160px;
+  border: 1.5px dashed var(--app-outline);
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+
+  color: var(--app-on-surface);
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+
+  &:hover {
+    border-color: var(--app-primary);
+    background: var(--app-primary-container);
+  }
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: var(--app-primary);
+  }
+
+  span {
+    font-weight: 600;
+  }
+
+  small {
+    color: var(--app-on-surface);
+    opacity: 0.65;
+  }
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 14px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+.venue-img {
+  margin-bottom: 1.5rem;
+}

@@ -23,6 +23,33 @@
   <mat-divider></mat-divider>
 
   <section class="dialog-body">
+    <!-- Venue image -->
+    <div class="field-group venue-img">
+      <span class="field-title">Venue Image</span>
+
+      <div class="image-upload">
+        @if (imagePreview()) {
+          <div class="image-preview">
+            <img [src]="imagePreview()!" alt="Venue preview" />
+
+            <button type="button" mat-icon-button class="remove-image-btn" (click)="removeImage()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        } @else {
+          <label class="upload-area">
+            <input type="file" accept="image/*" hidden (change)="onImageSelected($event)" />
+
+            <mat-icon>cloud_upload</mat-icon>
+
+            <span>Upload venue image</span>
+
+            <small> PNG, JPG or WEBP · Max 5MB </small>
+          </label>
+        }
+      </div>
+    </div>
+
     <form class="venue-form">
       <div class="field-group">
         <span class="field-title">Basic Information</span>

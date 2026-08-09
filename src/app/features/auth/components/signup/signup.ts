@@ -171,14 +171,12 @@ export class Signup {
       .subscribe({
         next: (res) => {
           console.log(res);
+          this.notificationService.success(SuccessMessages.userCreated);
+          this.router.navigate(['/auth/login']);
         },
 
         error: (err) => {
           console.log('err', err);
-        },
-        complete: () => {
-          this.notificationService.success(SuccessMessages.userCreated);
-          this.router.navigate(['/auth/login']);
         },
       });
   }
