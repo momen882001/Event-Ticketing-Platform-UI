@@ -24,8 +24,21 @@ export class EventsService {
     );
   }
 
-  createEvent(eventDate: IEventRequest) {
-    return this.http.post(`${URLs.apiBaseUrl + URLs.createEvent}`, eventDate);
+  createEvent(eventData: IEventRequest, image?: File | null) {
+    const formData = new FormData();
+
+    formData.append(
+      'data',
+      new Blob([JSON.stringify(eventData)], {
+        type: 'application/json',
+      }),
+    );
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    return this.http.post<IEventResponse>(`${URLs.apiBaseUrl + URLs.createEvent}`, formData);
   }
 
   cancelEvent(eventId: number) {

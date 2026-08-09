@@ -21,7 +21,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import { EventStatusEnum } from '../../../shared/enums/EventStatusEnum';
-import { IEventResponse } from '../interfaces/event-interface';
+import { IEventFormResult, IEventResponse } from '../interfaces/event-interface';
 import { EventStatusIndicators } from './event-status-indicators/event-status-indicators';
 import { mapEventToCalendar } from '../mappers/event-calendar.mapper';
 import { ViewEvent } from './view-event/view-event';
@@ -308,21 +308,19 @@ export class CalendarLandingPage implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result) {
-        return;
+    dialogRef.afterClosed().subscribe((result: IEventFormResult) => {
+      if (result) {
+        this.eventsService.createEvent(result.data, result.image).subscribe({
+          next: (response) => {
+            console.log('Event created:', response);
+            this.notificationService.success(SuccessMessages.eventCreated);
+            this.loadAllEvents();
+          },
+          error: (error) => {
+            console.error('Error creating event:', error);
+          },
+        });
       }
-
-      this.eventsService.createEvent(result).subscribe({
-        next: (response) => {
-          console.log('Event created:', response);
-          this.notificationService.success(SuccessMessages.eventCreated);
-          this.loadAllEvents();
-        },
-        error: (error) => {
-          console.error('Error creating event:', error);
-        },
-      });
     });
   }
 

@@ -120,6 +120,36 @@
         }
       </mat-form-field>
 
+      <!-- Event Image -->
+      <div class="image-section">
+        <div class="categories-header">
+          <div>
+            <h3>Event Image</h3>
+            <p>Upload an image for your event</p>
+          </div>
+        </div>
+
+        @if (imagePreview()) {
+          <div class="image-preview">
+            <img [src]="imagePreview()!" alt="Event preview" />
+
+            <button mat-icon-button type="button" class="remove-image-btn" (click)="removeImage()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        } @else {
+          <label class="upload-area">
+            <input type="file" accept="image/*" hidden (change)="onImageSelected($event)" />
+
+            <mat-icon>cloud_upload</mat-icon>
+
+            <strong>Upload event image</strong>
+
+            <span>PNG, JPG or WEBP · Max 5MB</span>
+          </label>
+        }
+      </div>
+
       <!-- Seat Categories -->
 
       <div class="categories-header">

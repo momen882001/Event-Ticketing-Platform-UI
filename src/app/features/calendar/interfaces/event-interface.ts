@@ -23,6 +23,12 @@ export interface IEventResponse {
   createdAt: string;
   updatedAt: string;
   seatCategories: ISeatCategoryResponse[];
+  imageUrl: string;
+}
+
+export interface IEventFormResult {
+  data: IEventRequest;
+  image: File | null;
 }
 
 export interface ISeatCategoryRequest {

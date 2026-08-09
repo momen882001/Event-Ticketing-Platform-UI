@@ -25,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { IVenueResponse } from '../../../venues/interfaces/venue-interface';
 import { VenuesService } from '../../../../core/services/venues.service';
 import {
+  IEventFormResult,
   IEventRequest,
   IEventResponse,
   ISeatCategoryResponse,
@@ -63,6 +64,9 @@ export class AddEditEvent implements OnInit {
   readonly data = inject<EventDialogData>(MAT_DIALOG_DATA);
 
   readonly venue = signal<IVenueResponse | null>(null);
+
+  readonly selectedImage = signal<File | null>(null);
+  readonly imagePreview = signal<string | null>(null);
 
   readonly isEditMode = computed(() => !!this.data.event);
   readonly dialogTitle = computed(() => (this.isEditMode() ? 'Edit Event' : 'Create Event'));
@@ -143,6 +147,48 @@ export class AddEditEvent implements OnInit {
     this.seatCategories.removeAt(index);
   }
 
+  //* ----------- Image Part ------------ *//
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      console.error('Only image files are allowed');
+      input.value = '';
+      return;
+    }
+
+    // 5 MB
+    const maxSize = 5 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      console.error('Image must be less than 5MB');
+      input.value = '';
+      return;
+    }
+
+    this.selectedImage.set(file);
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imagePreview.set(reader.result as string);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  removeImage(): void {
+    this.selectedImage.set(null);
+    this.imagePreview.set(null);
+  }
+
   private seatCapacityValidator(): ValidatorFn {
     return (): ValidationErrors | null => {
       const venueCapacity = this.venue()?.capacity;
@@ -197,7 +243,6 @@ export class AddEditEvent implements OnInit {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-
       return;
     }
 
@@ -209,6 +254,7 @@ export class AddEditEvent implements OnInit {
       description: value.description.trim(),
       startDateTime: this.data.startDateTime,
       endDateTime: this.data.endDateTime,
+
       seatCategories: value.seatCategories.map((category: any) => ({
         name: category.name.trim(),
         price: Number(category.price),
@@ -216,7 +262,12 @@ export class AddEditEvent implements OnInit {
       })),
     };
 
-    this.dialogRef.close(request);
+    const result: IEventFormResult = {
+      data: request,
+      image: this.selectedImage(),
+    };
+
+    this.dialogRef.close(result);
   }
 
   close(): void {

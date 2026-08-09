@@ -1,97 +1,176 @@
 .dialog {
   display: flex;
   flex-direction: column;
+
   height: 80vh;
   max-height: 80vh;
+
   overflow: hidden;
 
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--app-primary) 5%, var(--app-card-bg)),
+    color-mix(in srgb, var(--app-primary) 4%, var(--app-card-bg)),
     var(--app-card-bg)
   );
 
   color: var(--app-text);
 }
 
-/* ================= Header ================= */
+/* =========================================================
+   Header
+========================================================= */
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 
-  padding: 1.2rem;
+  padding: 1rem 1.25rem;
+
   flex-shrink: 0;
 
   border-bottom: 1px solid var(--app-border);
 
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--app-primary) 10%, transparent),
-    transparent
-  );
+  background: var(--app-card-bg);
 
   h2 {
-    margin: 0.75rem 0 0;
+    margin: 0;
 
-    font-size: 1.8rem;
+    font-size: 1.35rem;
     line-height: 1.2;
+
     font-weight: 800;
-    letter-spacing: -0.03em;
+
+    letter-spacing: -0.025em;
 
     color: var(--app-text);
   }
 
   button {
-    background: color-mix(in srgb, var(--app-primary) 10%, transparent);
+    background: color-mix(in srgb, var(--app-primary) 8%, transparent);
 
-    transition: 0.25s;
+    color: var(--app-text);
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
 
     &:hover {
       background: var(--app-primary);
+
       color: white;
+
       transform: rotate(90deg);
     }
   }
 }
 
-/* ================= Scroll Body ================= */
+/* =========================================================
+   Scroll Body
+========================================================= */
 
 .dialog-body {
   flex: 1;
+
   overflow-y: auto;
 
-  padding: 1.75rem;
+  padding: 1.5rem 1.75rem;
 
   scrollbar-width: thin;
+
   scrollbar-color: var(--app-primary) transparent;
 
   &::-webkit-scrollbar {
     width: 7px;
   }
 
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
   &::-webkit-scrollbar-thumb {
     border-radius: 999px;
+
     background: var(--app-primary);
   }
 }
 
-/* ================= Status ================= */
+/* =========================================================
+   Event Image
+========================================================= */
+
+.event-image {
+  width: 100%;
+
+  height: 220px;
+
+  margin-bottom: 1rem;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--app-border);
+
+  background: linear-gradient(
+    135deg,
+    var(--app-primary-container),
+    color-mix(in srgb, var(--app-tertiary) 10%, var(--app-card-bg))
+  );
+
+  box-shadow: 0 8px 25px rgb(33 31 45 / 6%);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 12px 30px color-mix(in srgb, var(--app-primary) 12%, transparent);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: center;
+  }
+}
+
+/* =========================================================
+   Status
+========================================================= */
+
+.event-status {
+  display: flex;
+
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
 
 .status {
   display: inline-flex;
+
   align-items: center;
+  justify-content: center;
+
   gap: 0.35rem;
 
-  padding: 0.45rem 1rem;
+  padding: 0.4rem 0.85rem;
 
   border-radius: 999px;
 
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+
   font-weight: 800;
 
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+
   text-transform: uppercase;
 
   backdrop-filter: blur(10px);
@@ -99,32 +178,38 @@
 
 .published {
   background: var(--app-info-bg);
+
   color: var(--app-info);
 }
 
 .sold-out {
   background: var(--app-warning-bg);
+
   color: var(--app-warning);
 }
 
 .completed {
   background: var(--app-success-bg);
+
   color: var(--app-success);
 }
 
 .cancelled {
   background: var(--app-danger-bg);
+
   color: var(--app-danger);
 }
 
-/* ================= Description ================= */
+/* =========================================================
+   Description
+========================================================= */
 
 .description {
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 
-  padding: 1.25rem;
+  padding: 1rem 1.15rem;
 
-  border-radius: 20px;
+  border-radius: 16px;
 
   background: color-mix(in srgb, var(--app-primary) 5%, var(--app-card-bg));
 
@@ -132,125 +217,178 @@
 
   color: var(--app-text-muted);
 
-  line-height: 1.8;
+  line-height: 1.7;
 
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
-/* ================= Info Cards ================= */
+/* =========================================================
+   Information Cards
+========================================================= */
 
 .grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
-  gap: 1rem;
+  gap: 0.85rem;
 
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .card {
   display: flex;
+
   align-items: center;
-  gap: 1rem;
 
-  padding: 1.25rem;
+  gap: 0.85rem;
 
-  border-radius: 20px;
+  min-width: 0;
+
+  padding: 1rem;
+
+  border-radius: 16px;
 
   background: var(--app-card-bg);
 
   border: 1px solid var(--app-border);
 
-  box-shadow: 0 10px 25px rgb(33 31 45 / 5%);
+  box-shadow: 0 5px 18px rgb(33 31 45 / 4%);
 
   transition:
-    transform 0.25s,
-    border-color 0.25s,
-    box-shadow 0.25s;
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
 
     border-color: var(--app-primary);
 
-    box-shadow: 0 16px 35px rgb(108 76 246 / 15%);
+    box-shadow: 0 10px 25px color-mix(in srgb, var(--app-primary) 12%, transparent);
   }
 
-  mat-icon {
+  > mat-icon {
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    width: 42px;
-    height: 42px;
-
-    border-radius: 14px;
+    border-radius: 12px;
 
     background: var(--app-primary-container);
 
     color: var(--app-primary);
 
-    font-size: 24px;
+    font-size: 22px;
   }
 
   label {
     display: block;
 
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.2rem;
 
     color: var(--app-text-muted);
 
-    font-size: 0.75rem;
+    font-size: 0.68rem;
 
-    font-weight: 600;
-
-    text-transform: uppercase;
+    font-weight: 700;
 
     letter-spacing: 0.05em;
+
+    text-transform: uppercase;
   }
 
   span {
+    display: block;
+
+    overflow: hidden;
+
+    font-size: 0.88rem;
+
     font-weight: 700;
 
-    font-size: 0.95rem;
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
   }
 }
 
-/* ================= Seats ================= */
+/* =========================================================
+   Seat Categories
+========================================================= */
+
+.seat-section {
+  margin-bottom: 1rem;
+}
 
 .section-title {
   display: flex;
 
   align-items: center;
 
-  gap: 0.6rem;
+  gap: 0.75rem;
 
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 
-  font-size: 1.15rem;
-
-  font-weight: 800;
-
-  mat-icon {
-    width: 42px;
-    height: 42px;
-
+  > div:last-child {
     display: flex;
-    align-items: center;
-    justify-content: center;
 
-    border-radius: 14px;
+    flex-direction: column;
 
-    background: color-mix(in srgb, var(--app-tertiary) 15%, transparent);
+    gap: 2px;
+  }
 
-    color: var(--app-tertiary);
+  > div:last-child > span {
+    font-size: 1.05rem;
+
+    font-weight: 800;
+
+    color: var(--app-text);
+  }
+
+  small {
+    color: var(--app-text-muted);
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
   }
 }
 
-.seat-section {
-  margin-bottom: 1rem;
+.section-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: color-mix(in srgb, var(--app-tertiary) 15%, transparent);
+
+  color: var(--app-tertiary);
+
+  mat-icon {
+    width: 21px;
+    height: 21px;
+
+    font-size: 21px;
+  }
 }
+
+/* =========================================================
+   Seat Category
+========================================================= */
 
 .seat {
   display: flex;
@@ -259,73 +397,194 @@
 
   align-items: center;
 
-  padding: 1.25rem;
+  gap: 1rem;
 
-  margin-bottom: 0.85rem;
+  padding: 0.9rem 1rem;
 
-  border-radius: 22px;
+  margin-bottom: 0.65rem;
+
+  border-radius: 16px;
 
   background: linear-gradient(
     135deg,
     var(--app-card-bg),
-    color-mix(in srgb, var(--app-primary) 4%, white)
+    color-mix(in srgb, var(--app-primary) 4%, var(--app-card-bg))
   );
 
   border: 1px solid var(--app-border);
 
-  transition: 0.25s;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateX(6px);
+    transform: translateX(4px);
 
     border-color: var(--app-primary);
-  }
 
-  h4 {
-    margin: 0 0 0.35rem;
-
-    font-size: 1rem;
-
-    font-weight: 800;
-  }
-
-  small {
-    color: var(--app-text-muted);
-
-    font-weight: 600;
-  }
-
-  strong {
-    padding: 0.55rem 1rem;
-
-    border-radius: 999px;
-
-    background: var(--app-primary-container);
-
-    color: var(--app-primary);
-
-    font-size: 1rem;
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--app-primary) 8%, transparent);
   }
 }
 
-/* ================= Footer ================= */
+.seat-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.75rem;
+
+  min-width: 0;
+}
+
+.seat-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: var(--app-primary-container);
+
+  color: var(--app-primary);
+
+  mat-icon {
+    width: 20px;
+    height: 20px;
+
+    font-size: 20px;
+  }
+}
+
+.seat h4 {
+  margin: 0 0 0.2rem;
+
+  font-size: 0.9rem;
+
+  font-weight: 800;
+
+  color: var(--app-text);
+}
+
+.seat small {
+  color: var(--app-text-muted);
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+}
+
+.seat strong {
+  flex-shrink: 0;
+
+  padding: 0.45rem 0.8rem;
+
+  border-radius: 999px;
+
+  background: var(--app-primary-container);
+
+  color: var(--app-primary);
+
+  font-size: 0.85rem;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Footer
+========================================================= */
 
 mat-dialog-actions {
   flex-shrink: 0;
 
   margin: 0;
 
-  padding: 1rem 1.75rem;
+  padding: 0.85rem 1.5rem;
 
   border-top: 1px solid var(--app-border);
 
   background: var(--app-card-bg);
 
   button {
-    border-radius: 14px;
+    min-width: 90px;
 
-    padding-inline: 1.5rem;
+    border-radius: 12px;
 
     font-weight: 700;
+
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--app-primary) 20%, transparent);
+    }
+  }
+}
+
+/* =========================================================
+   Responsive
+========================================================= */
+
+@media (max-width: 700px) {
+  .dialog {
+    height: 100vh;
+    max-height: 100vh;
+  }
+
+  .header {
+    padding: 0.9rem 1rem;
+
+    h2 {
+      font-size: 1.2rem;
+    }
+  }
+
+  .dialog-body {
+    padding: 1.15rem;
+  }
+
+  .event-image {
+    height: 180px;
+
+    border-radius: 14px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 0.9rem;
+  }
+
+  .seat {
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .event-image {
+    height: 150px;
+  }
+
+  .dialog-body {
+    padding: 1rem;
+  }
+
+  .seat strong {
+    padding: 0.4rem 0.65rem;
+
+    font-size: 0.78rem;
   }
 }

@@ -1,6 +1,26 @@
 <div class="dialog">
+  <!-- Header -->
   <header class="header">
     <div>
+      <h2>{{ event.title }}</h2>
+    </div>
+
+    <button mat-icon-button type="button" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <!-- Body -->
+  <div class="dialog-body">
+    <!-- Event Image -->
+    @if (props().imageUrl) {
+      <section class="event-image">
+        <img [src]="props().imageUrl" [alt]="event.title" />
+      </section>
+    }
+
+    <!-- Status -->
+    <div class="event-status">
       <span
         class="status"
         [class.published]="props().status === EventStatusEnum.PUBLISHED"
@@ -8,30 +28,27 @@
         [class.completed]="props().status === EventStatusEnum.COMPLETED"
         [class.cancelled]="props().status === EventStatusEnum.CANCELLED"
       >
-        {{ props().status.replace('_', ' ') }}
+        {{ props().status }}
       </span>
-
-      <h2>{{ event.title }}</h2>
     </div>
 
-    <button mat-icon-button (click)="close()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </header>
+    <!-- Description -->
+    @if (props().description) {
+      <section class="description">
+        {{ props().description }}
+      </section>
+    }
 
-  <div class="dialog-body">
-    <section class="description">
-      {{ props().description }}
-    </section>
-
+    <!-- Event Information -->
     <section class="grid">
       <div class="card">
         <mat-icon>schedule</mat-icon>
 
         <div>
           <label>Starts</label>
-
-          <span>{{ event.start | date: 'EEEE, d MMM y • h:mm a' }}</span>
+          <span>
+            {{ event.start | date: 'EEEE, d MMM y • h:mm a' }}
+          </span>
         </div>
       </div>
 
@@ -40,27 +57,26 @@
 
         <div>
           <label>Ends</label>
-
-          <span>{{ event.end | date: 'EEEE, d MMM y • h:mm a' }}</span>
+          <span>
+            {{ event.end | date: 'EEEE, d MMM y • h:mm a' }}
+          </span>
         </div>
       </div>
 
-      <div class="card">
+      <!-- <div class="card">
         <mat-icon>person</mat-icon>
 
         <div>
           <label>Organizer ID</label>
-
           <span>#{{ props().organizerId }}</span>
         </div>
-      </div>
+      </div> -->
 
       <div class="card">
         <mat-icon>location_on</mat-icon>
 
         <div>
           <label>Venue</label>
-
           <span>{{ props().venue.name }}</span>
         </div>
       </div>
@@ -70,25 +86,40 @@
 
         <div>
           <label>Category</label>
-
           <span>{{ props().venue.category.name }}</span>
         </div>
       </div>
     </section>
 
+    <!-- Seat Categories -->
     <section class="seat-section">
       <div class="section-title">
-        <mat-icon>airline_seat_recline_normal</mat-icon>
+        <div class="section-icon">
+          <mat-icon>airline_seat_recline_normal</mat-icon>
+        </div>
 
-        <span>Seat Categories</span>
+        <div>
+          <span>Seat Categories</span>
+          <small> {{ props().seatCategories.length }} categories </small>
+        </div>
       </div>
 
       @for (seat of props().seatCategories; track seat.id) {
         <div class="seat">
-          <div>
-            <h4>{{ seat.name }}</h4>
+          <div class="seat-info">
+            <div class="seat-icon">
+              <mat-icon>event_seat</mat-icon>
+            </div>
 
-            <small> {{ seat.availableSeats }} / {{ seat.totalSeats }} available </small>
+            <div>
+              <h4>{{ seat.name }}</h4>
+
+              <small>
+                {{ seat.availableSeats }} /
+                {{ seat.totalSeats }}
+                available
+              </small>
+            </div>
           </div>
 
           <strong>
@@ -99,7 +130,8 @@
     </section>
   </div>
 
+  <!-- Footer -->
   <mat-dialog-actions align="end">
-    <button mat-stroked-button (click)="close()">Close</button>
+    <button mat-flat-button color="primary" type="button" (click)="close()">Close</button>
   </mat-dialog-actions>
 </div>
