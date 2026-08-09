@@ -225,6 +225,28 @@
   border-top: 1px solid var(--app-sidebar-border);
 }
 
+.profile-btn {
+  &:hover {
+    background: color-mix(in srgb, var(--app-primary) 12%, transparent);
+
+    color: var(--app-primary);
+
+    i {
+      color: var(--app-primary);
+    }
+  }
+
+  &.active {
+    background: color-mix(in srgb, var(--app-primary) 18%, transparent);
+
+    color: var(--app-primary);
+
+    i {
+      color: var(--app-primary);
+    }
+  }
+}
+
 .logout-btn {
   display: flex;
   align-items: center;

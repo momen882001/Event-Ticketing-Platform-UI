@@ -64,6 +64,22 @@ export const DASHBOARD_ROUTES: Routes = [
           import('../../features/bookings/components/bookings').then((c) => c.Bookings),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'user-profile',
+        loadComponent: () =>
+          import('../../features/users/components/user-profile/user-profile').then(
+            (c) => c.UserProfile,
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'user-profile/reset-password',
+        loadComponent: () =>
+          import('../../features/users/components/reset-password/reset-password').then(
+            (c) => c.ResetPassword,
+          ),
+        canActivate: [AuthGuard],
+      },
     ],
   },
   {

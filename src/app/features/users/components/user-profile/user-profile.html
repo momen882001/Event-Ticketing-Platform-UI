@@ -1,0 +1,139 @@
+<section class="page-container fade-in page">
+  <app-page-hero
+    badge="Account"
+    badgeIcon="bi bi-person-circle"
+    title="User Profile"
+    description="View and manage your account details. Update your information or reset your password from here."
+  >
+  </app-page-hero>
+
+  <div class="profile-layout">
+    <div class="profile-identity">
+      <mat-card class="profile-card">
+        <mat-card-header class="profile-card__header">
+          <div class="profile-card__main">
+            <div class="avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
+
+            <div class="profile-card__titles">
+              <mat-card-title>{{ fullname() }}</mat-card-title>
+              <mat-card-subtitle>{{ username() }}</mat-card-subtitle>
+            </div>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content class="profile-card__content">
+          <div class="info-row">
+            <span class="info-label">Full Name</span>
+            <span class="info-value">{{ fullname() }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Username</span>
+            <span class="info-value">{{ username() }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Email</span>
+            <span class="info-value">{{ email() }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Role</span>
+            <span class="info-value">
+              <span class="role-badge" [ngClass]="roleClass()">{{ roleLabel() }}</span>
+            </span>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="profile-card__actions" align="end">
+          <button mat-stroked-button color="primary" (click)="goToResetPassword()">
+            <i class="bi bi-key-fill"></i>
+            Reset Password
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="profile-side">
+      <mat-card class="quick-stats">
+        <mat-card-header>
+          <mat-card-title>Account Overview</mat-card-title>
+          <mat-card-subtitle>Snapshot of your activity</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="bi bi-ticket-perforated-fill"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">0</span>
+                <span class="stat-label">Tickets</span>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="bi bi-calendar-event"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">0</span>
+                <span class="stat-label">Upcoming Events</span>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">0</span>
+                <span class="stat-label">Favorites</span>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">Active</span>
+                <span class="stat-label">Account Status</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="quick-actions">
+        <mat-card-header>
+          <mat-card-title>Quick Actions</mat-card-title>
+          <mat-card-subtitle>Shortcuts to common tasks</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="actions-list">
+            <button mat-stroked-button class="action-btn">
+              <i class="bi bi-ticket-perforated-fill"></i>
+              <span>My Tickets</span>
+            </button>
+
+            <button mat-stroked-button class="action-btn">
+              <i class="bi bi-calendar-event"></i>
+              <span>My Events</span>
+            </button>
+
+            <button mat-stroked-button class="action-btn">
+              <i class="bi bi-payment"></i>
+              <span>Payment Methods</span>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</section>
+
