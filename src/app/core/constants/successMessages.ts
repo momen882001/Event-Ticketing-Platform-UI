@@ -38,6 +38,7 @@ export const SuccessMessages = {
   // ==========================
   shouldSelectVenue: 'Please select a venue before creating an event.',
   eventCreated: 'Event has been created successfully.',
+  eventUpdated: 'Event has been updated successfully.',
   eventCanceled: 'Event has been canceled successfully.',
   eventDeleted: 'Event has been deleted successfully.',
 

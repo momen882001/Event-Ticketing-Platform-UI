@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { URLs } from '../api/api-urls';
 import { ICalendarFilter } from '../../features/calendar/interfaces/calendar-interface';
-import { IEventRequest, IEventResponse } from '../../features/calendar/interfaces/event-interface';
+import {
+  IEventRequest,
+  IEventResponse,
+  IEventUpdateRequest,
+} from '../../features/calendar/interfaces/event-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +28,41 @@ export class EventsService {
     );
   }
 
-  createEvent(eventDate: IEventRequest) {
-    return this.http.post(`${URLs.apiBaseUrl + URLs.createEvent}`, eventDate);
+  createEvent(eventData: IEventRequest, image?: File | null) {
+    const formData = new FormData();
+
+    formData.append(
+      'data',
+      new Blob([JSON.stringify(eventData)], {
+        type: 'application/json',
+      }),
+    );
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    return this.http.post<IEventResponse>(`${URLs.apiBaseUrl + URLs.createEvent}`, formData);
+  }
+
+  updateEvent(eventData: IEventUpdateRequest, id: number, image?: File | null) {
+    const formData = new FormData();
+
+    formData.append(
+      'data',
+      new Blob([JSON.stringify(eventData)], {
+        type: 'application/json',
+      }),
+    );
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    return this.http.put<IEventResponse>(
+      `${URLs.apiBaseUrl + URLs.updateEvent}`.replace(':id', id.toString()),
+      formData,
+    );
   }
 
   cancelEvent(eventId: number) {

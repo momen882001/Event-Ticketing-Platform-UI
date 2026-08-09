@@ -6,6 +6,7 @@ export interface IVenueResponse {
   categoryId: number;
   categoryName: string;
   isSeatable: boolean;
+  imageUrl?: string;
 }
 
 export interface IVenueRequest {
@@ -14,4 +15,9 @@ export interface IVenueRequest {
   capacity: number;
   categoryId: number | null;
   isSeatable: boolean;
+}
+
+export interface IVenueFormResult {
+  data: IVenueRequest;
+  image: File | null;
 }

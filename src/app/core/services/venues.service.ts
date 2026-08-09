@@ -13,14 +13,40 @@ export class VenuesService {
 
   //* APIs
 
-  createVenue(venueData: IVenueRequest) {
-    return this.http.post(`${URLs.apiBaseUrl + URLs.createVenue}`, venueData);
+  createVenue(data: IVenueRequest, image?: File | null) {
+    const formData = new FormData();
+
+    formData.append(
+      'data',
+      new Blob([JSON.stringify(data)], {
+        type: 'application/json',
+      }),
+    );
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    return this.http.post<IVenueResponse>(URLs.apiBaseUrl + URLs.createVenue, formData);
   }
 
-  updateVenue(venueData: IVenueRequest, id: number) {
-    return this.http.put(
+  updateVenue(venueData: IVenueRequest, id: number, image?: File | null) {
+    const formData = new FormData();
+
+    formData.append(
+      'data',
+      new Blob([JSON.stringify(venueData)], {
+        type: 'application/json',
+      }),
+    );
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    return this.http.put<IVenueResponse>(
       `${URLs.apiBaseUrl + URLs.updateVenue}`.replace(':id', id.toString()),
-      venueData,
+      formData,
     );
   }
 

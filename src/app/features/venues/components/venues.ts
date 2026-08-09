@@ -4,7 +4,7 @@ import { VenuesService } from '../../../core/services/venues.service';
 import { IGetAllApiParams } from '../../../shared/interfaces/apis-interface';
 import { GenericTable } from '../../../shared/components/generic-table/generic-table';
 import { MatDialog } from '@angular/material/dialog';
-import { IVenueRequest, IVenueResponse } from '../interfaces/venue-interface';
+import { IVenueFormResult, IVenueRequest, IVenueResponse } from '../interfaces/venue-interface';
 import { SuccessMessages } from '../../../core/constants/successMessages';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AddEditVenue } from './add-edit-venue/add-edit-venue';
@@ -90,19 +90,17 @@ export class Venues {
       exitAnimationDuration: '250ms',
     });
 
-    dialog.afterClosed().subscribe((result: IVenueRequest) => {
+    dialog.afterClosed().subscribe((result: IVenueFormResult) => {
       if (result) {
         console.log(result);
-        this.venuesService.createVenue(result).subscribe({
+        this.venuesService.createVenue(result.data, result.image).subscribe({
           next: (res) => {
             console.log(res, 'create venue res');
             this.notificationService.success(SuccessMessages.venueCreated);
+            this.loadAllVenues();
           },
           error: (err: any) => {
             console.log(err);
-          },
-          complete: () => {
-            this.loadAllVenues();
           },
         });
       }
@@ -123,19 +121,17 @@ export class Venues {
       data: venue,
     });
 
-    dialog.afterClosed().subscribe((result: IVenueRequest) => {
+    dialog.afterClosed().subscribe((result: IVenueFormResult) => {
       if (result) {
         console.log(result);
-        this.venuesService.updateVenue(result, venue.id).subscribe({
+        this.venuesService.updateVenue(result.data, venue.id, result.image).subscribe({
           next: (res) => {
             console.log(res, 'update venue res');
             this.notificationService.success(SuccessMessages.venueUpdated);
+            this.loadAllVenues();
           },
           error: (err: any) => {
             console.log(err);
-          },
-          complete: () => {
-            this.loadAllVenues();
           },
         });
       }
