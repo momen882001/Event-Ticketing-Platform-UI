@@ -4,14 +4,24 @@ import { IBookingRequest } from '../../features/bookings/interfaces/booking-inte
 import { URLs } from '../api/api-urls';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class BookingsService {
   constructor(private http: HttpClient) {}
 
-  //* APIs
-
+  
   createBooking(bookingData: IBookingRequest) {
-    return this.http.post(`${URLs.apiBaseUrl + URLs.createBooking}`, bookingData);
+    return this.http.post(
+      `${URLs.apiBaseUrl + URLs.createBooking}`,
+      bookingData
+    );
+  }
+
+
+  getAllBookingsPaginated(params: any) {
+    return this.http.get<any>(
+      `${URLs.apiBaseUrl}/bookings`,
+      { params }
+    );
   }
 }
