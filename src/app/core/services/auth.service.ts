@@ -31,6 +31,13 @@ export class AuthService {
     return this.http.post(`${URLs.apiBaseUrl + URLs.register}`, resgisterData);
   }
 
+  resetPassword(oldPassword: string, newPassword: string) {
+    return this.http.put(`${URLs.apiBaseUrl + URLs.resetPassword}`, {
+      oldPassword,
+      newPassword,
+    });
+  }
+
   //* public methods
   // check if the user is authenticated
   hasUserToken(): boolean {

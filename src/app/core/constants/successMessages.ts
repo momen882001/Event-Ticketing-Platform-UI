@@ -4,6 +4,7 @@ export const SuccessMessages = {
   // ==========================
   login: 'Welcome back! You have successfully signed in.',
   logout: 'You have been signed out successfully.',
+  passwordReset: 'Your password has been reset successfully.',
 
   // ==========================
   // Users

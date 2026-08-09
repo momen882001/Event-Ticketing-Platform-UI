@@ -4,6 +4,7 @@ export const URLs = {
   // auth
   login: 'auth/login',
   register: 'auth/register',
+  resetPassword: 'users/password',
 
   // categories
   getAllCategories: 'categories',
