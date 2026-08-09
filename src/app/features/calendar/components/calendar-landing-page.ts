@@ -21,7 +21,11 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import { EventStatusEnum } from '../../../shared/enums/EventStatusEnum';
-import { IEventFormResult, IEventResponse } from '../interfaces/event-interface';
+import {
+  IEventFormResult,
+  IEventResponse,
+  IEventUpdateFormResult,
+} from '../interfaces/event-interface';
 import { EventStatusIndicators } from './event-status-indicators/event-status-indicators';
 import { mapEventToCalendar } from '../mappers/event-calendar.mapper';
 import { ViewEvent } from './view-event/view-event';
@@ -103,7 +107,7 @@ export class CalendarLandingPage implements OnInit {
         (this.isOrganizer() &&
           this.authService.getUserData?.userId ==
             this.clickedEvent()?.extendedProps['organizerId']),
-      action: () => console.log('edit'),
+      action: () => this.onEditEvent(),
     },
 
     {
@@ -382,6 +386,44 @@ export class CalendarLandingPage implements OnInit {
     }));
   }
 
+  private onEditEvent(): void {
+    const responseEvent = this.mapClickedEventToResponse(this.clickedEvent() as EventApi);
+    const dialogRef = this.dialog.open(AddEditEvent, {
+      width: '550px',
+      height: '100vh',
+      maxWidth: '100vw',
+      panelClass: 'event-drawer-dialog',
+      position: {
+        right: '0',
+        top: '0',
+      },
+
+      data: {
+        venueId: responseEvent.venue.id,
+        startDateTime: this.formatLocalDateTime(this.clickedEvent()?.start as Date),
+        endDateTime: this.formatLocalDateTime(this.clickedEvent()?.end as Date),
+        event: responseEvent,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: IEventUpdateFormResult) => {
+      if (result) {
+        this.eventsService
+          .updateEvent(result.data, Number(this.clickedEvent()?.id), result.image)
+          .subscribe({
+            next: (response) => {
+              console.log('Event created:', response);
+              this.notificationService.success(SuccessMessages.eventUpdated);
+              this.loadAllEvents();
+            },
+            error: (error) => {
+              console.error('Error creating event:', error);
+            },
+          });
+      }
+    });
+  }
+
   private onCancelEvent(): void {
     const event = this.clickedEvent();
 
@@ -465,6 +507,26 @@ export class CalendarLandingPage implements OnInit {
 
   private onBookEvent(): void {
     this.router.navigate(['/dashboard', 'calendar', 'events', this.clickedEvent()?.id, 'booking']);
+  }
+
+  private mapClickedEventToResponse(event: EventApi): IEventResponse {
+    const props = event.extendedProps as Partial<IEventResponse>;
+
+    return {
+      id: Number(event.id),
+      organizerId: props.organizerId!,
+      venue: props.venue!,
+      categoryId: props.categoryId!,
+      title: event.title,
+      description: props.description!,
+      startDateTime: this.formatLocalDateTime(event.start!),
+      endDateTime: this.formatLocalDateTime(event.end!),
+      status: props.status!,
+      createdAt: props.createdAt!,
+      updatedAt: props.updatedAt!,
+      seatCategories: props.seatCategories!,
+      imageUrl: props.imageUrl!,
+    };
   }
 
   @HostListener('window:scroll')

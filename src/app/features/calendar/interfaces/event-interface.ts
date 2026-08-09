@@ -10,6 +10,22 @@ export interface IEventRequest {
   seatCategories: ISeatCategoryRequest[];
 }
 
+export interface IEventUpdateRequest {
+  venueId: number;
+  title: string;
+  description: string;
+  startDateTime: string;
+  endDateTime: string;
+  seatCategories: ISeatCategoryUpdateRequest[];
+}
+
+export interface ISeatCategoryUpdateRequest {
+  id: number | null;
+  name: string;
+  price: number;
+  totalSeats: number;
+}
+
 export interface IEventResponse {
   id: number;
   organizerId: number;
@@ -28,6 +44,11 @@ export interface IEventResponse {
 
 export interface IEventFormResult {
   data: IEventRequest;
+  image: File | null;
+}
+
+export interface IEventUpdateFormResult {
+  data: IEventUpdateRequest;
   image: File | null;
 }
 

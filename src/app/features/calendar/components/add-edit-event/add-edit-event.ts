@@ -66,7 +66,7 @@ export class AddEditEvent implements OnInit {
   readonly venue = signal<IVenueResponse | null>(null);
 
   readonly selectedImage = signal<File | null>(null);
-  readonly imagePreview = signal<string | null>(null);
+  readonly imagePreview = signal<string | null>(this.data.event?.imageUrl ?? null);
 
   readonly isEditMode = computed(() => !!this.data.event);
   readonly dialogTitle = computed(() => (this.isEditMode() ? 'Edit Event' : 'Create Event'));
