@@ -24,6 +24,7 @@
   </div>
 
   <nav class="navigation">
+    <!-- Only for admin -->
     @if (isAdmin()) {
       <a routerLink="/dashboard/users" routerLinkActive="active" class="nav-item">
         <i class="bi bi-people"></i>
@@ -38,14 +39,18 @@
         <span>Venues</span>
       </a>
     }
+    <!-- For All Roles -->
     <a routerLink="/dashboard/calendar" routerLinkActive="active" class="nav-item">
       <i class="bi bi-calendar"></i>
       <span>Events</span>
     </a>
-    <a routerLink="/dashboard/bookings" routerLinkActive="active" class="nav-item">
-      <i class="bi bi-ticket-perforated-fill"></i>
-      <span>My Bookings</span>
-    </a>
+    <!-- Only for users -->
+    @if (isUser()) {
+      <a routerLink="/dashboard/bookings" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-ticket-perforated-fill"></i>
+        <span>My Bookings</span>
+      </a>
+    }
   </nav>
 
   <div class="bottom-section">

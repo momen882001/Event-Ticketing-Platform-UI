@@ -28,6 +28,8 @@ import {
   IEventFormResult,
   IEventRequest,
   IEventResponse,
+  IEventUpdateFormResult,
+  IEventUpdateRequest,
   ISeatCategoryResponse,
 } from '../../interfaces/event-interface';
 
@@ -247,6 +249,31 @@ export class AddEditEvent implements OnInit {
     }
 
     const value = this.form.getRawValue();
+
+    if (this.isEditMode()) {
+      const request: IEventUpdateRequest = {
+        venueId: this.data.venueId,
+        title: value.title.trim(),
+        description: value.description.trim(),
+        startDateTime: this.data.startDateTime,
+        endDateTime: this.data.endDateTime,
+
+        seatCategories: value.seatCategories.map((category: any) => ({
+          id: category.id,
+          name: category.name.trim(),
+          price: Number(category.price),
+          totalSeats: Number(category.totalSeats),
+        })),
+      };
+
+      const result: IEventUpdateFormResult = {
+        data: request,
+        image: this.selectedImage(),
+      };
+
+      this.dialogRef.close(result);
+      return;
+    }
 
     const request: IEventRequest = {
       venueId: this.data.venueId,

@@ -46,6 +46,8 @@ export class EventsService {
   }
 
   updateEvent(eventData: IEventUpdateRequest, id: number, image?: File | null) {
+    console.log(eventData, 'eventData');
+
     const formData = new FormData();
 
     formData.append(

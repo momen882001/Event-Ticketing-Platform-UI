@@ -237,12 +237,12 @@ export class EventBooking implements OnInit {
       if (payment) {
         console.log(payment);
         this.bookingsService.createBooking(payload).subscribe({
-          error: (err) => {
-            console.log(err);
-          },
-          complete: () => {
+          next: (res) => {
             this.notificationsService.success(SuccessMessages.bookingCreated);
             this.router.navigate(['dashboard', 'bookings']);
+          },
+          error: (err) => {
+            console.log(err);
           },
         });
       }

@@ -35,4 +35,5 @@ export const URLs = {
   // bookings
   createBooking: 'bookings',
   getAllBookings: 'bookings',
+  cancelBookingById: 'bookings/:id/cancel',
 };

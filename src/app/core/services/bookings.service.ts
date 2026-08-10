@@ -27,4 +27,11 @@ export class BookingsService {
       },
     );
   }
+
+  cancelBooking(bookingId: number) {
+    return this.http.patch(
+      `${URLs.apiBaseUrl + URLs.cancelBookingById}`.replace(':id', bookingId.toString()),
+      {},
+    );
+  }
 }
