@@ -1,6 +1,8 @@
+import { BookingStatusEnum } from '../../../shared/enums/BookingStatusEnum';
+import { IEventResponse } from '../../calendar/interfaces/event-interface';
 import { IBookingItemRequest } from './booking-item-interface';
-import {IBookingItemResponse} from './booking-item-interface';
-import {IPaymentResponse} from './Booking-payment-interface';
+import { IBookingItemResponse } from './booking-item-interface';
+import { IPaymentResponse } from './booking-payment-interface';
 
 export interface IBookingRequest {
   eventId: number;
@@ -14,8 +16,6 @@ export interface IBookingResponse {
   status: BookingStatusEnum;
   createdAt: string;
   updatedAt: string;
+  event: IEventResponse;
   payment: IPaymentResponse;
 }
-
-
-

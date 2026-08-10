@@ -2,13 +2,14 @@
   <app-page-hero
     badge="Event Booking"
     badgeIcon="bi bi-ticket-perforated-fill"
-    title="Bookings"
-    description="Manage all event bookings "
+    title="My Bookings"
+    description="View and manage all your event bookings, check ticket details, track booking status, and access your reservations in one place"
   />
 
   <app-generic-table
     [dataSource]="allBookings()"
     [columns]="columns"
+    [actions]="actions"
     [isSearchable]="false"
     [totalItems]="totalItems()"
     [pageSize]="pageSize()"

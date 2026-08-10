@@ -462,12 +462,12 @@ export class CalendarLandingPage implements OnInit {
       }
 
       this.eventsService.cancelEvent(+event.id).subscribe({
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
+        next: (res) => {
           this.notificationService.success(SuccessMessages.eventCanceled);
           this.loadAllEvents();
+        },
+        error: (err) => {
+          console.log(err);
         },
       });
     });
@@ -502,12 +502,12 @@ export class CalendarLandingPage implements OnInit {
       }
 
       this.eventsService.deleteEvent(+event.id).subscribe({
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
+        next: (res) => {
           this.notificationService.success(SuccessMessages.eventDeleted);
           this.loadAllEvents();
+        },
+        error: (err) => {
+          console.log(err);
         },
       });
     });

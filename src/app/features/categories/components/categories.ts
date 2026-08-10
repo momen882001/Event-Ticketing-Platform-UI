@@ -83,12 +83,10 @@ export class Categories implements OnInit {
           next: (res) => {
             console.log(res, 'create category res');
             this.notificationService.success(SuccessMessages.categoryCreated);
+            this.loadAllCategories();
           },
           error: (err: any) => {
             console.log(err);
-          },
-          complete: () => {
-            this.loadAllCategories();
           },
         });
       }
@@ -108,12 +106,10 @@ export class Categories implements OnInit {
           next: (res) => {
             console.log(res, 'create category res');
             this.notificationService.success(SuccessMessages.categoryUpdated);
+            this.loadAllCategories();
           },
           error: (err: any) => {
             console.log(err);
-          },
-          complete: () => {
-            this.loadAllCategories();
           },
         });
       }
