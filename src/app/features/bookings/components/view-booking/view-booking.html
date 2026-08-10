@@ -1,0 +1,414 @@
+<div class="booking-page">
+  <!-- =========================
+       Loading
+  ========================== -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+
+      <h3>Loading booking details</h3>
+      <p>Please wait while we retrieve your booking.</p>
+    </div>
+  }
+
+  <!-- =========================
+       Error
+  ========================== -->
+  @else if (hasError()) {
+    <div class="error-state">
+      <div class="error-icon">
+        <mat-icon>event_busy</mat-icon>
+      </div>
+
+      <h2>Booking not found</h2>
+
+      <p>
+        We couldn't load the booking details. The booking may no longer exist or something went
+        wrong.
+      </p>
+
+      <button mat-flat-button class="primary-button" type="button" (click)="goToMyBookings()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to My Bookings
+      </button>
+    </div>
+  }
+
+  <!-- =========================
+       Booking Details
+  ========================== -->
+  @else if (booking(); as booking) {
+    <div class="booking-container">
+      <!-- =========================
+           Header
+      ========================== -->
+      <header class="page-header">
+        <div class="header-content">
+          <button
+            mat-icon-button
+            class="back-button"
+            type="button"
+            aria-label="Back to home"
+            (click)="goToMyBookings()"
+          >
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+
+          <div>
+            <span class="eyebrow"> MY BOOKING </span>
+
+            <h1>Booking Details</h1>
+
+            <p>Review your event booking and ticket information.</p>
+          </div>
+        </div>
+
+        <div class="booking-status" [class]="getStatusClass(booking.status)">
+          <mat-icon>
+            {{ getStatusIcon(booking.status) }}
+          </mat-icon>
+
+          <span>
+            {{ getStatusLabel(booking.status) }}
+          </span>
+        </div>
+      </header>
+
+      <!-- =========================
+           Event Hero
+      ========================== -->
+      <section class="event-hero">
+        @if (booking.event.imageUrl) {
+          <img class="event-image" [src]="booking.event.imageUrl" [alt]="booking.event.title" />
+        } @else {
+          <div class="event-image event-image-placeholder">
+            <mat-icon>event</mat-icon>
+          </div>
+        }
+
+        <div class="event-overlay"></div>
+
+        <div class="event-content">
+          <div class="event-category">EVENT</div>
+
+          <h2>
+            {{ booking.event.title }}
+          </h2>
+
+          <div class="event-meta">
+            <div class="event-meta-item">
+              <mat-icon>calendar_today</mat-icon>
+
+              <span>
+                {{ booking.event.startDateTime | date: 'EEE, MMM d, y' }}
+              </span>
+            </div>
+
+            <div class="event-meta-item">
+              <mat-icon>schedule</mat-icon>
+
+              <span>
+                {{ booking.event.startDateTime | date: 'h:mm a' }}
+              </span>
+            </div>
+
+            <div class="event-meta-item">
+              <mat-icon>location_on</mat-icon>
+
+              <span>
+                {{ booking.event.venue.name }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+           Main Grid
+      ========================== -->
+      <div class="content-grid">
+        <!-- =========================
+             Left Column
+        ========================== -->
+        <main class="main-column">
+          <!-- Booking Summary -->
+          <section class="card booking-summary">
+            <div class="card-header">
+              <div>
+                <span class="section-label"> BOOKING </span>
+
+                <h2>Booking Summary</h2>
+              </div>
+
+              <div class="summary-icon">
+                <mat-icon>confirmation_number</mat-icon>
+              </div>
+            </div>
+
+            <div class="summary-grid">
+              <div class="summary-item">
+                <span class="summary-label"> Booking date </span>
+
+                <strong>
+                  {{ booking.createdAt | date: 'MMM d, y' }}
+                </strong>
+
+                <small>
+                  {{ booking.createdAt | date: 'h:mm a' }}
+                </small>
+              </div>
+
+              <div class="summary-item">
+                <span class="summary-label"> Last updated </span>
+
+                <strong>
+                  {{ booking.updatedAt | date: 'MMM d, y' }}
+                </strong>
+
+                <small>
+                  {{ booking.updatedAt | date: 'h:mm a' }}
+                </small>
+              </div>
+
+              <div class="summary-item">
+                <span class="summary-label"> Tickets </span>
+
+                <strong>
+                  {{ totalTickets() }}
+                </strong>
+
+                <small>
+                  {{ totalTickets() === 1 ? 'ticket' : 'tickets' }}
+                </small>
+              </div>
+
+              <div class="summary-item">
+                <span class="summary-label"> Duration </span>
+
+                <strong>
+                  {{ eventDuration() }}
+                </strong>
+
+                <small> Event duration </small>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tickets -->
+          <section class="card tickets-card">
+            <div class="card-header">
+              <div>
+                <span class="section-label"> YOUR TICKETS </span>
+
+                <h2>Ticket Breakdown</h2>
+              </div>
+
+              <div class="ticket-count">
+                {{ totalTickets() }}
+                {{ totalTickets() === 1 ? 'Ticket' : 'Tickets' }}
+              </div>
+            </div>
+
+            <div class="tickets-list">
+              @for (item of booking.items; track item.seatCategoryId) {
+                <div class="ticket-row">
+                  <div class="ticket-icon">
+                    <mat-icon>confirmation_number</mat-icon>
+                  </div>
+
+                  <div class="ticket-info">
+                    <h3>
+                      {{ item.seatCategoryName }}
+                    </h3>
+
+                    <span> Seat category </span>
+                  </div>
+
+                  <div class="ticket-quantity">
+                    <span class="quantity-label"> Quantity </span>
+
+                    <strong> ×{{ item.quantity }} </strong>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+
+          <!-- Event Information -->
+          <section class="card event-information">
+            <div class="card-header">
+              <div>
+                <span class="section-label"> EVENT INFORMATION </span>
+
+                <h2>About the Event</h2>
+              </div>
+
+              <div class="summary-icon">
+                <mat-icon>event_note</mat-icon>
+              </div>
+            </div>
+
+            <p class="event-description">
+              {{ booking.event.description }}
+            </p>
+
+            <div class="event-details">
+              <div class="detail-row">
+                <div class="detail-icon">
+                  <mat-icon>calendar_month</mat-icon>
+                </div>
+
+                <div>
+                  <span>Start date</span>
+
+                  <strong>
+                    {{ booking.event.startDateTime | date: 'EEEE, MMMM d, y' }}
+                  </strong>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-icon">
+                  <mat-icon>schedule</mat-icon>
+                </div>
+
+                <div>
+                  <span>Time</span>
+
+                  <strong>
+                    {{ booking.event.startDateTime | date: 'h:mm a' }}
+                    –
+                    {{ booking.event.endDateTime | date: 'h:mm a' }}
+                  </strong>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-icon">
+                  <mat-icon>location_on</mat-icon>
+                </div>
+
+                <div>
+                  <span>Venue</span>
+
+                  <strong>
+                    {{ booking.event.venue.name }}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <!-- =========================
+             Right Column
+        ========================== -->
+        <aside class="side-column">
+          <!-- Payment -->
+          <section class="card payment-card">
+            <div class="payment-heading">
+              <div class="payment-icon">
+                <mat-icon>payments</mat-icon>
+              </div>
+
+              <div>
+                <span class="section-label"> PAYMENT </span>
+
+                <h2>Payment Summary</h2>
+              </div>
+            </div>
+
+            <div class="payment-total">
+              <span> Total Amount </span>
+
+              <strong>
+                {{ booking.payment.amount | number: '1.2-2' }}
+              </strong>
+            </div>
+
+            <div class="payment-status">
+              <div class="success-indicator">
+                <mat-icon>check</mat-icon>
+              </div>
+
+              <div>
+                <strong>Payment recorded</strong>
+
+                <span>
+                  {{ booking.payment.createdAt | date: 'MMM d, y · h:mm a' }}
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Venue -->
+          <section class="card venue-card">
+            <div class="card-header">
+              <div>
+                <span class="section-label"> VENUE </span>
+
+                <h2>Event Location</h2>
+              </div>
+
+              <div class="summary-icon">
+                <mat-icon>location_on</mat-icon>
+              </div>
+            </div>
+
+            @if (booking.event.venue.imageUrl) {
+              <div class="venue-image-wrapper">
+                <img
+                  [src]="booking.event.venue.imageUrl"
+                  [alt]="booking.event.venue.name"
+                  class="venue-image"
+                />
+              </div>
+            }
+
+            <div class="venue-content">
+              <h3>
+                {{ booking.event.venue.name }}
+              </h3>
+
+              <div class="venue-address">
+                <mat-icon>place</mat-icon>
+
+                <span>
+                  {{ booking.event.venue.address }}
+                </span>
+              </div>
+
+              <div class="venue-capacity">
+                <mat-icon>groups</mat-icon>
+
+                <span> Capacity: {{ booking.event.venue.capacity | number }} </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Important Information -->
+          <section class="info-card">
+            <div class="info-icon">
+              <mat-icon>info</mat-icon>
+            </div>
+
+            <div>
+              <h3>Important</h3>
+
+              <p>
+                Keep your ticket information available when attending the event. You may be asked to
+                present your booking or ticket QR code at the entrance.
+              </p>
+            </div>
+          </section>
+
+          <!-- Back Home -->
+          <button mat-flat-button class="home-button" type="button" (click)="goToMyBookings()">
+            <mat-icon>confirmation_number</mat-icon>
+            Back to My Bookings
+          </button>
+        </aside>
+      </div>
+    </div>
+  }
+</div>

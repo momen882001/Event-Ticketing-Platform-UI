@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
   IBookingRequest,
   IBookingResponse,
@@ -7,6 +7,10 @@ import {
 import { URLs } from '../api/api-urls';
 import { IPagedResponse } from '../../shared/interfaces/pagination-interface';
 import { IGetAllApiParams } from '../../shared/interfaces/apis-interface';
+
+const headers = new HttpHeaders({
+  'No-Spinner': 'true',
+});
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +20,15 @@ export class BookingsService {
 
   createBooking(bookingData: IBookingRequest) {
     return this.http.post(`${URLs.apiBaseUrl + URLs.createBooking}`, bookingData);
+  }
+
+  getBookingById(id: number) {
+    return this.http.get<IBookingResponse>(
+      `${URLs.apiBaseUrl + URLs.getBookingById}`.replace(':id', id.toString()),
+      {
+        headers,
+      },
+    );
   }
 
   getAllBookingsPaginated(params: IGetAllApiParams) {

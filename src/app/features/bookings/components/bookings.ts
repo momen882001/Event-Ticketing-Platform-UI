@@ -14,6 +14,7 @@ import { SuccessMessages } from '../../../core/constants/successMessages';
 import { NotificationService } from '../../../core/services/notification.service';
 import { IEventResponse } from '../../calendar/interfaces/event-interface';
 import { BookingStatusEnum } from '../../../shared/enums/BookingStatusEnum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bookings',
@@ -31,6 +32,7 @@ export class Bookings {
     private bookingsService: BookingsService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class Bookings {
     {
       icon: 'visibility',
       label: 'View Booking',
-      handler: (booking) => console.log(booking),
+      handler: (booking) => this.onViewBooking(booking.id),
     },
     {
       icon: 'confirmation_number',
@@ -130,5 +132,9 @@ export class Bookings {
         },
       });
     });
+  }
+
+  private onViewBooking(bookingId: number): void {
+    this.router.navigate(['/dashboard', 'bookings', bookingId, 'view']);
   }
 }

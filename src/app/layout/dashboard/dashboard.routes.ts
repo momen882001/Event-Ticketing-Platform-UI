@@ -65,6 +65,14 @@ export const DASHBOARD_ROUTES: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'bookings/:bookingId/view',
+        loadComponent: () =>
+          import('../../features/bookings/components/view-booking/view-booking').then(
+            (c) => c.ViewBooking,
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'user-profile',
         loadComponent: () =>
           import('../../features/users/components/user-profile/user-profile').then(
