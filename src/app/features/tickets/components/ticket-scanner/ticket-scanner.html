@@ -1,0 +1,186 @@
+<div class="scanner-page">
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="scanner-header">
+    <div class="header-icon">
+      <mat-icon> qr_code_scanner </mat-icon>
+    </div>
+
+    <div>
+      <span class="eyebrow"> EVENT CHECK-IN </span>
+
+      <h1>Scan Ticket</h1>
+
+      <p>Scan the attendee's QR code to validate their ticket.</p>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SCANNER
+
+       IMPORTANT:
+       Do NOT put the video inside @if.
+       We only hide the scanner visually.
+  ====================================================== -->
+
+  <div class="scanner-card" [class.scanner-hidden]="success() || error()">
+    <!-- Camera -->
+
+    <div class="camera-container">
+      <video #video class="camera" autoplay muted playsinline></video>
+
+      <!-- Scanner overlay -->
+
+      <div class="scanner-overlay">
+        <div class="scanner-frame">
+          <span class="corner top-left"></span>
+
+          <span class="corner top-right"></span>
+
+          <span class="corner bottom-left"></span>
+
+          <span class="corner bottom-right"></span>
+
+          <div class="scan-line"></div>
+        </div>
+      </div>
+
+      <!-- Checking in -->
+
+      @if (checkingIn()) {
+        <div class="camera-loading">
+          <mat-spinner diameter="40"> </mat-spinner>
+
+          <span> Validating ticket... </span>
+        </div>
+      }
+    </div>
+
+    <!-- Instructions -->
+
+    <div class="scanner-instructions">
+      <mat-icon> center_focus_strong </mat-icon>
+
+      <div>
+        <strong> Position the QR code inside the frame </strong>
+
+        <p>The ticket will be checked automatically.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  @if (error()) {
+    <div class="result-card error-card">
+      <div class="result-icon">
+        <mat-icon> cancel </mat-icon>
+      </div>
+
+      <span class="result-label"> CHECK-IN FAILED </span>
+
+      <h2>Invalid Ticket</h2>
+
+      <p>
+        {{ error() }}
+      </p>
+
+      @if (scannedCode()) {
+        <div class="scanned-code">
+          <mat-icon> qr_code </mat-icon>
+
+          <span>
+            {{ scannedCode() }}
+          </span>
+        </div>
+      }
+
+      <button mat-flat-button type="button" (click)="scanAnother()">
+        <mat-icon> qr_code_scanner </mat-icon>
+
+        Scan Another Ticket
+      </button>
+    </div>
+  }
+
+  <!-- =====================================================
+       SUCCESS
+  ====================================================== -->
+
+  @if (success() && ticket()) {
+    <div class="result-card success-card">
+      <div class="result-icon">
+        <mat-icon> check_circle </mat-icon>
+      </div>
+
+      <span class="result-label"> CHECK-IN SUCCESSFUL </span>
+
+      <h2>Ticket Valid</h2>
+
+      <p class="success-message">The ticket has been successfully checked in.</p>
+
+      <!-- Ticket information -->
+
+      <div class="ticket-info">
+        <div class="ticket-info-item">
+          <span> EVENT </span>
+
+          <strong>
+            {{ ticket()!.eventTitle }}
+          </strong>
+        </div>
+
+        <div class="ticket-info-item">
+          <span> TICKET </span>
+
+          <strong class="ticket-code">
+            {{ ticket()!.ticketCode }}
+          </strong>
+        </div>
+
+        <div class="ticket-info-item">
+          <span> CATEGORY </span>
+
+          <strong>
+            {{ ticket()!.seatCategoryName }}
+          </strong>
+        </div>
+
+        <div class="ticket-info-item">
+          <span> STATUS </span>
+
+          <strong class="status-used">
+            <mat-icon> verified </mat-icon>
+
+            {{ ticket()!.status }}
+          </strong>
+        </div>
+      </div>
+
+      <!-- Check-in time -->
+
+      @if (ticket()!.checkedInAt) {
+        <div class="check-in-time">
+          <mat-icon> schedule </mat-icon>
+
+          <span>
+            Checked in at
+            <strong>
+              {{ ticket()!.checkedInAt }}
+            </strong>
+          </span>
+        </div>
+      }
+
+      <button mat-flat-button type="button" class="scan-again-button" (click)="scanAnother()">
+        <mat-icon> qr_code_scanner </mat-icon>
+
+        Scan Another Ticket
+      </button>
+    </div>
+  }
+</div>

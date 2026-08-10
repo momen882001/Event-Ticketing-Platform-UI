@@ -36,4 +36,11 @@ export class TicketsService {
       `${URLs.apiBaseUrl + URLs.getTicketById}`.replace(':id', ticketId.toString()),
     );
   }
+
+  checkIn(ticketCode: string) {
+    return this.http.patch<ITicketResponse>(
+      `${URLs.apiBaseUrl + URLs.checkInTicket}`.replace(':ticketCode', ticketCode.toString()),
+      {},
+    );
+  }
 }

@@ -63,6 +63,16 @@ export const DASHBOARD_ROUTES: Routes = [
             loadComponent: () =>
               import('../../features/tickets/components/tickets').then((c) => c.Tickets),
           },
+          {
+            path: 'tickets/scan',
+            loadComponent: () =>
+              import('../../features/tickets/components/ticket-scanner/ticket-scanner').then(
+                (c) => c.TicketScanner,
+              ),
+            data: {
+              roles: [UserRoleEnum.ADMIN, UserRoleEnum.ORGANIZER],
+            },
+          },
         ],
       },
 

@@ -41,4 +41,5 @@ export const URLs = {
   // tickets
   getAllTicketsByBookingId: 'tickets/booking/:bookingId',
   getTicketById: 'tickets/:id',
+  checkInTicket: 'tickets/:ticketCode/check-in',
 };

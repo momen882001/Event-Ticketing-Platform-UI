@@ -51,6 +51,14 @@
         <span>My Bookings</span>
       </a>
     }
+
+    <!-- For Admin and Organizers -->
+    @if (isAdmin() || isOrganizer()) {
+      <a routerLink="/dashboard/bookings/tickets/scan" routerLinkActive="active" class="nav-item">
+        <i class="bi bi-ticket-perforated-fill"></i>
+        <span>Scan Tickets</span>
+      </a>
+    }
   </nav>
 
   <div class="bottom-section">

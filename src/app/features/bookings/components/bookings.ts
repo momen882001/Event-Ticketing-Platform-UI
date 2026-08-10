@@ -40,6 +40,7 @@ export class Bookings {
   }
 
   readonly columns: TableColumn[] = [
+    { key: 'id', header: 'Booking Id', pipe: (value) => '#' + value },
     { key: 'event', header: 'Event Name', pipe: (value) => (value as IEventResponse)?.title },
     { key: 'status', header: 'Status' },
     {
@@ -64,7 +65,7 @@ export class Bookings {
       icon: 'confirmation_number',
       label: 'Tickets',
       handler: (booking) => this.goToTickets(booking.id),
-      visible: (booking) => booking.status !== BookingStatusEnum.CANCELLED,
+      // visible: (booking) => booking.status !== BookingStatusEnum.CANCELLED,
     },
     {
       icon: 'cancel',
