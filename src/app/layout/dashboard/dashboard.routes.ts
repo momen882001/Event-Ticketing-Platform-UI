@@ -58,6 +58,11 @@ export const DASHBOARD_ROUTES: Routes = [
                 (c) => c.ViewBooking,
               ),
           },
+          {
+            path: ':bookingId/tickets',
+            loadComponent: () =>
+              import('../../features/tickets/components/tickets').then((c) => c.Tickets),
+          },
         ],
       },
 
