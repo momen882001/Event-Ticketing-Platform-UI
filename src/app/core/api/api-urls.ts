@@ -34,4 +34,5 @@ export const URLs = {
 
   // bookings
   createBooking: 'bookings',
+  getAllBookings: 'bookings',
 };
