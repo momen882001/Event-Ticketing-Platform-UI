@@ -1,0 +1,176 @@
+<div class="tickets-page">
+  <!-- Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <mat-icon>confirmation_number</mat-icon>
+      </div>
+
+      <div>
+        <span class="eyebrow">MY BOOKINGS</span>
+
+        <h1>My Tickets</h1>
+
+        <p>Your event tickets and QR codes are ready.</p>
+      </div>
+    </div>
+
+    @if (bookingId()) {
+      <div class="booking-reference">
+        <span>Booking</span>
+        <strong>#{{ bookingId() }}</strong>
+      </div>
+    }
+  </header>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="state-container">
+      <mat-spinner diameter="42"></mat-spinner>
+
+      <h3>Loading your tickets...</h3>
+
+      <p>Please wait while we prepare your tickets.</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @else if (error()) {
+    <div class="state-container error-state">
+      <div class="state-icon">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+
+      <h3>Unable to load tickets</h3>
+
+      <p>Something went wrong while loading your tickets.</p>
+
+      <button mat-flat-button type="button" (click)="loadTickets(bookingId()!)">
+        <mat-icon>refresh</mat-icon>
+        Try again
+      </button>
+    </div>
+  }
+
+  <!-- Empty -->
+  @else if (!tickets().length) {
+    <div class="state-container">
+      <div class="state-icon">
+        <mat-icon>confirmation_number</mat-icon>
+      </div>
+
+      <h3>No tickets found</h3>
+
+      <p>There are no tickets associated with this booking.</p>
+    </div>
+  }
+
+  <!-- Tickets -->
+  @else {
+    <section class="tickets-list">
+      @for (ticket of tickets(); track trackByTicketId($index, ticket); let i = $index) {
+        <article class="ticket-card">
+          <!-- Ticket Main -->
+          <div class="ticket-main">
+            <!-- Event -->
+            <div class="event-section">
+              <div class="event-icon">
+                <mat-icon>event</mat-icon>
+              </div>
+
+              <div class="event-info">
+                <span class="label"> EVENT </span>
+
+                <h2>
+                  {{ ticket.eventTitle }}
+                </h2>
+              </div>
+            </div>
+
+            <!-- Ticket details -->
+            <div class="ticket-details">
+              <div class="detail">
+                <span class="label"> TICKET CODE </span>
+
+                <strong class="ticket-code">
+                  {{ ticket.ticketCode }}
+                </strong>
+              </div>
+
+              <div class="detail">
+                <span class="label"> SEAT CATEGORY </span>
+
+                <strong>
+                  {{ ticket.seatCategoryName }}
+                </strong>
+              </div>
+
+              <div class="detail">
+                <span class="label"> ISSUED </span>
+
+                <strong>
+                  {{ formatDate(ticket.issuedAt) }}
+                </strong>
+              </div>
+
+              @if (ticket.checkedInAt) {
+                <div class="detail">
+                  <span class="label"> CHECKED IN </span>
+
+                  <strong>
+                    {{ formatDate(ticket.checkedInAt) }}
+                  </strong>
+                </div>
+              }
+            </div>
+
+            <!-- Status -->
+            <div class="ticket-footer">
+              <div class="status" [class]="getStatusClass(ticket.status)">
+                <mat-icon>
+                  {{ getStatusIcon(ticket.status) }}
+                </mat-icon>
+
+                <span>
+                  {{ ticket.status | titlecase }}
+                </span>
+              </div>
+
+              <span class="ticket-number"> Ticket #{{ ticket.id }} </span>
+            </div>
+          </div>
+
+          <!-- Perforation -->
+          <div class="ticket-divider">
+            <span class="circle circle-top"></span>
+            <span class="circle circle-bottom"></span>
+          </div>
+
+          <!-- QR Section -->
+          <div class="qr-section">
+            <div class="qr-wrapper">
+              <canvas #qrCanvas class="qr-code"></canvas>
+            </div>
+
+            <div class="qr-content">
+              <span class="scan-label"> SCAN TO VERIFY </span>
+
+              <p>Present this QR code at the entrance.</p>
+
+              <button
+                mat-stroked-button
+                type="button"
+                class="download-button"
+                (click)="downloadQRCode(ticket, i)"
+              >
+                <mat-icon> download </mat-icon>
+
+                Download QR
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </section>
+  }
+</div>

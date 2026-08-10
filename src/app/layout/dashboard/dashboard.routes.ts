@@ -58,6 +58,21 @@ export const DASHBOARD_ROUTES: Routes = [
                 (c) => c.ViewBooking,
               ),
           },
+          {
+            path: ':bookingId/tickets',
+            loadComponent: () =>
+              import('../../features/tickets/components/tickets').then((c) => c.Tickets),
+          },
+          {
+            path: 'tickets/scan',
+            loadComponent: () =>
+              import('../../features/tickets/components/ticket-scanner/ticket-scanner').then(
+                (c) => c.TicketScanner,
+              ),
+            data: {
+              roles: [UserRoleEnum.ADMIN, UserRoleEnum.ORGANIZER],
+            },
+          },
         ],
       },
 

@@ -40,6 +40,7 @@ export class Bookings {
   }
 
   readonly columns: TableColumn[] = [
+    { key: 'id', header: 'Booking Id', pipe: (value) => '#' + value },
     { key: 'event', header: 'Event Name', pipe: (value) => (value as IEventResponse)?.title },
     { key: 'status', header: 'Status' },
     {
@@ -63,8 +64,8 @@ export class Bookings {
     {
       icon: 'confirmation_number',
       label: 'Tickets',
-      handler: (booking) => console.log(booking),
-      visible: (booking) => booking.status !== BookingStatusEnum.CANCELLED,
+      handler: (booking) => this.goToTickets(booking.id),
+      // visible: (booking) => booking.status !== BookingStatusEnum.CANCELLED,
     },
     {
       icon: 'cancel',
@@ -136,5 +137,9 @@ export class Bookings {
 
   private onViewBooking(bookingId: number): void {
     this.router.navigate(['/dashboard', 'bookings', bookingId, 'view']);
+  }
+
+  private goToTickets(bookingId: number) {
+    this.router.navigate(['/dashboard', 'bookings', bookingId, 'tickets']);
   }
 }

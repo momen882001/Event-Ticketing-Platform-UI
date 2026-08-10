@@ -37,4 +37,9 @@ export const URLs = {
   getBookingById: 'bookings/:id',
   getAllBookings: 'bookings',
   cancelBookingById: 'bookings/:id/cancel',
+
+  // tickets
+  getAllTicketsByBookingId: 'tickets/booking/:bookingId',
+  getTicketById: 'tickets/:id',
+  checkInTicket: 'tickets/:ticketCode/check-in',
 };
