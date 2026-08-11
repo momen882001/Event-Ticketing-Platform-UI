@@ -34,6 +34,9 @@ export class TicketsService {
   getTicketById(ticketId: number) {
     return this.http.get<ITicketResponse>(
       `${URLs.apiBaseUrl + URLs.getTicketById}`.replace(':id', ticketId.toString()),
+      {
+        headers,
+      },
     );
   }
 
@@ -41,6 +44,9 @@ export class TicketsService {
     return this.http.patch<ITicketResponse>(
       `${URLs.apiBaseUrl + URLs.checkInTicket}`.replace(':ticketCode', ticketCode.toString()),
       {},
+      {
+        headers,
+      },
     );
   }
 }
