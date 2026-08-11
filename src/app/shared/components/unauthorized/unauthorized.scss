@@ -1,0 +1,371 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.error-page {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 40px 24px;
+
+  background:
+    radial-gradient(circle at 15% 20%, var(--app-primary-container), transparent 30%),
+    radial-gradient(
+      circle at 85% 80%,
+      color-mix(in srgb, var(--app-tertiary) 12%, transparent),
+      transparent 30%
+    ),
+    var(--app-bg);
+}
+
+/* ========================================
+   Background
+======================================== */
+
+.background-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(70px);
+  opacity: 0.45;
+}
+
+.background-glow-primary {
+  width: 260px;
+  height: 260px;
+  top: -100px;
+  left: -80px;
+  background: var(--app-primary);
+}
+
+.background-glow-secondary {
+  width: 220px;
+  height: 220px;
+  right: -70px;
+  bottom: -80px;
+  background: var(--app-tertiary);
+}
+
+/* ========================================
+   Card
+======================================== */
+
+.error-card {
+  position: relative;
+  width: min(100%, 760px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 56px 48px;
+
+  text-align: center;
+
+  background: color-mix(in srgb, var(--app-card-bg) 94%, var(--app-primary) 6%);
+
+  border: 1px solid var(--app-border);
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 24px 70px rgb(33 31 45 / 0.08),
+    0 8px 30px rgb(108 76 246 / 0.08);
+
+  backdrop-filter: blur(12px);
+
+  overflow: hidden;
+}
+
+/* ========================================
+   Illustration
+======================================== */
+
+.illustration {
+  position: relative;
+
+  width: 150px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 28px;
+}
+
+.illustration-circle {
+  width: 112px;
+  height: 112px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--app-primary-container);
+
+  color: var(--app-primary);
+
+  box-shadow:
+    0 0 0 14px color-mix(in srgb, var(--app-primary) 7%, transparent),
+    0 0 0 28px color-mix(in srgb, var(--app-primary) 4%, transparent);
+}
+
+.illustration-circle mat-icon {
+  width: 48px;
+  height: 48px;
+
+  font-size: 48px;
+}
+
+.floating-shield {
+  position: absolute;
+
+  right: 5px;
+  bottom: 4px;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: var(--app-tertiary);
+
+  color: var(--app-on-tertiary);
+
+  box-shadow: 0 10px 24px rgb(255 107 94 / 0.25);
+
+  transform: rotate(8deg);
+}
+
+.floating-shield mat-icon {
+  font-size: 25px;
+}
+
+.dot {
+  position: absolute;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: var(--app-primary);
+}
+
+.dot-one {
+  top: 15px;
+  left: 20px;
+}
+
+.dot-two {
+  top: 35px;
+  right: 10px;
+
+  width: 5px;
+  height: 5px;
+
+  background: var(--app-tertiary);
+}
+
+.dot-three {
+  bottom: 15px;
+  left: 10px;
+
+  width: 6px;
+  height: 6px;
+
+  background: var(--app-accent-warm);
+}
+
+/* ========================================
+   Content
+======================================== */
+
+.content {
+  max-width: 560px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 12px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+
+  color: var(--app-primary);
+}
+
+h1 {
+  margin: 0 0 16px;
+
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -0.035em;
+
+  color: var(--app-text);
+}
+
+p {
+  margin: 0 auto;
+
+  max-width: 520px;
+
+  font-size: 16px;
+  line-height: 1.7;
+
+  color: var(--app-text-muted);
+}
+
+/* ========================================
+   Actions
+======================================== */
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 32px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 0 20px;
+
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.primary-button {
+  border: 1px solid var(--app-primary);
+
+  background: var(--app-primary);
+  color: var(--app-on-primary);
+
+  box-shadow: 0 8px 20px rgb(108 76 246 / 0.2);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 28px rgb(108 76 246 / 0.28);
+}
+
+.secondary-button {
+  border: 1px solid var(--app-border);
+
+  background: var(--app-card-bg);
+  color: var(--app-text);
+}
+
+.secondary-button:hover {
+  transform: translateY(-2px);
+
+  background: var(--app-primary-container);
+  border-color: var(--app-primary);
+
+  color: var(--app-on-primary-container);
+}
+
+.primary-button mat-icon,
+.secondary-button mat-icon {
+  width: 20px;
+  height: 20px;
+
+  font-size: 20px;
+}
+
+/* ========================================
+   Status
+======================================== */
+
+.status-code {
+  position: absolute;
+
+  top: 20px;
+  right: 28px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+
+  color: var(--app-text-muted);
+
+  opacity: 0.6;
+}
+
+/* ========================================
+   Responsive
+======================================== */
+
+@media (max-width: 600px) {
+  .error-page {
+    padding: 20px 16px;
+  }
+
+  .error-card {
+    padding: 42px 24px;
+    border-radius: 22px;
+  }
+
+  .illustration {
+    transform: scale(0.9);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  p {
+    font-size: 15px;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+
+  .status-code {
+    top: 16px;
+    right: 18px;
+  }
+}

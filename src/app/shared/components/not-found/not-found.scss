@@ -1,0 +1,537 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.error-page {
+  position: relative;
+  min-height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 40px 24px;
+
+  background:
+    radial-gradient(circle at 15% 20%, var(--app-primary-container), transparent 30%),
+    radial-gradient(
+      circle at 85% 80%,
+      color-mix(in srgb, var(--app-tertiary) 12%, transparent),
+      transparent 30%
+    ),
+    var(--app-bg);
+}
+
+/* ========================================
+   Background
+======================================== */
+
+.background-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(70px);
+
+  opacity: 0.4;
+}
+
+.background-glow-primary {
+  width: 280px;
+  height: 280px;
+
+  top: -100px;
+  left: -100px;
+
+  background: var(--app-primary);
+}
+
+.background-glow-secondary {
+  width: 230px;
+  height: 230px;
+
+  right: -80px;
+  bottom: -80px;
+
+  background: var(--app-tertiary);
+}
+
+/* ========================================
+   Card
+======================================== */
+
+.error-card {
+  position: relative;
+
+  width: min(100%, 760px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 48px;
+
+  text-align: center;
+
+  background: color-mix(in srgb, var(--app-card-bg) 94%, var(--app-primary) 6%);
+
+  border: 1px solid var(--app-border);
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 24px 70px rgb(33 31 45 / 0.08),
+    0 8px 30px rgb(108 76 246 / 0.08);
+
+  overflow: hidden;
+}
+
+/* ========================================
+   Ticket scene
+======================================== */
+
+.ticket-scene {
+  position: relative;
+
+  width: 280px;
+  height: 170px;
+
+  margin-bottom: 28px;
+}
+
+/* ========================================
+   Ticket
+======================================== */
+
+.ticket {
+  position: absolute;
+
+  width: 220px;
+  height: 110px;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: stretch;
+
+  box-shadow: 0 16px 30px rgb(33 31 45 / 0.12);
+}
+
+.ticket-back {
+  top: 14px;
+  left: 30px;
+
+  transform: rotate(-8deg);
+
+  background: var(--app-primary-container);
+
+  opacity: 0.7;
+}
+
+.ticket-back .ticket-content {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--app-primary);
+
+  opacity: 0.5;
+}
+
+/* Main ticket */
+
+.ticket-main {
+  z-index: 2;
+
+  top: 25px;
+  left: 30px;
+
+  transform: rotate(4deg);
+
+  background: var(--app-card-bg);
+
+  border: 1px solid var(--app-border);
+}
+
+/* ========================================
+   Ticket left
+======================================== */
+
+.ticket-left {
+  width: 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--app-primary);
+
+  color: var(--app-on-primary);
+
+  border-radius: 14px 0 0 14px;
+}
+
+.ticket-left mat-icon {
+  width: 36px;
+  height: 36px;
+
+  font-size: 36px;
+}
+
+/* ========================================
+   Ticket divider
+======================================== */
+
+.ticket-divider {
+  position: relative;
+
+  width: 1px;
+
+  margin: 12px 0;
+
+  border-left: 2px dashed var(--app-border);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ticket-divider span {
+  position: absolute;
+
+  left: -6px;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: var(--app-card-bg);
+
+  border: 1px solid var(--app-border);
+}
+
+.ticket-divider span:nth-child(1) {
+  top: -7px;
+}
+
+.ticket-divider span:nth-child(2) {
+  top: 25%;
+}
+
+.ticket-divider span:nth-child(3) {
+  top: 50%;
+}
+
+.ticket-divider span:nth-child(4) {
+  top: 75%;
+}
+
+.ticket-divider span:nth-child(5) {
+  bottom: -7px;
+}
+
+/* ========================================
+   Ticket right
+======================================== */
+
+.ticket-right {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding-left: 10px;
+}
+
+.ticket-right strong {
+  font-size: 30px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  color: var(--app-text);
+}
+
+.ticket-right small {
+  margin-top: 7px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  color: var(--app-text-muted);
+}
+
+/* ========================================
+   Search icon
+======================================== */
+
+.floating-icon {
+  position: absolute;
+
+  z-index: 4;
+
+  right: 5px;
+  bottom: 5px;
+
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: var(--app-tertiary);
+
+  color: var(--app-on-tertiary);
+
+  box-shadow: 0 12px 26px rgb(255 107 94 / 0.25);
+
+  transform: rotate(-8deg);
+}
+
+.floating-icon mat-icon {
+  font-size: 27px;
+}
+
+/* ========================================
+   Decorative dots
+======================================== */
+
+.dot {
+  position: absolute;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: var(--app-primary);
+}
+
+.dot-one {
+  top: 15px;
+  left: 20px;
+}
+
+.dot-two {
+  top: 5px;
+  right: 25px;
+
+  width: 6px;
+  height: 6px;
+
+  background: var(--app-accent-warm);
+}
+
+.dot-three {
+  bottom: 10px;
+  left: 15px;
+
+  width: 6px;
+  height: 6px;
+
+  background: var(--app-tertiary);
+}
+
+/* ========================================
+   Content
+======================================== */
+
+.content {
+  max-width: 560px;
+}
+
+.eyebrow {
+  display: inline-flex;
+
+  margin-bottom: 12px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  color: var(--app-primary);
+}
+
+h1 {
+  margin: 0 0 16px;
+
+  font-size: clamp(30px, 5vw, 46px);
+
+  line-height: 1.1;
+
+  font-weight: 750;
+
+  letter-spacing: -0.035em;
+
+  color: var(--app-text);
+}
+
+p {
+  max-width: 520px;
+
+  margin: 0 auto;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+
+  color: var(--app-text-muted);
+}
+
+/* ========================================
+   Actions
+======================================== */
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 32px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 0 20px;
+
+  border-radius: 12px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.primary-button {
+  border: 1px solid var(--app-primary);
+
+  background: var(--app-primary);
+
+  color: var(--app-on-primary);
+
+  box-shadow: 0 8px 20px rgb(108 76 246 / 0.2);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 28px rgb(108 76 246 / 0.28);
+}
+
+.secondary-button {
+  border: 1px solid var(--app-border);
+
+  background: var(--app-card-bg);
+
+  color: var(--app-text);
+}
+
+.secondary-button:hover {
+  transform: translateY(-2px);
+
+  background: var(--app-primary-container);
+
+  border-color: var(--app-primary);
+
+  color: var(--app-on-primary-container);
+}
+
+/* ========================================
+   Status
+======================================== */
+
+.status-code {
+  position: absolute;
+
+  top: 20px;
+  right: 28px;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  color: var(--app-text-muted);
+
+  opacity: 0.6;
+}
+
+/* ========================================
+   Responsive
+======================================== */
+
+@media (max-width: 600px) {
+  .error-page {
+    padding: 20px 16px;
+  }
+
+  .error-card {
+    padding: 40px 24px;
+
+    border-radius: 22px;
+  }
+
+  .ticket-scene {
+    transform: scale(0.85);
+
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  p {
+    font-size: 15px;
+  }
+
+  .actions {
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+
+  .status-code {
+    top: 16px;
+    right: 18px;
+  }
+}

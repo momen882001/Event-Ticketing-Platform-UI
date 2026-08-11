@@ -35,6 +35,10 @@ export const DASHBOARD_ROUTES: Routes = [
               import('../../features/bookings/components/event-booking/event-booking').then(
                 (c) => c.EventBooking,
               ),
+            canActivate: [AuthGuard],
+            data: {
+              roles: [UserRoleEnum.USER],
+            },
           },
         ],
       },
@@ -50,6 +54,10 @@ export const DASHBOARD_ROUTES: Routes = [
             path: '',
             loadComponent: () =>
               import('../../features/bookings/components/bookings').then((c) => c.Bookings),
+            canActivate: [AuthGuard],
+            data: {
+              roles: [UserRoleEnum.USER],
+            },
           },
           {
             path: ':bookingId/view',
@@ -57,11 +65,19 @@ export const DASHBOARD_ROUTES: Routes = [
               import('../../features/bookings/components/view-booking/view-booking').then(
                 (c) => c.ViewBooking,
               ),
+            canActivate: [AuthGuard],
+            data: {
+              roles: [UserRoleEnum.USER],
+            },
           },
           {
             path: ':bookingId/tickets',
             loadComponent: () =>
               import('../../features/tickets/components/tickets').then((c) => c.Tickets),
+            canActivate: [AuthGuard],
+            data: {
+              roles: [UserRoleEnum.USER],
+            },
           },
           {
             path: 'tickets/scan',
@@ -69,6 +85,7 @@ export const DASHBOARD_ROUTES: Routes = [
               import('../../features/tickets/components/ticket-scanner/ticket-scanner').then(
                 (c) => c.TicketScanner,
               ),
+            canActivate: [AuthGuard],
             data: {
               roles: [UserRoleEnum.ADMIN, UserRoleEnum.ORGANIZER],
             },

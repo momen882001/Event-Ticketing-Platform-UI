@@ -23,4 +23,13 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./layout/dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
   },
+  {
+    path: 'unauthorized',
+    loadComponent: () =>
+      import('./shared/components/unauthorized/unauthorized').then((c) => c.Unauthorized),
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./shared/components/not-found/not-found').then((c) => c.NotFound),
+  },
 ];
