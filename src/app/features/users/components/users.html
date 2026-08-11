@@ -4,6 +4,9 @@
     badgeIcon="bi bi-people-fill"
     title="Users"
     description="View and manage all registered users on the platform, including their roles, emails, and account details."
+    [buttonText]="isUserAdmin() ? 'Add Organizer' : ''"
+    [buttonIcon]="isUserAdmin() ? 'bi bi-person-plus-fill' : ''"
+    (action)="onAddOrganizer()"
   >
   </app-page-hero>
 

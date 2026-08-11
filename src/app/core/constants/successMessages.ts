@@ -12,6 +12,7 @@ export const SuccessMessages = {
   usersLoaded: 'Users loaded successfully.',
   userLoaded: 'User details loaded successfully.',
   userCreated: 'User has been created successfully.',
+  organizerCreated: 'Organizer has been created successfully.',
   userUpdated: 'User has been updated successfully.',
   userDeleted: 'User has been deleted successfully.',
 

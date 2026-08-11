@@ -1,0 +1,247 @@
+.organizer-dialog {
+  width: min(760px, 90vw);
+  max-height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(
+    180deg,
+    var(--app-card-bg),
+    var(--app-surface)
+  );
+
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* =========================
+   Header
+   ========================= */
+
+.dialog-header {
+  min-height: 96px;
+  padding: 20px 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-wrapper {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    var(--app-primary),
+    var(--app-tertiary)
+  );
+
+  color: white;
+  box-shadow: var(--app-hero-shadow);
+}
+
+.icon-wrapper mat-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.dialog-header p {
+  margin: 6px 0 0;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  color: var(--app-text-muted);
+}
+
+.close-btn {
+  color: var(--app-text-muted);
+}
+
+/* =========================
+   Body
+   ========================= */
+
+.dialog-body {
+  flex: 1;
+
+  padding: 28px;
+
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.organizer-form {
+  width: 100%;
+}
+
+.field-group {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 16px;
+  row-gap: 10px;
+
+  padding: 22px;
+
+  border-radius: 18px;
+
+  background: var(--app-card-bg);
+  border: 1px solid var(--app-border);
+
+  box-sizing: border-box;
+}
+
+.field-title {
+  grid-column: 1 / -1;
+
+  margin-bottom: 6px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: var(--app-primary);
+}
+
+mat-form-field {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Email takes the entire row */
+.field-group mat-form-field:nth-of-type(3) {
+  grid-column: 1 / -1;
+}
+
+/* Slight separation before passwords */
+.field-group mat-form-field:nth-of-type(4),
+.field-group mat-form-field:nth-of-type(5) {
+  margin-top: 4px;
+}
+
+/* =========================
+   Footer
+   ========================= */
+
+.dialog-footer {
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  padding: 14px 28px;
+
+  box-sizing: border-box;
+
+  border-top: 1px solid var(--app-border);
+  background: var(--app-card-bg);
+}
+
+.cancel-btn {
+  height: 42px;
+
+  padding: 0 18px;
+
+  border-radius: 12px;
+
+  color: var(--app-text-muted);
+}
+
+.save-btn {
+  height: 42px;
+
+  padding: 0 20px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: linear-gradient(
+    135deg,
+    var(--app-primary),
+    var(--app-tertiary)
+  );
+
+  color: white;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 700px) {
+.organizer-dialog {
+  width: 100%;
+  min-height: 620px;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(
+    180deg,
+    var(--app-card-bg),
+    var(--app-surface)
+  );
+
+  overflow: hidden;
+}
+
+  .dialog-header {
+    padding: 18px 20px;
+  }
+
+  .dialog-body {
+    padding: 20px;
+  }
+
+  .field-group {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .field-title {
+    grid-column: auto;
+  }
+
+  .field-group mat-form-field:nth-of-type(3) {
+    grid-column: auto;
+  }
+
+  .dialog-footer {
+    padding: 12px 20px;
+  }
+}
