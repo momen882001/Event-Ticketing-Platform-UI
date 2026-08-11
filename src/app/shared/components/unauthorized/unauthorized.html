@@ -1,0 +1,50 @@
+<main class="error-page">
+  <div class="background-glow background-glow-primary"></div>
+  <div class="background-glow background-glow-secondary"></div>
+
+  <section class="error-card">
+    <!-- Illustration -->
+    <div class="illustration">
+      <div class="illustration-circle">
+        <mat-icon>lock</mat-icon>
+      </div>
+
+      <div class="floating-shield">
+        <mat-icon>shield</mat-icon>
+      </div>
+
+      <span class="dot dot-one"></span>
+      <span class="dot dot-two"></span>
+      <span class="dot dot-three"></span>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <span class="eyebrow"> ACCESS RESTRICTED </span>
+
+      <h1>You don't have permission</h1>
+
+      <p>
+        This area is restricted to users with the required permissions. If you believe you should
+        have access, please contact an administrator.
+      </p>
+
+      <div class="actions">
+        <button type="button" class="primary-button" (click)="goToDashboard()">
+          <mat-icon>dashboard</mat-icon>
+          <span>Go to Dashboard</span>
+        </button>
+
+        <button type="button" class="secondary-button" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          <span>Go Back</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-code">
+      <span>403</span>
+    </div>
+  </section>
+</main>
