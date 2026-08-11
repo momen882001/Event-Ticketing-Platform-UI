@@ -4,10 +4,12 @@ import {
   effect,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   signal,
   ViewChild,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import {
   CalendarOptions,
@@ -37,6 +39,7 @@ import { ICalendarFilter, ICalendarMenuAction } from '../interfaces/calendar-int
 import { ICategoryResponse } from '../../categories/interfaces/category-interface';
 import { IVenueResponse } from '../../venues/interfaces/venue-interface';
 import { EventsService } from '../../../core/services/events.service';
+import { EventWebSocketService } from '../../../core/services/event-websocket.service';
 import { AddEditEvent } from './add-edit-event/add-edit-event';
 import { NotificationService } from '../../../core/services/notification.service';
 import { SuccessMessages } from '../../../core/constants/successMessages';
@@ -48,6 +51,7 @@ import { DatePipe } from '@angular/common';
 import { UserRoleEnum } from '../../../shared/enums/UserRoleEnum';
 import { ConfirmationDialog } from '../../../shared/components/confirmation-dialog/confirmation-dialog';
 import { IConfirmationDialogData } from '../../../shared/interfaces/confirmation-dialog';
+import { IEventUpdate } from '../../../shared/interfaces/event-update.interface';
 
 @Component({
   selector: 'app-calendar-landing-page',
@@ -62,7 +66,7 @@ import { IConfirmationDialogData } from '../../../shared/interfaces/confirmation
   templateUrl: './calendar-landing-page.html',
   styleUrl: './calendar-landing-page.scss',
 })
-export class CalendarLandingPage implements OnInit {
+export class CalendarLandingPage implements OnInit, OnDestroy {
   events = signal<IEventResponse[]>([]);
   allCategories = signal<ICategoryResponse[]>([]);
   allVenues = signal<IVenueResponse[]>([]);
@@ -79,6 +83,8 @@ export class CalendarLandingPage implements OnInit {
     x: 0,
     y: 0,
   });
+
+  private eventUpdatesSubscription?: Subscription;
 
   @ViewChild('calendarMenu')
   calendarMenu!: ElementRef<HTMLElement>;
@@ -162,6 +168,7 @@ export class CalendarLandingPage implements OnInit {
     private categoriesService: CategoriesService,
     private venuesService: VenuesService,
     private eventsService: EventsService,
+    private eventWebSocketService: EventWebSocketService,
     private notificationService: NotificationService,
     private authService: AuthService,
     private router: Router,
@@ -179,6 +186,12 @@ export class CalendarLandingPage implements OnInit {
     this.loadAllCategories();
     this.loadAllVenues();
     this.updateCalendarSelectableOption();
+    this.listenToEventUpdates();
+  }
+
+  ngOnDestroy(): void {
+    this.eventUpdatesSubscription?.unsubscribe();
+    this.eventWebSocketService.disconnect();
   }
 
   calendarOptions = signal<CalendarOptions>({
@@ -337,6 +350,76 @@ export class CalendarLandingPage implements OnInit {
   }
 
   // ------------------------------- Private Methods -------------------------------
+
+  private listenToEventUpdates(): void {
+    this.eventWebSocketService.connect();
+
+    this.eventUpdatesSubscription = this.eventWebSocketService.updates$.subscribe((update) => {
+      this.applyEventUpdate(update);
+    });
+  }
+
+  private applyEventUpdate(update: IEventUpdate): void {
+    if (update.type === 'EVENT_DELETED') {
+      this.events.update((events) => events.filter((event) => event.id !== update.eventId));
+      return;
+    }
+
+    if (!update.event) {
+      return;
+    }
+
+    const updatedEvent = update.event;
+    const matchesFilter = this.eventMatchesFilter(updatedEvent, this.filterObject());
+
+    this.events.update((events) => {
+      const index = events.findIndex((event) => event.id === update.eventId);
+
+      if (index >= 0) {
+        if (!matchesFilter) {
+          return events.filter((event) => event.id !== update.eventId);
+        }
+
+        const next = [...events];
+        next[index] = updatedEvent;
+        return next;
+      }
+
+      if (matchesFilter && (update.type === 'EVENT_CREATED' || update.type === 'EVENT_UPDATED')) {
+        return [updatedEvent, ...events];
+      }
+
+      return events;
+    });
+  }
+
+  private eventMatchesFilter(event: IEventResponse, filter: ICalendarFilter): boolean {
+    const search = filter.search?.trim().toLowerCase();
+
+    if (search) {
+      const matchesSearch =
+        event.title.toLowerCase().includes(search) ||
+        event.description?.toLowerCase().includes(search);
+
+      if (!matchesSearch) {
+        return false;
+      }
+    }
+
+    if (filter.categoryId != null && event.categoryId !== filter.categoryId) {
+      return false;
+    }
+
+    if (filter.venueId != null && event.venue?.id !== filter.venueId) {
+      return false;
+    }
+
+    if (filter.status != null && event.status !== filter.status) {
+      return false;
+    }
+
+    return true;
+  }
 
   private loadAllEvents(filterObject?: ICalendarFilter) {
     this.eventsService.getAllEvents(filterObject).subscribe({
