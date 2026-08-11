@@ -339,7 +339,7 @@ export class CalendarLandingPage implements OnInit, OnDestroy {
           next: (response) => {
             console.log('Event created:', response);
             this.notificationService.success(SuccessMessages.eventCreated);
-            this.loadAllEvents();
+            // this.loadAllEvents();
           },
           error: (error) => {
             console.error('Error creating event:', error);
@@ -503,9 +503,9 @@ export class CalendarLandingPage implements OnInit, OnDestroy {
           .updateEvent(result.data, Number(this.clickedEvent()?.id), result.image)
           .subscribe({
             next: (response) => {
-              console.log('Event created:', response);
+              console.log('Event updated:', response);
               this.notificationService.success(SuccessMessages.eventUpdated);
-              this.loadAllEvents();
+              // this.loadAllEvents();
             },
             error: (error) => {
               console.error('Error creating event:', error);
@@ -547,7 +547,7 @@ export class CalendarLandingPage implements OnInit, OnDestroy {
       this.eventsService.cancelEvent(+event.id).subscribe({
         next: (res) => {
           this.notificationService.success(SuccessMessages.eventCanceled);
-          this.loadAllEvents();
+          // this.loadAllEvents();
         },
         error: (err) => {
           console.log(err);
@@ -587,7 +587,7 @@ export class CalendarLandingPage implements OnInit, OnDestroy {
       this.eventsService.deleteEvent(+event.id).subscribe({
         next: (res) => {
           this.notificationService.success(SuccessMessages.eventDeleted);
-          this.loadAllEvents();
+          // this.loadAllEvents();
         },
         error: (err) => {
           console.log(err);
