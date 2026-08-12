@@ -6,6 +6,7 @@ import { EventCardComponent } from '../../../../shared/components/event-card/eve
 import { NavbarComponent } from '../../../../layout/navbar/navbar';
 import { UsersService } from '../../../../core/services/users.service';
 import { IEventResponse } from '../../../calendar/interfaces/event-interface';
+import { EventStatusEnum } from '../../../../shared/enums/EventStatusEnum';
 
 @Component({
   selector: 'app-event-view-all',
@@ -99,7 +100,8 @@ export class EventViewAllComponent implements OnInit {
         this.renderVenueSlice();
         this.isLoadingVenues.set(false);
 
-        this.allEvents.set(events.content ?? []);
+        const publishedEvents = (events.content ?? []).filter((event) => this.isPublished(event));
+        this.allEvents.set(publishedEvents);
         this.isLoadingEvents.set(false);
       },
       error: (err) => {
@@ -124,5 +126,9 @@ export class EventViewAllComponent implements OnInit {
     const start = this.venuePage() * this.venuePageSize;
     const end = start + this.venuePageSize;
     this.venues.set(['All', ...this.allVenues().slice(start, end)]);
+  }
+
+  private isPublished(event: IEventResponse): boolean {
+    return String(event.status).toUpperCase() === EventStatusEnum.PUBLISHED;
   }
 }

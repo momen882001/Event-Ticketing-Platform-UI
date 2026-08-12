@@ -1,6 +1,11 @@
 <article class="event-card">
   <div class="event-card__media">
-    <img [src]="imageUrl" [alt]="event.title" loading="lazy" />
+    <img
+      [src]="displayImage"
+      [alt]="event.title"
+      loading="lazy"
+      (error)="onImageError()"
+    />
     <span class="event-card__badge">{{ categoryName }}</span>
     @if (event.status === EventStatusEnum.PUBLISHED) {
       <span class="event-card__status-dot" title="Available"></span>

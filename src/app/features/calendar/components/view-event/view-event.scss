@@ -109,6 +109,8 @@
 
   overflow: hidden;
 
+  object-fit: fill;
+
   border-radius: 18px;
 
   border: 1px solid var(--app-border);
@@ -135,7 +137,7 @@
 
     display: block;
 
-    object-fit: cover;
+    object-fit: fill;
 
     object-position: center;
   }

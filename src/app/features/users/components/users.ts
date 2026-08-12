@@ -21,7 +21,7 @@ import { AddOrganizer } from './add-organizer/add-organizer';
 export class Users implements OnInit {
   allUsers = signal<IUserResponse[]>([]);
   totalItems = signal<number>(0);
-  pageSize = signal<number>(10);
+  pageSize = signal<number>(5);
   pageNumber = signal<number>(0);
 
   constructor(
@@ -47,42 +47,40 @@ export class Users implements OnInit {
     { key: 'createdAt', header: 'Created At', type: 'datetime' },
   ];
 
- onAddOrganizer(): void {
-  const dialog = this.dialog.open(AddOrganizer, {
-  width: '750px',
-  maxWidth: '92vw',
-  maxHeight: '90vh',
-  autoFocus: false,
-  panelClass: 'organizer-dialog-panel',
-});
-
-  dialog.afterClosed().subscribe((result) => {
-    if (!result) {
-      return;
-    }
-
-    const registerData: IRegisterRequest = {
-      ...result,
-      role: UserRoleEnum.ORGANIZER,
-    };
-
-    this.authService.signUp(registerData).subscribe({
-      next: (res) => {
-        console.log(res, 'create organizer res');
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        this.notificationService.success(
-          SuccessMessages.organizerCreated
-        );
-
-        this.loadAllUsers();
-      },
+  onAddOrganizer(): void {
+    const dialog = this.dialog.open(AddOrganizer, {
+      width: '750px',
+      maxWidth: '92vw',
+      maxHeight: '90vh',
+      autoFocus: false,
+      panelClass: 'organizer-dialog-panel',
     });
-  });
-}
+
+    dialog.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
+      }
+
+      const registerData: IRegisterRequest = {
+        ...result,
+        role: UserRoleEnum.ORGANIZER,
+      };
+
+      this.authService.signUp(registerData).subscribe({
+        next: (res) => {
+          console.log(res, 'create organizer res');
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.notificationService.success(SuccessMessages.organizerCreated);
+
+          this.loadAllUsers();
+        },
+      });
+    });
+  }
 
   private loadAllUsers(): void {
     this.adminUsersService.getAllUsers().subscribe({

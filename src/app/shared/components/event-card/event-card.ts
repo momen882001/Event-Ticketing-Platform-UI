@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IEventResponse } from '../../../features/calendar/interfaces/event-interface';
 import { EventStatusEnum } from '../../enums/EventStatusEnum';
 
+const DEFAULT_EVENT_IMAGE = 'assets/images/default-image.jpeg';
+
 @Component({
   selector: 'app-event-card',
   imports: [CommonModule],
@@ -12,8 +14,21 @@ import { EventStatusEnum } from '../../enums/EventStatusEnum';
 export class EventCardComponent {
   public EventStatusEnum = EventStatusEnum;
 
-  @Input({ required: true }) event!: IEventResponse;
+  private _event!: IEventResponse;
+
+  @Input({ required: true })
+  set event(value: IEventResponse) {
+    this._event = value;
+    this.displayImage = this.resolveImageUrl(value.imageUrl);
+  }
+
+  get event(): IEventResponse {
+    return this._event;
+  }
+
   @Output() book = new EventEmitter<IEventResponse>();
+
+  protected displayImage = DEFAULT_EVENT_IMAGE;
 
   get lowestPrice(): string {
     const seats = this.event.seatCategories;
@@ -53,10 +68,14 @@ export class EventCardComponent {
     return venueAny?.name ?? '—';
   }
 
-  get imageUrl(): string {
-    return (
-      this.event.imageUrl?.trim() ||
-      'https://images.unsplash.com/photo-1459749411177-039908711577?auto=format&fit=crop&w=900&q=80'
-    );
+  protected onImageError(): void {
+    if (this.displayImage !== DEFAULT_EVENT_IMAGE) {
+      this.displayImage = DEFAULT_EVENT_IMAGE;
+    }
+  }
+
+  private resolveImageUrl(url?: string | null): string {
+    const trimmed = url?.trim();
+    return trimmed || DEFAULT_EVENT_IMAGE;
   }
 }

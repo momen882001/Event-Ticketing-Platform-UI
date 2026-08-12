@@ -1,12 +1,12 @@
 ﻿import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { forkJoin } from 'rxjs';
 import { NavbarComponent } from '../../../layout/navbar/navbar';
 import { InfoComponent } from './info/info';
 import { EventCardComponent } from '../../../shared/components/event-card/event-card';
 import { UsersService } from '../../../core/services/users.service';
 import { IEventResponse } from '../../calendar/interfaces/event-interface';
+import { EventStatusEnum } from '../../../shared/enums/EventStatusEnum';
 
 @Component({
   selector: 'app-homepage',
@@ -43,7 +43,7 @@ export class Homepage implements OnInit, OnDestroy {
   private loadFeaturedEvents(): void {
     this.usersService.getAllEvents(0, 30, 'startDateTime,desc').subscribe({
       next: (page) => {
-        this.allEvents = page.content ?? [];
+        this.allEvents = (page.content ?? []).filter((event) => this.isPublished(event));
         this.featuredEvents.set(this.pickRandomFeatured(this.allEvents));
         this.featuredBatch.update((batch) => batch + 1);
         this.isFeaturedLoading.set(false);
@@ -75,5 +75,9 @@ export class Homepage implements OnInit, OnDestroy {
   private pickRandomFeatured(events: IEventResponse[]): IEventResponse[] {
     const shuffle = [...events].sort(() => Math.random() - 0.5);
     return shuffle.slice(0, Math.min(this.featuredCount, shuffle.length));
+  }
+
+  private isPublished(event: IEventResponse): boolean {
+    return String(event.status).toUpperCase() === EventStatusEnum.PUBLISHED;
   }
 }
