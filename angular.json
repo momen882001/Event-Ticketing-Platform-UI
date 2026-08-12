@@ -70,7 +70,8 @@
               "buildTarget": "Event-Ticketing-Platform-UI:build:production"
             },
             "development": {
-              "buildTarget": "Event-Ticketing-Platform-UI:build:development"
+              "buildTarget": "Event-Ticketing-Platform-UI:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

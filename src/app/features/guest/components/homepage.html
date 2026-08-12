@@ -34,17 +34,18 @@
         <a routerLink="/events" class="section__link">View all</a>
       </div>
 
-      @if (isFeaturedLoading) {
+      @if (isFeaturedLoading()) {
         <div class="featured-loading" aria-live="polite">
           <p>Loading featured events...</p>
         </div>
       } @else {
         <div class="event-grid event-grid--featured">
-          @for (event of featuredEvents; track featuredBatch + '-' + event.title + '-' + $index; let i = $index) {
-            <app-event-card
+          @for (event of featuredEvents(); track featuredBatch() + '-' + event.title + '-' + $index; let i = $index) {
+                        <app-event-card
               class="featured-card featured-card--enter"
               [style.animation-delay]="(i * 120) + 'ms'"
               [event]="event"
+              (book)="onBookEvent($event)"
             ></app-event-card>
           }
         </div>

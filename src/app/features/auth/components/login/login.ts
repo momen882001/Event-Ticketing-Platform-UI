@@ -42,7 +42,7 @@ export class Login {
   readonly hidePassword = signal(true);
   readonly submitAttempted = signal(false);
 
-  readonly returnUrl = signal('/dashboard');
+  readonly returnUrl = signal('/');
 
   readonly loginModel = signal<LoginModel>({
     username: '',
