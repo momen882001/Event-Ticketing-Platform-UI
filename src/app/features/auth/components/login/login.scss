@@ -99,6 +99,67 @@
   animation: fadeInUp 0.45s ease-out 0.12s both;
 }
 
+.auth-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.5rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--app-border) 80%, transparent);
+  background: color-mix(in srgb, var(--app-bg) 88%, white);
+  color: var(--app-text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    color: var(--app-primary);
+    border-color: color-mix(in srgb, var(--app-primary) 35%, var(--app-border));
+    background: color-mix(in srgb, var(--app-primary) 6%, white);
+    box-shadow: 0 4px 14px rgb(26 77 124 / 0.08);
+    transform: translateX(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--app-primary) 55%, transparent);
+    outline-offset: 2px;
+  }
+}
+
+.auth-back__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--app-primary) 10%, white);
+  color: var(--app-primary);
+  transition: background 0.2s ease;
+
+  mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+.auth-back:hover .auth-back__icon {
+  background: color-mix(in srgb, var(--app-primary) 16%, white);
+}
+
+.auth-back__label {
+  padding-right: 0.15rem;
+}
+
 .login-panel__header {
   margin-bottom: 1.75rem;
 }

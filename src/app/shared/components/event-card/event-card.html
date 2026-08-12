@@ -1,6 +1,10 @@
 <article class="event">
   <div class="event__media">
-    <img [src]="event.image" [alt]="event.title" loading="lazy" />
+    <img
+      [src]="event.image ?? '/src/assets/images/default-image.jpeg'"
+      [alt]="event.title"
+      loading="lazy"
+    />
   </div>
   <div class="event__body">
     <p class="event__category">{{ event.category }}</p>
@@ -9,7 +13,9 @@
     <p class="event__meta">{{ event.venue }}</p>
     <div class="event__footer">
       <strong>{{ event.price }}</strong>
-      <button type="button" class="btn btn--compact" (click)="book.emit(event)">Book</button>
+      @if (event.status === EventStatusEnum.PUBLISHED) {
+        <button type="button" class="btn btn--compact" (click)="book.emit(event)">Book</button>
+      }
     </div>
   </div>
 </article>

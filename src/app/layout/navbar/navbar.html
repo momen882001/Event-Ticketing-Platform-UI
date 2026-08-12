@@ -1,9 +1,7 @@
 <header class="home-nav">
   <div class="home-nav__inner">
     <div class="home-nav__start">
-      <a routerLink="/" class="home-nav__brand" aria-label="Event Booking Platform">
-        Event Booking Platform
-      </a>
+      <a routerLink="/" class="home-nav__brand" aria-label="EventMe"> EventMe </a>
 
       <nav class="home-nav__links" aria-label="Main navigation">
         <a routerLink="/events">Events</a>
@@ -17,6 +15,8 @@
       @if (!isLoggedIn()) {
         <a routerLink="/auth/login" class="home-nav__login">Login</a>
         <a routerLink="/auth/register" class="home-nav__login btn--ghost-nav">Create account</a>
+      } @else {
+        <a (click)="onLogout()" class="home-nav__login">Logout</a>
       }
     </div>
   </div>

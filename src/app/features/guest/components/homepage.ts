@@ -53,7 +53,7 @@ export class Homepage implements OnInit, OnDestroy {
 
   private loadFeaturedEvents(): void {
     forkJoin({
-      events: this.usersService.getAllEvents(0, 20, 'startDateTime,desc'),
+      events: this.usersService.getAllEvents(0, 30, 'startDateTime,desc'),
       categories: this.usersService.getAllCategories(),
       venues: this.usersService.getAllVenues(),
     }).subscribe({
@@ -75,6 +75,7 @@ export class Homepage implements OnInit, OnDestroy {
             `Venue ${event.venueId ?? '--'}`,
           price: '--',
           image: event.imageUrl?.trim() || this.pickRandomImage(),
+          status: event.status,
         }));
 
         this.allMappedEvents = mapped;

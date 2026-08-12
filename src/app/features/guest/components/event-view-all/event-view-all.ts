@@ -4,10 +4,7 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { EventCardComponent, EventCard } from '../../../../shared/components/event-card/event-card';
 import { NavbarComponent } from '../../../../layout/navbar/navbar';
-import {
-  EventResponse,
-  UsersService,
-} from '../../../../core/services/users.service';
+import { EventResponse, UsersService } from '../../../../core/services/users.service';
 
 @Component({
   selector: 'app-event-view-all',
@@ -47,8 +44,7 @@ export class EventViewAllComponent implements OnInit {
       const matchCategory =
         this.selectedCategory() === 'All' || event.category === this.selectedCategory();
 
-      const matchVenue =
-        this.selectedVenue() === 'All' || event.venue === this.selectedVenue();
+      const matchVenue = this.selectedVenue() === 'All' || event.venue === this.selectedVenue();
 
       return matchCategory && matchVenue;
     }),
@@ -147,11 +143,12 @@ export class EventViewAllComponent implements OnInit {
       venue:
         event.venue?.name ??
         (event.venueId !== undefined ? this.venueNameMap.get(event.venueId) : undefined) ??
-        `Venue ${event.venueId ?? '—'}`,
-      price: '—',
+        `Venue ${event.venueId ?? 'ï¿½'}`,
+      price: 'ï¿½',
       image:
         event.imageUrl?.trim() ||
         'https://images.unsplash.com/photo-1459749411177-039908711577?auto=format&fit=crop&w=900&q=80',
+      status: event.status,
     };
   }
 }
