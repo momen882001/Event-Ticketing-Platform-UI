@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { URLs } from '../api/api-urls';
+import { IEventResponse } from '../../features/calendar/interfaces/event-interface';
 
 export type EventResponse = {
   id: number;
@@ -73,11 +74,11 @@ export class UsersService {
     page = 0,
     size = 10,
     sort = 'startDateTime,desc',
-  ): Observable<PageResponse<EventResponse>> {
+  ): Observable<PageResponse<IEventResponse>> {
     const params = this.buildQuery({ page, size, sort });
 
     return this.http
-      .get<EventResponse[] | PageResponse<EventResponse> | EventListResponse>(
+      .get<IEventResponse[] | PageResponse<IEventResponse> | { value?: IEventResponse[]; content?: IEventResponse[]; data?: IEventResponse[] }>(
         `${this.apiBase}/events`,
         { params },
       )
@@ -97,12 +98,11 @@ export class UsersService {
           }
 
           if (response && typeof response === 'object') {
-            const list = response as EventListResponse;
-            const content =
-              list.content ?? list.value ?? list.data ?? [];
+            const list = response as { value?: IEventResponse[]; content?: IEventResponse[]; data?: IEventResponse[] };
+            const content = list.content ?? list.value ?? list.data ?? [];
 
             if (Array.isArray(content)) {
-              const meta = (response as PageResponse<EventResponse>).page;
+              const meta = (response as PageResponse<IEventResponse>).page;
 
               return {
                 content,
@@ -121,7 +121,7 @@ export class UsersService {
         catchError((err) => {
           console.error('getAllEvents failed:', err);
           return of({
-            content: [],
+            content: [] as IEventResponse[],
             page: {
               size,
               number: page,
@@ -133,8 +133,8 @@ export class UsersService {
       );
   }
 
-  getEventById(id: number): Observable<EventResponse> {
-    return this.http.get<EventResponse>(`${this.apiBase}/events/${id}`);
+  getEventById(id: number): Observable<IEventResponse> {
+    return this.http.get<IEventResponse>(`${this.apiBase}/events/${id}`);
   }
 
   getAllCategories(): Observable<CategoryResponse[]> {

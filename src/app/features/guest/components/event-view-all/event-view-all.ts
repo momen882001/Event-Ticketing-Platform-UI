@@ -2,9 +2,10 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { EventCardComponent, EventCard } from '../../../../shared/components/event-card/event-card';
+import { EventCardComponent } from '../../../../shared/components/event-card/event-card';
 import { NavbarComponent } from '../../../../layout/navbar/navbar';
-import { EventResponse, UsersService } from '../../../../core/services/users.service';
+import { UsersService } from '../../../../core/services/users.service';
+import { IEventResponse } from '../../../calendar/interfaces/event-interface';
 
 @Component({
   selector: 'app-event-view-all',
@@ -22,7 +23,7 @@ export class EventViewAllComponent implements OnInit {
   protected readonly selectedCategory = signal('All');
   protected readonly selectedVenue = signal('All');
 
-  protected readonly allEvents = signal<EventCard[]>([]);
+  protected readonly allEvents = signal<IEventResponse[]>([]);
   protected readonly isLoadingEvents = signal(true);
   protected readonly isLoadingCategories = signal(true);
   protected readonly isLoadingVenues = signal(true);
@@ -36,15 +37,17 @@ export class EventViewAllComponent implements OnInit {
   private readonly allCategories = signal<string[]>([]);
   private readonly allVenues = signal<string[]>([]);
 
-  private categoryNameMap = new Map<number, string>();
-  private venueNameMap = new Map<number, string>();
-
-  protected readonly filteredEvents = computed<EventCard[]>(() =>
+  protected readonly filteredEvents = computed<IEventResponse[]>(() =>
     this.allEvents().filter((event) => {
-      const matchCategory =
-        this.selectedCategory() === 'All' || event.category === this.selectedCategory();
+      // Backend may return category as `venue.category.name` instead of `venue.categoryName`.
+      const venueAny = event.venue as unknown as { categoryName?: string; category?: { name?: string }; name?: string } | null;
+      const categoryName = venueAny?.categoryName ?? venueAny?.category?.name ?? '';
+      const venueName = venueAny?.name ?? '';
 
-      const matchVenue = this.selectedVenue() === 'All' || event.venue === this.selectedVenue();
+      const matchCategory =
+        this.selectedCategory() === 'All' || categoryName === this.selectedCategory();
+      const matchVenue =
+        this.selectedVenue() === 'All' || venueName === this.selectedVenue();
 
       return matchCategory && matchVenue;
     }),
@@ -54,11 +57,7 @@ export class EventViewAllComponent implements OnInit {
     this.loadAllData();
   }
 
-  protected onBookEvent(event: EventCard): void {
-    if (event.id === undefined) {
-      return;
-    }
-
+  protected onBookEvent(event: IEventResponse): void {
     this.router.navigate(['/dashboard', 'calendar', 'events', event.id, 'booking']);
   }
 
@@ -92,19 +91,15 @@ export class EventViewAllComponent implements OnInit {
         const categoryList = categories ?? [];
         const venueList = venues ?? [];
 
-        this.categoryNameMap = new Map(
-          categoryList.map((category) => [category.id, category.name]),
-        );
-        this.allCategories.set(categoryList.map((category) => category.name));
+        this.allCategories.set(categoryList.map((c) => c.name));
         this.renderCategorySlice();
         this.isLoadingCategories.set(false);
 
-        this.venueNameMap = new Map(venueList.map((venue) => [venue.id, venue.name]));
-        this.allVenues.set(venueList.map((venue) => venue.name));
+        this.allVenues.set(venueList.map((v) => v.name));
         this.renderVenueSlice();
         this.isLoadingVenues.set(false);
 
-        this.allEvents.set((events.content ?? []).map((event) => this.mapEvent(event)));
+        this.allEvents.set(events.content ?? []);
         this.isLoadingEvents.set(false);
       },
       error: (err) => {
@@ -129,26 +124,5 @@ export class EventViewAllComponent implements OnInit {
     const start = this.venuePage() * this.venuePageSize;
     const end = start + this.venuePageSize;
     this.venues.set(['All', ...this.allVenues().slice(start, end)]);
-  }
-
-  private mapEvent(event: EventResponse): EventCard {
-    return {
-      id: event.id,
-      title: event.title,
-      category:
-        this.categoryNameMap.get(event.categoryId) ??
-        event.venue?.category?.name ??
-        `Category ${event.categoryId}`,
-      date: new Date(event.startDateTime).toLocaleString(),
-      venue:
-        event.venue?.name ??
-        (event.venueId !== undefined ? this.venueNameMap.get(event.venueId) : undefined) ??
-        `Venue ${event.venueId ?? '�'}`,
-      price: '�',
-      image:
-        event.imageUrl?.trim() ||
-        'https://images.unsplash.com/photo-1459749411177-039908711577?auto=format&fit=crop&w=900&q=80',
-      status: event.status,
-    };
   }
 }

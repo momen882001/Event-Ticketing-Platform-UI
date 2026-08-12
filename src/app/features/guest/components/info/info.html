@@ -7,6 +7,11 @@
   <div class="trust-grid">
     @for (item of highlights; track item.title) {
       <article class="trust-item">
+        <div class="trust-item__icon-wrap">
+          <svg class="trust-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path [attr.d]="item.icon" />
+          </svg>
+        </div>
         <h3>{{ item.title }}</h3>
         <p>{{ item.text }}</p>
       </article>
