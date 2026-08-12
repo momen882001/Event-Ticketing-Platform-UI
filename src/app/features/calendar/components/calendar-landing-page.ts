@@ -197,8 +197,9 @@ export class CalendarLandingPage implements OnInit, OnDestroy {
   calendarOptions = signal<CalendarOptions>({
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
     initialView: 'timeGridWeek',
-    height: 'auto',
+    height: '100vh',
     expandRows: true,
+    stickyHeaderDates: true,
     nowIndicator: true,
     dayMaxEvents: true,
     weekends: true,

@@ -80,6 +80,11 @@ app-event-status-indicators {
 
   /* ================= Header ================= */
 
+  .fc-scrollgrid-section-header,
+  .fc-scrollgrid-section-header th {
+    background: var(--app-card-bg);
+  }
+
   .fc-col-header-cell {
     background: var(--app-surface);
     border-color: var(--app-border);
