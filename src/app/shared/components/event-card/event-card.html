@@ -9,7 +9,7 @@
     <p class="event__meta">{{ event.venue }}</p>
     <div class="event__footer">
       <strong>{{ event.price }}</strong>
-      <button type="button" class="btn btn--compact">Book</button>
+      <button type="button" class="btn btn--compact" (click)="book.emit(event)">Book</button>
     </div>
   </div>
 </article>

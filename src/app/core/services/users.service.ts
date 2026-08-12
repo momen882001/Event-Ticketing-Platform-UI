@@ -6,13 +6,26 @@ import { URLs } from '../api/api-urls';
 export type EventResponse = {
   id: number;
   organizerId: number;
-  venueId: number;
+  venueId?: number;
   categoryId: number;
   title: string;
   description: string;
   startDateTime: string;
   endDateTime: string;
   status: string;
+  imageUrl?: string;
+  venue?: {
+    id: number;
+    name: string;
+    address?: string;
+    category?: { id: number; name: string } | null;
+  } | null;
+};
+
+export type EventListResponse = {
+  value?: EventResponse[];
+  content?: EventResponse[];
+  data?: EventResponse[];
 };
 
 export type CategoryResponse = {
@@ -52,7 +65,7 @@ export type PageResponse<T> = {
   providedIn: 'root',
 })
 export class UsersService {
-  private readonly apiBase = 'http://localhost:8082/api';
+  private readonly apiBase = '/api';
 
   constructor(private http: HttpClient) {}
 
@@ -62,19 +75,62 @@ export class UsersService {
     sort = 'startDateTime,desc',
   ): Observable<PageResponse<EventResponse>> {
     const params = this.buildQuery({ page, size, sort });
-    return this.http.get<PageResponse<EventResponse>>(`${this.apiBase}/events`, { params }).pipe(
-      catchError(() =>
-        of({
-          content: [],
-          page: {
-            size,
-            number: page,
-            totalElements: 0,
-            totalPages: 0,
-          },
+
+    return this.http
+      .get<EventResponse[] | PageResponse<EventResponse> | EventListResponse>(
+        `${this.apiBase}/events`,
+        { params },
+      )
+      .pipe(
+        map((response) => {
+          // Backend returns a plain array OR a { content, page } object — normalize both.
+          if (Array.isArray(response)) {
+            return {
+              content: response,
+              page: {
+                size,
+                number: page,
+                totalElements: response.length,
+                totalPages: Math.ceil(response.length / size),
+              },
+            };
+          }
+
+          if (response && typeof response === 'object') {
+            const list = response as EventListResponse;
+            const content =
+              list.content ?? list.value ?? list.data ?? [];
+
+            if (Array.isArray(content)) {
+              const meta = (response as PageResponse<EventResponse>).page;
+
+              return {
+                content,
+                page: meta ?? {
+                  size,
+                  number: page,
+                  totalElements: content.length,
+                  totalPages: Math.ceil(content.length / size),
+                },
+              };
+            }
+          }
+
+          return { content: [], page: { size, number: page, totalElements: 0, totalPages: 0 } };
         }),
-      ),
-    );
+        catchError((err) => {
+          console.error('getAllEvents failed:', err);
+          return of({
+            content: [],
+            page: {
+              size,
+              number: page,
+              totalElements: 0,
+              totalPages: 0,
+            },
+          });
+        }),
+      );
   }
 
   getEventById(id: number): Observable<EventResponse> {
@@ -102,7 +158,10 @@ export class UsersService {
 
           return [];
         }),
-        catchError(() => of([])),
+        catchError((err) => {
+          console.error('getAllCategories failed:', err);
+          return of([]);
+        }),
       );
   }
 
@@ -121,8 +180,9 @@ export class UsersService {
   ): Observable<PageResponse<VenueResponse>> {
     const params = this.buildQuery({ page, size, sort });
     return this.http.get<PageResponse<VenueResponse>>(`${this.apiBase}/venues/paged`, { params }).pipe(
-      catchError(() =>
-        of({
+      catchError((err) => {
+        console.error('getPagedVenues failed:', err);
+        return of({
           content: [],
           page: {
             size,
@@ -130,8 +190,8 @@ export class UsersService {
             totalElements: 0,
             totalPages: 0,
           },
-        }),
-      ),
+        });
+      }),
     );
   }
 
