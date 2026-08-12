@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export interface EventCard {
+  id?: number;
   title: string;
   category: string;
   date: string;
@@ -17,4 +18,5 @@ export interface EventCard {
 })
 export class EventCardComponent {
   @Input({ required: true }) event!: EventCard;
+  @Output() book = new EventEmitter<EventCard>();
 }

@@ -1,18 +1,23 @@
 <header class="home-nav">
   <div class="home-nav__inner">
     <div class="home-nav__start">
-      <a routerLink="/homepage" class="home-nav__brand" aria-label="Event Booking Platform">
+      <a routerLink="/" class="home-nav__brand" aria-label="Event Booking Platform">
         Event Booking Platform
       </a>
 
       <nav class="home-nav__links" aria-label="Main navigation">
         <a routerLink="/events">Events</a>
+        @if (isLoggedIn()) {
+          <a routerLink="/dashboard/calendar">Dashboard</a>
+        }
       </nav>
     </div>
 
     <div class="home-nav__end">
-      <a routerLink="/auth/login" class="home-nav__login">Login</a>
-      <a routerLink="/auth/register" class="home-nav__login btn--ghost-nav">Create account</a>
+      @if (!isLoggedIn()) {
+        <a routerLink="/auth/login" class="home-nav__login">Login</a>
+        <a routerLink="/auth/register" class="home-nav__login btn--ghost-nav">Create account</a>
+      }
     </div>
   </div>
 </header>

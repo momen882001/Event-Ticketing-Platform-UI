@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
+﻿import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { NavbarComponent } from '../../../layout/navbar/navbar';
 import { InfoComponent } from './info/info';
 import { EventCardComponent, EventCard } from '../../../shared/components/event-card/event-card';
-import { AuthService } from '../../../core/services/auth.service';
 import { UsersService } from '../../../core/services/users.service';
 
 @Component({
@@ -15,14 +14,12 @@ import { UsersService } from '../../../core/services/users.service';
   styleUrl: './homepage.scss',
 })
 export class Homepage implements OnInit, OnDestroy {
-  private readonly authService = inject(AuthService);
   private readonly usersService = inject(UsersService);
   private readonly router = inject(Router);
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
-  protected featuredEvents: EventCard[] = [];
-  protected isFeaturedLoading = true;
-  protected featuredBatch = 0;
+  protected readonly featuredEvents = signal<EventCard[]>([]);
+  protected readonly isFeaturedLoading = signal(true);
+  protected readonly featuredBatch = signal(0);
 
   private readonly featuredCount = 3;
   private readonly autoRotateInterval = 10000;
@@ -39,10 +36,6 @@ export class Homepage implements OnInit, OnDestroy {
   private allMappedEvents: EventCard[] = [];
 
   ngOnInit(): void {
-    if (this.authService.hasUserToken()) {
-      this.router.navigate(['/dashboard']);
-    }
-
     this.loadFeaturedEvents();
   }
 
@@ -50,36 +43,50 @@ export class Homepage implements OnInit, OnDestroy {
     this.stopAutoRotate();
   }
 
+  onBookEvent(event: EventCard): void {
+    if (event.id === undefined) {
+      return;
+    }
+
+    this.router.navigate(['/dashboard', 'calendar', 'events', event.id, 'booking']);
+  }
+
   private loadFeaturedEvents(): void {
     forkJoin({
       events: this.usersService.getAllEvents(0, 20, 'startDateTime,desc'),
       categories: this.usersService.getAllCategories(),
-      venues: this.usersService.getPagedVenues(0, 50, 'name,asc'),
+      venues: this.usersService.getAllVenues(),
     }).subscribe({
       next: ({ events, categories, venues }) => {
         const categoryMap = new Map(categories.map((category) => [category.id, category.name]));
-        const venueMap = new Map(venues.content.map((venue) => [venue.id, venue.name]));
+        const venueMap = new Map(venues.map((venue) => [venue.id, venue.name]));
 
         const mapped = (events.content ?? []).map((event) => ({
+          id: event.id,
           title: event.title,
-          category: categoryMap.get(event.categoryId) ?? `Category ${event.categoryId}`,
+          category:
+            categoryMap.get(event.categoryId) ??
+            event.venue?.category?.name ??
+            `Category ${event.categoryId}`,
           date: new Date(event.startDateTime).toLocaleString(),
-          venue: venueMap.get(event.venueId) ?? `Venue ${event.venueId}`,
-          price: '—',
-          image: this.pickRandomImage(),
+          venue:
+            event.venue?.name ??
+            (event.venueId !== undefined ? venueMap.get(event.venueId) : undefined) ??
+            `Venue ${event.venueId ?? '--'}`,
+          price: '--',
+          image: event.imageUrl?.trim() || this.pickRandomImage(),
         }));
 
         this.allMappedEvents = mapped;
-        this.featuredEvents = this.pickRandomFeatured(mapped);
-        this.featuredBatch++;
-        this.isFeaturedLoading = false;
-        this.changeDetectorRef.markForCheck();
+        this.featuredEvents.set(this.pickRandomFeatured(mapped));
+        this.featuredBatch.update((batch) => batch + 1);
+        this.isFeaturedLoading.set(false);
         this.startAutoRotate();
       },
-      error: () => {
-        this.featuredEvents = [];
-        this.isFeaturedLoading = false;
-        this.changeDetectorRef.markForCheck();
+      error: (err) => {
+        console.error('Failed to load featured events', err);
+        this.featuredEvents.set([]);
+        this.isFeaturedLoading.set(false);
       },
     });
   }
@@ -99,9 +106,8 @@ export class Homepage implements OnInit, OnDestroy {
   }
 
   private applyRandomSelection(): void {
-    this.featuredEvents = this.pickRandomFeatured(this.allMappedEvents);
-    this.featuredBatch++;
-    this.changeDetectorRef.markForCheck();
+    this.featuredEvents.set(this.pickRandomFeatured(this.allMappedEvents));
+    this.featuredBatch.update((batch) => batch + 1);
   }
 
   private pickRandomFeatured(events: EventCard[]): EventCard[] {

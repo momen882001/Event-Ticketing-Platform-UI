@@ -16,14 +16,14 @@
         <section class="filter-section">
           <h3>Category</h3>
           <div class="filter-list">
-            @if (isLoadingCategories) {
+            @if (isLoadingCategories()) {
               <p class="loading-inline">Loading categories...</p>
             } @else {
-              @for (item of categories; track item + '-' + $index) {
+              @for (item of categories(); track item + '-' + $index) {
                 <button 
                   type="button" 
                   class="filter-btn" 
-                  [class.active]="selectedCategory === item"
+                  [class.active]="selectedCategory() === item"
                   (click)="selectCategory(item)">
                   {{ item }}
                 </button>
@@ -35,14 +35,14 @@
         <section class="filter-section">
           <h3>Venue</h3>
           <div class="filter-list">
-            @if (isLoadingVenues) {
+            @if (isLoadingVenues()) {
               <p class="loading-inline">Loading venues...</p>
             } @else {
-              @for (venue of venues; track venue + '-' + $index) {
+              @for (venue of venues(); track venue + '-' + $index) {
                 <button 
                   type="button" 
                   class="filter-btn" 
-                  [class.active]="selectedVenue === venue"
+                  [class.active]="selectedVenue() === venue"
                   (click)="selectVenue(venue)">
                   {{ venue }}
                 </button>
@@ -55,24 +55,24 @@
       <!-- Events Grid -->
       <section class="events-content">
         <div class="events-grid-header">
-          <h2>Showing {{ filteredEvents.length }} event{{ filteredEvents.length !== 1 ? 's' : '' }}</h2>
-          @if (selectedCategory !== 'All' || selectedVenue !== 'All') {
+          <h2>Showing {{ filteredEvents().length }} event{{ filteredEvents().length !== 1 ? 's' : '' }}</h2>
+          @if (selectedCategory() !== 'All' || selectedVenue() !== 'All') {
             <button class="clear-btn" (click)="selectCategory('All'); selectVenue('All')">Clear filters</button>
           }
         </div>
 
-        @if (isLoadingEvents) {
+        @if (isLoadingEvents()) {
           <div class="no-results">
             <p>Loading events...</p>
           </div>
         } @else {
           <div class="event-grid">
-            @for (event of filteredEvents; track event.title) {
-              <app-event-card [event]="event"></app-event-card>
+            @for (event of filteredEvents(); track event.title) {
+              <app-event-card [event]="event" (book)="onBookEvent($event)"></app-event-card>
             }
           </div>
 
-          @if (filteredEvents.length === 0) {
+          @if (filteredEvents().length === 0) {
             <div class="no-results">
               <p>No events found matching your criteria. Try adjusting your filters.</p>
               <button class="btn btn--primary" (click)="selectCategory('All'); selectVenue('All')">View All Events</button>

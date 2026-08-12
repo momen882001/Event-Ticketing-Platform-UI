@@ -1,5 +1,5 @@
 export const URLs = {
-  apiBaseUrl: 'http://localhost:8082/api/',
+  apiBaseUrl: '/api/',
   wsEndpoint: 'http://localhost:8082/ws',
   eventsUpdatesTopic: '/topic/events/updates',
 
