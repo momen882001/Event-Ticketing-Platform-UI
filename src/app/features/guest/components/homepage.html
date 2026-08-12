@@ -11,7 +11,7 @@
     </div>
 
     <div class="hero__content">
-      <p class="hero__brand"> Event Booking Platform</p>
+      <p class="hero__brand">EventMe</p>
       <h1 class="hero__headline">Live events, booked with ease.</h1>
       <p class="hero__lede">
         Discover concerts, sports, and gatherings near you — then reserve your seat in minutes.
@@ -40,10 +40,14 @@
         </div>
       } @else {
         <div class="event-grid event-grid--featured">
-          @for (event of featuredEvents(); track featuredBatch() + '-' + event.title + '-' + $index; let i = $index) {
-                        <app-event-card
+          @for (
+            event of featuredEvents();
+            track featuredBatch() + '-' + event.title + '-' + $index;
+            let i = $index
+          ) {
+            <app-event-card
               class="featured-card featured-card--enter"
-              [style.animation-delay]="(i * 120) + 'ms'"
+              [style.animation-delay]="i * 120 + 'ms'"
               [event]="event"
               (book)="onBookEvent($event)"
             ></app-event-card>
@@ -58,10 +62,10 @@
   <footer class="home-footer">
     <div class="home-footer__inner">
       <div>
-        <strong>Event Booking Platform</strong>
+        <strong>EventMe</strong>
         <p>Curated experiences. Seamless booking.</p>
       </div>
-      <p class="home-footer__copy">© 2026 Event Booking Platform</p>
+      <p class="home-footer__copy">© 2026 EventMe</p>
     </div>
   </footer>
 </div>
