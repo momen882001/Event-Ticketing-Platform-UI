@@ -137,7 +137,14 @@ export class CalendarLandingPage implements OnInit, OnDestroy {
       icon: 'bi-trash3',
       type: 'danger',
       color: 'var(--app-danger)',
-      isVisible: () => this.isAdmin(),
+      isVisible: () => {
+        const event = this.clickedEvent();
+        const isAllowedUser =
+          this.isAdmin() ||
+          (this.isOrganizer() &&
+            this.authService.getUserData?.userId === event?.extendedProps['organizerId']);
+        return isAllowedUser && !event?.extendedProps['hasBookings'];
+      },
       action: () => this.onDeleteEvent(),
     },
     {
